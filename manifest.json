@@ -1,0 +1,18 @@
+{
+  "name": "ページ情報を共有",
+  "version": "0.1",
+  "manifest_version": 2,
+  "description": "ページ情報をWiki記法などに変換する",
+  "icons": {
+    "128": "icon/icon.png"
+  },
+  "permissions": [
+    "activeTab",
+    "clipboardWrite"
+  ],
+  "browser_action": {
+    "default_icon": "icon/icon.png",
+    "default_title": "ページ情報を共有",
+    "default_popup": "popup.html"
+  }
+}
