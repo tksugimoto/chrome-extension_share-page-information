@@ -12,6 +12,8 @@ var templates = [
     }
 ];
 
+var titleInput = document.getElementById("title");
+
 
 chrome.tabs.getSelected(null, function (tab) {
     if (tab.url.match(/^https?:/)) {
@@ -19,21 +21,33 @@ chrome.tabs.getSelected(null, function (tab) {
             url: tab.url,
             title: tab.title
         };
-        templates.forEach(function (template) {
-            if (typeof template.format === "function") {
-                var str = template.format(data);
-                display(template.type, str);
-            } else if (typeof template.format === "string") {
-                var str = template.format.replace(/{{([a-z]+)}}/g, function (all, name) {
-                    return data[name] || "";
-                });
-                display(template.type, str);
-            }
-        });
+        create(data);
+        
+        titleInput.value = data.title;
+        titleInput.select();
+        titleInput.onkeyup = function () {
+            data.title = this.value;
+            create(data);
+        };
     } else {
-        container.innerText = "非対応ページ";
+        document.body.innerText = "非対応ページ";
     }
 });
+
+function create(data) {
+    container.innerText = "";
+    templates.forEach(function (template) {
+        if (typeof template.format === "function") {
+            var str = template.format(data);
+            display(template.type, str);
+        } else if (typeof template.format === "string") {
+            var str = template.format.replace(/{{([a-z]+)}}/g, function (all, name) {
+                return data[name] || "";
+            });
+            display(template.type, str);
+        }
+    });
+}
 
 var container = document.getElementById("container");
 function display(type, str) {
