@@ -16,7 +16,7 @@ var titleInput = document.getElementById("title");
 
 
 chrome.tabs.getSelected(null, function (tab) {
-    if (tab.url.match(/^https?:/)) {
+    if (tab.url.match(/^(?:https?|file):/)) {
         var data = {
             url: tab.url,
             title: tab.title
