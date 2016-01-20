@@ -8,7 +8,7 @@ var templates = [
         format: "[[{{title}}|{{url}}]]"
     }, {
         type: "マークダウン\n [表示名](URL \"タイトル\")",
-        format: '[{{title}}]({{url}} "{{url}}")'
+        format: '[{{title}}]({{url}} "{{decodedUrl}}")'
     }
 ];
 
@@ -19,7 +19,8 @@ chrome.tabs.getSelected(null, function (tab) {
     if (tab.url.match(/^(?:https?|file):/)) {
         var data = {
             url: tab.url,
-            title: tab.title
+            title: tab.title,
+            decodedUrl: decodeURIComponent(tab.url)
         };
         create(data);
         
@@ -41,7 +42,7 @@ function create(data) {
             var str = template.format(data);
             display(template.type, str);
         } else if (typeof template.format === "string") {
-            var str = template.format.replace(/{{([a-z]+)}}/g, function (all, name) {
+            var str = template.format.replace(/{{([a-z]+)}}/ig, function (all, name) {
                 return data[name] || "";
             });
             display(template.type, str);
