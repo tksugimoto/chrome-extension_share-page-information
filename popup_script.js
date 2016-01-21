@@ -11,7 +11,11 @@ var templates = [
         format: function (data) {
             var text = data.title.replace(/\]/g, "\\]");
             var url = data.url.replace(/\)/g, "\\)");
-            var tooltip = data.decodedUrl.replace(/"\)/g, '"\\)');
+            var decodedUrl = data.url;
+            try {
+                decodedUrl = decodeURIComponent(data.url);
+            } catch (e) {}
+            var tooltip = decodedUrl.replace(/"\)/g, '"\\)');
             return `[${text}](${url} "${tooltip}")`;
         }
     }
@@ -24,8 +28,7 @@ chrome.tabs.getSelected(null, function (tab) {
     if (tab.url.match(/^(?:https?|file):/)) {
         var data = {
             url: tab.url,
-            title: tab.title,
-            decodedUrl: decodeURIComponent(tab.url)
+            title: tab.title
         };
         create(data);
         
