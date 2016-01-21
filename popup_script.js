@@ -8,7 +8,9 @@ var templates = [
         format: "[[{{title}}|{{url}}]]"
     }, {
         type: "マークダウン\n [リンクテキスト](URL \"タイトル(tooltip)\")",
-        format: '[{{title}}]({{url}} "{{decodedUrl}}")'
+        format: function (data) {
+            return `[${data.title.replace(/\]/g, "\\]")}](${data.url.replace(/\)/g, "\\)")} "${data.decodedUrl.replace(/"\)/g, '"\\)')}")`
+        }
     }
 ];
 
