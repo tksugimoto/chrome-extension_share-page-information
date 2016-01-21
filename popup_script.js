@@ -9,7 +9,10 @@ var templates = [
     }, {
         type: "マークダウン\n [リンクテキスト](URL \"タイトル(tooltip)\")",
         format: function (data) {
-            return `[${data.title.replace(/\]/g, "\\]")}](${data.url.replace(/\)/g, "\\)")} "${data.decodedUrl.replace(/"\)/g, '"\\)')}")`
+            var text = data.title.replace(/\]/g, "\\]");
+            var url = data.url.replace(/\)/g, "\\)");
+            var tooltip = data.decodedUrl.replace(/"\)/g, '"\\)');
+            return `[${text}](${url} "${tooltip}")`;
         }
     }
 ];
