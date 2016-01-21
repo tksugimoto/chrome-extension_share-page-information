@@ -1,13 +1,13 @@
 
 var templates = [
     {
-        type: "タイトル + URL\n タイトル\\nURL",
+        type: "タイトル + URL\n タイトル<改行>URL",
         format: "{{title}}\n{{url}}"
     }, {
-        type: "Wiki \n [[タイトル|URL]]",
+        type: "Wiki (Hiki) \n [[タイトル|URL]]",
         format: "[[{{title}}|{{url}}]]"
     }, {
-        type: "マークダウン\n [表示名](URL \"タイトル\")",
+        type: "マークダウン\n [リンクテキスト](URL \"タイトル(tooltip)\")",
         format: '[{{title}}]({{url}} "{{decodedUrl}}")'
     }
 ];
