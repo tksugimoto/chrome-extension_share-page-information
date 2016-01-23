@@ -65,7 +65,8 @@ function display(type, str) {
         value: str,
         rows: 5,
         style: {
-            width: "100%"
+            width: "100%",
+            "word-break": "break-all"
         }
     });
     var copyButton = createElement("button", {
