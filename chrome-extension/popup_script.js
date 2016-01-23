@@ -81,18 +81,6 @@ function display(type, str) {
             innerText: type
         }),
         copyButton,
-        createElement("button", {
-            innerText: "コピー（「参考：」）",
-            title: "「参考：」を先頭に追加してコピー",
-            style: {
-                "float": "right"
-            },
-            onclick: function () {
-                textarea.value = "参考：" + textarea.value;
-                this.disabled = true;
-                copy();
-            }
-        }),
         createElement("br"),
         textarea
     ]));
