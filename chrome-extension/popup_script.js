@@ -64,6 +64,7 @@ function display(type, str) {
     var textarea = createElement("textarea", {
         value: str,
         rows: 5,
+        spellcheck: false,
         style: {
             width: "100%",
             "word-break": "break-all"
