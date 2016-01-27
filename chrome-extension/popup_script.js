@@ -9,7 +9,7 @@ var templates = [
     }, {
         type: "Markdown\n [リンクテキスト](URL \"タイトル(tooltip)\")",
         format: function (data) {
-            var text = data.title.replace(/\]/g, "\\]");
+            var text = data.title.replace(/\\/g, "\\\\").replace(/\]/g, "\\]");
             var url = data.url.replace(/\)/g, "\\)");
             var decodedUrl = data.url;
             try {
