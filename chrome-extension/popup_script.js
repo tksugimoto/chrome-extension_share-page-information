@@ -34,10 +34,18 @@ chrome.tabs.getSelected(null, function (tab) {
         
         titleInput.value = data.title;
         titleInput.select();
-        titleInput.onkeyup = function () {
-            data.title = this.value;
+        var oldValue = titleInput.value;
+        titleInput.onkeypress = function () {
+            data.title = oldValue = titleInput.value;
             create(data);
         };
+        window.setInterval(function () {
+            // 右クリックからの貼付けなど
+            if (oldValue !== titleInput.value) {
+                data.title = oldValue = titleInput.value;
+                create(data);
+            }
+        }, 50);
     } else {
         document.body.innerText = "非対応ページ";
     }
