@@ -4,10 +4,10 @@ var templates = [
         type: "タイトル + URL\n タイトル<改行>URL",
         format: "{{title}}\n{{url}}"
     }, {
-        type: "Hiki (Wikiクローン) \n [[タイトル|URL]]",
+        type: "Hiki (Wikiクローン) \n [[リンクテキスト: タイトル|リンク先: URL]]",
         format: "[[{{title}}|{{url}}]]"
     }, {
-        type: "Markdown\n [リンクテキスト](URL \"タイトル(tooltip)\")",
+        type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
         format: function (data) {
             var text = data.title.replace(/\\/g, "\\\\").replace(/\]/g, "\\]");
             var url = data.url.replace(/\)/g, "\\)");
