@@ -60,6 +60,13 @@ chrome.tabs.query({
 
 function create(data) {
     container.innerText = "";
+    container.appendChild(createElement("p", {
+    }, [
+        createElement("a", {
+            innerText: data.title,
+            href: data.url
+        })
+    ]));
     templates.forEach(function (template) {
         if (typeof template.format === "function") {
             var str = template.format(data);
