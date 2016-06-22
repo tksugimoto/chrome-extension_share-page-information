@@ -23,8 +23,11 @@ var templates = [
 
 var titleInput = document.getElementById("title");
 
-
-chrome.tabs.getSelected(null, function (tab) {
+chrome.tabs.query({
+    active: true,
+    currentWindow: true
+}, function (tabs) {
+    var tab = tabs[0];
     if (tab.url.match(/^(?:https?|file):/)) {
         var data = {
             url: tab.url,
@@ -111,35 +114,35 @@ function display(type, str) {
 
 
 function createElement(elem, attrs, childs){
-	if (!elem) return null;
-	if (typeof elem === "string") elem = document.createElement(elem);
-	if (attrs) {
-		for (var key_attr in attrs) {
-			if (key_attr === "style") {
-				var styles = attrs.style;
-				if (styles) for (var key_style in styles) elem.style[key_style] = styles[key_style];
-			} else if (key_attr === "class") {
-				elem.className = attrs.class;
-			} else if (key_attr.indexOf("-") !== -1) {
-				// data-** etc
-				elem.setAttribute(key_attr, attrs[key_attr]);
-			} else {
-				elem[key_attr] = attrs[key_attr];
-			}
-		}
-	}
-	if (childs) {
-		if (childs instanceof Array) {
-			childs.forEach(function (child){
-				if (child) {
-					if (typeof child === "string") child = document.createTextNode(child);
-					elem.appendChild(child);
-				}
-			});
-		} else {
-			if (typeof childs === "string") childs = document.createTextNode(childs);
-			elem.appendChild(childs);
-		}
-	}
-	return elem;
+    if (!elem) return null;
+    if (typeof elem === "string") elem = document.createElement(elem);
+    if (attrs) {
+        for (var key_attr in attrs) {
+            if (key_attr === "style") {
+                var styles = attrs.style;
+                if (styles) for (var key_style in styles) elem.style[key_style] = styles[key_style];
+            } else if (key_attr === "class") {
+                elem.className = attrs.class;
+            } else if (key_attr.indexOf("-") !== -1) {
+                // data-** etc
+                elem.setAttribute(key_attr, attrs[key_attr]);
+            } else {
+                elem[key_attr] = attrs[key_attr];
+            }
+        }
+    }
+    if (childs) {
+        if (childs instanceof Array) {
+            childs.forEach(function (child){
+                if (child) {
+                    if (typeof child === "string") child = document.createTextNode(child);
+                    elem.appendChild(child);
+                }
+            });
+        } else {
+            if (typeof childs === "string") childs = document.createTextNode(childs);
+            elem.appendChild(childs);
+        }
+    }
+    return elem;
 }
