@@ -33,6 +33,10 @@ chrome.tabs.query({
             url: tab.url,
             title: tab.title
         };
+        // Firefox用
+        // Firefoxはネットワークドライブの場合/が5つ必要
+        // Chromeではfile:の後に/がいくつ並んでもOK
+        data.url = data.url.replace(/^file:[/][/]([^:/]+)[/]/, "file://///$1/");
         create(data);
         
         titleInput.value = data.title;
