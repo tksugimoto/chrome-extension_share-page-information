@@ -80,6 +80,7 @@ function display(type, str) {
         value: str,
         rows: 5,
         spellcheck: false,
+        tabIndex: -1,
         style: {
             width: "100%",
             "word-break": "break-all"
