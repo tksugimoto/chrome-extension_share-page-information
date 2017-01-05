@@ -1,22 +1,6 @@
 
 var templates = [
     {
-        type: "リンク",
-        format: function (data) {
-            return createElement("a", {
-                tabIndex: -1,
-                innerText: data.title,
-                href: data.url
-            });
-        },
-        select: function (element) {
-            const range = document.createRange();
-            range.selectNodeContents(element);
-            const selection = window.getSelection();
-            selection.removeAllRanges();
-            selection.addRange(range);
-        }
-    }, {
         type: "タイトル + URL\n タイトル<改行>URL",
         format: "{{title}}\n{{url}}"
     }, {
@@ -33,6 +17,22 @@ var templates = [
             } catch (e) {}
             var tooltip = decodedUrl.replace(/"\)/g, '"\\)');
             return `[${text}](${url} "${tooltip}")`;
+        }
+    }, {
+        type: "リンク",
+        format: function (data) {
+            return createElement("a", {
+                tabIndex: -1,
+                innerText: data.title,
+                href: data.url
+            });
+        },
+        select: function (element) {
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
         }
     }
 ];
