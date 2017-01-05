@@ -18,6 +18,22 @@ var templates = [
             var tooltip = decodedUrl.replace(/"\)/g, '"\\)');
             return `[${text}](${url} "${tooltip}")`;
         }
+    }, {
+        type: "リンク",
+        format: function (data) {
+            return createElement("a", {
+                tabIndex: -1,
+                innerText: data.title,
+                href: data.url
+            });
+        },
+        select: function (element) {
+            const range = document.createRange();
+            range.selectNodeContents(element);
+            const selection = window.getSelection();
+            selection.removeAllRanges();
+            selection.addRange(range);
+        }
     }
 ];
 
@@ -60,10 +76,11 @@ chrome.tabs.query({
 
 function create(data) {
     container.innerText = "";
+
     templates.forEach(function (template) {
         if (typeof template.format === "function") {
-            var str = template.format(data);
-            display(template.type, str);
+            var target = template.format(data);
+            display(template.type, target, template.select);
         } else if (typeof template.format === "string") {
             var str = template.format.replace(/{{([a-z]+)}}/ig, function (all, name) {
                 return data[name] || "";
@@ -74,10 +91,10 @@ function create(data) {
 }
 
 var container = document.getElementById("container");
-function display(type, str) {
-    if (!type || !str) return;
-    var textarea = createElement("textarea", {
-        value: str,
+function display(type, target, select) {
+    if (!type || !target) return;
+    var element = (typeof target !== "string") ? target : createElement("textarea", {
+        value: target,
         rows: 5,
         spellcheck: false,
         tabIndex: -1,
@@ -100,12 +117,18 @@ function display(type, str) {
         }),
         copyButton,
         createElement("br"),
-        textarea
+        element
     ]));
+
+    if (typeof select !== "function") {
+        select = function (textarea) {
+            textarea.select();
+        }
+    }
 
     var timeout_id = null;
     function copy(){
-        textarea.select();
+        select(element);
         document.execCommand("copy", null, null);
 
         if (null !== timeout_id) clearTimeout(timeout_id);
