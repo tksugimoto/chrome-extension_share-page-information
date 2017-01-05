@@ -1,5 +1,5 @@
 
-var templates = [
+const templates = [
 	{
 		type: "タイトル + URL\n タイトル<改行>URL",
 		format: "{{title}}\n{{url}}"
@@ -9,13 +9,13 @@ var templates = [
 	}, {
 		type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
 		format: function (data) {
-			var text = data.title.replace(/\[|\]|\\/g, "\\$&");
-			var url = data.url.replace(/\)/g, "\\)");
-			var decodedUrl = data.url;
+			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
+			const url = data.url.replace(/\)/g, "\\)");
+			let decodedUrl = data.url;
 			try {
 				decodedUrl = decodeURIComponent(data.url);
 			} catch (e) {}
-			var tooltip = decodedUrl.replace(/"\)/g, '"\\)');
+			const tooltip = decodedUrl.replace(/"\)/g, '"\\)');
 			return `[${text}](${url} "${tooltip}")`;
 		}
 	}, {
@@ -37,15 +37,15 @@ var templates = [
 	}
 ];
 
-var titleInput = document.getElementById("title");
+const titleInput = document.getElementById("title");
 
 chrome.tabs.query({
 	active: true,
 	currentWindow: true
 }, function (tabs) {
-	var tab = tabs[0];
+	const tab = tabs[0];
 	if (tab.url.match(/^(?:https?|file):/)) {
-		var data = {
+		const data = {
 			url: tab.url,
 			title: tab.title
 		};
@@ -57,7 +57,7 @@ chrome.tabs.query({
 		
 		titleInput.value = data.title;
 		titleInput.select();
-		var oldValue = titleInput.value;
+		let oldValue = titleInput.value;
 		titleInput.onkeypress = function () {
 			data.title = oldValue = titleInput.value;
 			create(data);
@@ -79,10 +79,10 @@ function create(data) {
 
 	templates.forEach(function (template) {
 		if (typeof template.format === "function") {
-			var target = template.format(data);
+			const target = template.format(data);
 			display(template.type, target, template.select);
 		} else if (typeof template.format === "string") {
-			var str = template.format.replace(/{{([a-z]+)}}/ig, function (all, name) {
+			const str = template.format.replace(/{{([a-z]+)}}/ig, function (all, name) {
 				return data[name] || "";
 			});
 			display(template.type, str);
@@ -90,10 +90,10 @@ function create(data) {
 	});
 }
 
-var container = document.getElementById("container");
+const container = document.getElementById("container");
 function display(type, target, select) {
 	if (!type || !target) return;
-	var element = (typeof target !== "string") ? target : createElement("textarea", {
+	const element = (typeof target !== "string") ? target : createElement("textarea", {
 		value: target,
 		rows: 5,
 		spellcheck: false,
@@ -103,7 +103,7 @@ function display(type, target, select) {
 			"word-break": "break-all"
 		}
 	});
-	var copyButton = createElement("button", {
+	const copyButton = createElement("button", {
 		innerText: "コピー",
 		style: {
 			"float": "right"
@@ -126,7 +126,7 @@ function display(type, target, select) {
 		}
 	}
 
-	var timeout_id = null;
+	let timeout_id = null;
 	function copy(){
 		select(element);
 		document.execCommand("copy", null, null);
@@ -145,10 +145,10 @@ function createElement(elem, attrs, childs){
 	if (!elem) return null;
 	if (typeof elem === "string") elem = document.createElement(elem);
 	if (attrs) {
-		for (var key_attr in attrs) {
+		for (const key_attr in attrs) {
 			if (key_attr === "style") {
-				var styles = attrs.style;
-				if (styles) for (var key_style in styles) elem.style[key_style] = styles[key_style];
+				const styles = attrs.style;
+				if (styles) for (const key_style in styles) elem.style[key_style] = styles[key_style];
 			} else if (key_attr === "class") {
 				elem.className = attrs.class;
 			} else if (key_attr.indexOf("-") !== -1) {
