@@ -1,12 +1,15 @@
 
 const templates = [
 	{
+		id: "title_url",
 		type: "タイトル + URL\n タイトル<改行>URL",
 		format: "{{title}}\n{{url}}"
 	}, {
+		id: "hiki",
 		type: "Hiki (Wikiクローン) \n [[リンクテキスト: タイトル|リンク先: URL]]",
 		format: "[[{{title}}|{{url}}]]"
 	}, {
+		id: "markdown",
 		type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
 		format: data => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
@@ -19,6 +22,7 @@ const templates = [
 			return `[${text}](${url} "${tooltip}")`;
 		}
 	}, {
+		id: "link",
 		type: "リンク",
 		format: data => {
 			return createElement("a", {
@@ -54,6 +58,7 @@ chrome.tabs.query({
 		// Chromeではfile:の後に/がいくつ並んでもOK
 		data.url = data.url.replace(/^file:[/][/]([^:/]+)[/]/, "file://///$1/");
 		create(data);
+		setupOpenCopyAction();
 		
 		titleInput.value = data.title;
 		titleInput.select();
@@ -80,18 +85,18 @@ function create(data) {
 	templates.forEach(template => {
 		if (typeof template.format === "function") {
 			const target = template.format(data);
-			display(template.type, target, template.select);
+			display(template.id, template.type, target, template.select);
 		} else if (typeof template.format === "string") {
 			const str = template.format.replace(/{{([a-z]+)}}/ig, (all, name) => {
 				return data[name] || "";
 			});
-			display(template.type, str);
+			display(template.id, template.type, str);
 		}
 	});
 }
 
 const container = document.getElementById("container");
-function display(type, target, select) {
+function display(id, type, target, select) {
 	if (!type || !target) return;
 	const element = (typeof target !== "string") ? target : createElement("textarea", {
 		value: target,
@@ -104,6 +109,7 @@ function display(type, target, select) {
 		}
 	});
 	const copyButton = createElement("button", {
+		id: createCopyButtonId(id),
 		innerText: "コピー",
 		style: {
 			"float": "right"
@@ -140,6 +146,32 @@ function display(type, target, select) {
 	}
 }
 
+function setupOpenCopyAction() {
+	const openCopyActionSelect = document.getElementById("open_copy_action");
+	templates.forEach(template => {
+		const id = template.id;
+		const selected = id === localStorage["open_copy_action_id"];
+
+		const option = createElement("option", {
+			value: template.id,
+			innerText: template.type.replace(/\n.*/, ""),
+			selected: selected
+		});
+		openCopyActionSelect.appendChild(option);
+
+		if (selected) {
+			document.getElementById(createCopyButtonId(id)).onclick();
+		}
+	});
+	openCopyActionSelect.addEventListener("change", evt => {
+		const selectedValue = openCopyActionSelect.selectedOptions[0].value;
+		localStorage["open_copy_action_id"] = selectedValue;
+	});
+}
+
+function createCopyButtonId(id) {
+	return `copy_button-${id}`;
+}
 
 function createElement(elem, attrs, childs){
 	if (!elem) return null;
