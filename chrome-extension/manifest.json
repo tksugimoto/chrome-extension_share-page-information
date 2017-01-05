@@ -1,6 +1,6 @@
 {
   "name": "ページ情報を共有",
-  "version": "0.5",
+  "version": "0.6.0",
   "manifest_version": 2,
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAiF3qQcF05ArkXyiIWOkkG8zsgxHIoL6BTmRCMl2CgT5maq3bJWdhgDzLoBi1oL0RGmtGTooBk/z2tm+DH26LDUkO0cm0eFExpp4gh1RhEmrKf3QP7nZepsknIg/wF/ueR+ZATXhYymMeaue03Sl4e/ZyD954i45zjnYmV4dq2kssDhgx4JoLJIeU8CNB8ZveD7W9sk6/lVBEjKGOGCGsUX9LLznw9T/aQuT1LQQKzFdKbnK6Lpkx23se3pe05DK0xM9Nt3DP6ADuMouq94LRWXoWmwa4soR0jVde3FfFZY4OGbLSwFucXCyOxM8TF7Loz8ZSwOoo2qLtZUDvrWPfdwIDAQAB",
   "description": "ページ情報をWiki記法などに変換する",
