@@ -8,7 +8,7 @@ const templates = [
 		format: "[[{{title}}|{{url}}]]"
 	}, {
 		type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
-		format: function (data) {
+		format: data => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
 			const url = data.url.replace(/\)/g, "\\)");
 			let decodedUrl = data.url;
@@ -20,14 +20,14 @@ const templates = [
 		}
 	}, {
 		type: "リンク",
-		format: function (data) {
+		format: data => {
 			return createElement("a", {
 				tabIndex: -1,
 				innerText: data.title,
 				href: data.url
 			});
 		},
-		select: function (element) {
+		select: element => {
 			const range = document.createRange();
 			range.selectNodeContents(element);
 			const selection = window.getSelection();
@@ -42,7 +42,7 @@ const titleInput = document.getElementById("title");
 chrome.tabs.query({
 	active: true,
 	currentWindow: true
-}, function (tabs) {
+}, tabs => {
 	const tab = tabs[0];
 	if (tab.url.match(/^(?:https?|file):/)) {
 		const data = {
@@ -58,11 +58,11 @@ chrome.tabs.query({
 		titleInput.value = data.title;
 		titleInput.select();
 		let oldValue = titleInput.value;
-		titleInput.onkeypress = function () {
+		titleInput.onkeypress = () => {
 			data.title = oldValue = titleInput.value;
 			create(data);
 		};
-		window.setInterval(function () {
+		window.setInterval(() => {
 			// 右クリックからの貼付けなど
 			if (oldValue !== titleInput.value) {
 				data.title = oldValue = titleInput.value;
@@ -77,12 +77,12 @@ chrome.tabs.query({
 function create(data) {
 	container.innerText = "";
 
-	templates.forEach(function (template) {
+	templates.forEach(template => {
 		if (typeof template.format === "function") {
 			const target = template.format(data);
 			display(template.type, target, template.select);
 		} else if (typeof template.format === "string") {
-			const str = template.format.replace(/{{([a-z]+)}}/ig, function (all, name) {
+			const str = template.format.replace(/{{([a-z]+)}}/ig, (all, name) => {
 				return data[name] || "";
 			});
 			display(template.type, str);
@@ -121,7 +121,7 @@ function display(type, target, select) {
 	]));
 
 	if (typeof select !== "function") {
-		select = function (textarea) {
+		select = textarea => {
 			textarea.select();
 		}
 	}
@@ -133,7 +133,7 @@ function display(type, target, select) {
 
 		if (null !== timeout_id) clearTimeout(timeout_id);
 		copyButton.innerText = "コピー完了";
-		timeout_id = setTimeout(function () {
+		timeout_id = setTimeout(() => {
 			copyButton.innerText = "コピー";
 		}, 3000);
 		copyButton.focus();
@@ -161,7 +161,7 @@ function createElement(elem, attrs, childs){
 	}
 	if (childs) {
 		if (childs instanceof Array) {
-			childs.forEach(function (child){
+			childs.forEach(child => {
 				if (child) {
 					if (typeof child === "string") child = document.createTextNode(child);
 					elem.appendChild(child);
