@@ -4,6 +4,7 @@ var templates = [
         type: "リンク",
         format: function (data) {
             return createElement("a", {
+                tabIndex: -1,
                 innerText: data.title,
                 href: data.url
             });
