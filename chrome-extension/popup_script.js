@@ -60,13 +60,42 @@ chrome.tabs.query({
 
 function create(data) {
     container.innerText = "";
-    container.appendChild(createElement("p", {
-    }, [
-        createElement("a", {
+
+    {
+        const link = createElement("a", {
             innerText: data.title,
             href: data.url
-        })
-    ]));
+        });
+        let timeout_id = null;
+        const copyButton = createElement("button", {
+            innerText: "コピー",
+            style: {
+                "float": "right"
+            },
+            onclick: () => {
+                const range = document.createRange();
+                range.selectNodeContents(link);
+                const selection = window.getSelection();
+                selection.removeAllRanges();
+                selection.addRange(range);
+
+                document.execCommand("copy");
+
+                if (null !== timeout_id) clearTimeout(timeout_id);
+                copyButton.innerText = "コピー完了";
+                timeout_id = setTimeout(function () {
+                    copyButton.innerText = "コピー";
+                }, 3000);
+                copyButton.focus();
+            }
+        });
+        container.appendChild(createElement("p", {
+        }, [
+            link,
+            copyButton
+        ]));
+    }
+
     templates.forEach(function (template) {
         if (typeof template.format === "function") {
             var str = template.format(data);
