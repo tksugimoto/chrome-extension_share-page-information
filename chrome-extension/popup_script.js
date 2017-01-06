@@ -62,18 +62,27 @@ chrome.tabs.query({
 		
 		titleInput.value = data.title;
 		titleInput.select();
-		let oldValue = titleInput.value;
-		titleInput.onkeypress = () => {
-			data.title = oldValue = titleInput.value;
-			create(data);
-		};
-		window.setInterval(() => {
-			// 右クリックからの貼付けなど
-			if (oldValue !== titleInput.value) {
-				data.title = oldValue = titleInput.value;
+		function change(e) {
+			setTimeout(() => {
+				data.title = titleInput.value;
 				create(data);
+			}, 1);
+		}
+		titleInput.addEventListener("keypress", change);
+		titleInput.addEventListener("keydown", evt => {
+			const key = evt.key;
+			if (key === "Backspace" || key === "Delete") {
+				change();
 			}
-		}, 50);
+		});
+		titleInput.addEventListener("paste", change);
+		titleInput.addEventListener("compositionend", evt => {
+			// 変換確定・キャンセル時
+			if (evt.data !== "") {
+				// キャンセルではない時
+				change();
+			}
+		});
 	} else {
 		document.body.innerText = "非対応ページ";
 	}
