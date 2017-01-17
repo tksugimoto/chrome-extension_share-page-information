@@ -68,21 +68,7 @@ chrome.tabs.query({
 				create(data);
 			}, 1);
 		}
-		titleInput.addEventListener("keypress", change);
-		titleInput.addEventListener("keydown", evt => {
-			const key = evt.key;
-			if (key === "Backspace" || key === "Delete") {
-				change();
-			}
-		});
-		titleInput.addEventListener("paste", change);
-		titleInput.addEventListener("compositionend", evt => {
-			// 変換確定・キャンセル時
-			if (evt.data !== "") {
-				// キャンセルではない時
-				change();
-			}
-		});
+		titleInput.addEventListener("input", change);
 	} else {
 		document.body.innerText = "非対応ページ";
 	}
