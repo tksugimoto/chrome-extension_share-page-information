@@ -155,6 +155,15 @@ chrome.tabs.query({
 		// Firefoxはネットワークドライブの場合/が5つ必要
 		// Chromeではfile:の後に/がいくつ並んでもOK
 		data.url = data.url.replace(/^file:[/][/]([^:/]+)[/]/, "file://///$1/");
+
+
+		const container = document.getElementById("container");
+		function create(data) {
+			templates.forEach(template => {
+				template.appendTo(data, container);
+			});
+		}
+
 		create(data);
 		setupOpenCopyAction();
 		
@@ -163,6 +172,7 @@ chrome.tabs.query({
 		function change(e) {
 			setTimeout(() => {
 				data.title = titleInput.value;
+				container.innerText = "";
 				create(data);
 			}, 1);
 		}
@@ -171,17 +181,6 @@ chrome.tabs.query({
 		document.body.innerText = "非対応ページ";
 	}
 });
-
-function create(data) {
-	container.innerText = "";
-
-	templates.forEach(template => {
-		template.appendTo(data, container);
-	});
-}
-
-const container = document.getElementById("container");
-
 
 function setupOpenCopyAction() {
 	const openCopyActionSelect = document.getElementById("open_copy_action");
