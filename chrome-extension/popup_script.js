@@ -143,6 +143,7 @@ function display(id, type, target, select) {
 
 function setupOpenCopyAction() {
 	const openCopyActionSelect = document.getElementById("open_copy_action");
+	const openCopyActionOptions =  document.createDocumentFragment();
 	templates.forEach(template => {
 		const id = template.id;
 		const selected = id === localStorage["open_copy_action_id"];
@@ -152,12 +153,13 @@ function setupOpenCopyAction() {
 			innerText: template.type.replace(/\n.*/, ""),
 			selected: selected
 		});
-		openCopyActionSelect.appendChild(option);
+		openCopyActionOptions.appendChild(option);
 
 		if (selected) {
 			document.getElementById(createCopyButtonId(id)).onclick();
 		}
 	});
+	openCopyActionSelect.appendChild(openCopyActionOptions);
 	openCopyActionSelect.addEventListener("change", evt => {
 		const selectedValue = openCopyActionSelect.selectedOptions[0].value;
 		localStorage["open_copy_action_id"] = selectedValue;
