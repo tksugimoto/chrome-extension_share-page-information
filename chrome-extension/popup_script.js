@@ -1,17 +1,127 @@
 
+class ShareTemplate {
+	constructor(argObject) {
+		["id", "type", "selectableElement"].forEach(key => {
+			if (typeof argObject[key] === "undefined") {
+				throw new Error(`${key}プロパティが必要`);
+			}
+			this[key] = argObject[key];
+		});
+	}
+	appendTo(data, parent) {
+		const element = this.selectableElement.generateElement(data);
+		const copyButton = createElement("button", {
+			id: createCopyButtonId(this.id),
+			innerText: "コピー",
+			style: {
+				"float": "right"
+			},
+			onclick: copy.bind(this)
+		});
+		parent.appendChild(createElement("p", {
+		}, [
+			createElement("span", {
+				innerText: this.type
+			}),
+			copyButton,
+			createElement("br"),
+			element
+		]));
+
+		let timeout_id = null;
+		function copy() {
+			this._copy(element);
+
+			if (null !== timeout_id) clearTimeout(timeout_id);
+			copyButton.innerText = "コピー完了";
+			timeout_id = setTimeout(() => {
+				copyButton.innerText = "コピー";
+			}, 3000);
+			copyButton.focus();
+		}
+	}
+	_copy(element) {
+		this.selectableElement.selectElement(element);
+		document.execCommand("copy");
+	}
+}
+
+class SelectableElement {
+	generateElement() {
+		// 返り値: HTMLElement
+		throw new Error("実装が必要です");
+	}
+	selectElement(element) {
+		throw new Error("実装が必要です");
+	}
+}
+
+class SelectableTextarea extends SelectableElement {
+	constructor(format) {
+		super();
+		this._setupGenerateTextByFormat(format);
+	}
+	_setupGenerateTextByFormat(format) {
+		if (typeof format === "function") {
+			this.generateTextByFormat = format;
+		} else {
+			format = String(format);
+			this.generateTextByFormat = data => {
+				return format.replace(/{{([a-z]+)}}/ig, (all, name) => {
+					return data[name] || "";
+				});
+			};
+		}
+	}
+	generateElement(data) {
+		return createElement("textarea", {
+			value: this.generateTextByFormat(data),
+			rows: 5,
+			spellcheck: false,
+			tabIndex: -1,
+			style: {
+				width: "100%",
+				"word-break": "break-all"
+			}
+		});
+	}
+	selectElement(element) {
+		element.select();
+	}
+}
+
+class SelectableLink extends SelectableElement{
+	generateElement({title, url}) {
+		return createElement("a", {
+			tabIndex: -1,
+			innerText: title,
+			href: url
+		});
+	}
+	selectElement(element) {
+		const range = document.createRange();
+		range.selectNodeContents(element);
+		const selection = window.getSelection();
+		selection.removeAllRanges();
+		selection.addRange(range);
+	}
+}
+
 const templates = [
-	{
+	new ShareTemplate({
 		id: "title_url",
 		type: "タイトル + URL\n タイトル<改行>URL",
-		format: "{{title}}\n{{url}}"
-	}, {
+		selectableElement: new SelectableTextarea("{{title}}\n{{url}}")
+	}),
+	new ShareTemplate({
 		id: "hiki",
 		type: "Hiki (Wikiクローン) \n [[リンクテキスト: タイトル|リンク先: URL]]",
-		format: "[[{{title}}|{{url}}]]"
-	}, {
+		selectableElement: new SelectableTextarea("[[{{title}}|{{url}}]]")
+	}),
+	new ShareTemplate({
 		id: "markdown",
 		type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
-		format: data => {
+		selectableElement: new SelectableTextarea(data => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
 			const url = data.url.replace(/\)/g, "\\)");
 			let decodedUrl = data.url;
@@ -20,25 +130,13 @@ const templates = [
 			} catch (e) {}
 			const tooltip = decodedUrl.replace(/"\)/g, '"\\)');
 			return `[${text}](${url} "${tooltip}")`;
-		}
-	}, {
+		})
+	}),
+	new ShareTemplate({
 		id: "link",
 		type: "リンク",
-		format: data => {
-			return createElement("a", {
-				tabIndex: -1,
-				innerText: data.title,
-				href: data.url
-			});
-		},
-		select: element => {
-			const range = document.createRange();
-			range.selectNodeContents(element);
-			const selection = window.getSelection();
-			selection.removeAllRanges();
-			selection.addRange(range);
-		}
-	}
+		selectableElement: new SelectableLink()
+	})
 ];
 
 const titleInput = document.getElementById("title");
@@ -78,68 +176,12 @@ function create(data) {
 	container.innerText = "";
 
 	templates.forEach(template => {
-		if (typeof template.format === "function") {
-			const target = template.format(data);
-			display(template.id, template.type, target, template.select);
-		} else if (typeof template.format === "string") {
-			const str = template.format.replace(/{{([a-z]+)}}/ig, (all, name) => {
-				return data[name] || "";
-			});
-			display(template.id, template.type, str);
-		}
+		template.appendTo(data, container);
 	});
 }
 
 const container = document.getElementById("container");
-function display(id, type, target, select) {
-	if (!type || !target) return;
-	const element = (typeof target !== "string") ? target : createElement("textarea", {
-		value: target,
-		rows: 5,
-		spellcheck: false,
-		tabIndex: -1,
-		style: {
-			width: "100%",
-			"word-break": "break-all"
-		}
-	});
-	const copyButton = createElement("button", {
-		id: createCopyButtonId(id),
-		innerText: "コピー",
-		style: {
-			"float": "right"
-		},
-		onclick: copy
-	});
-	container.appendChild(createElement("p", {
-	}, [
-		createElement("span", {
-			innerText: type
-		}),
-		copyButton,
-		createElement("br"),
-		element
-	]));
 
-	if (typeof select !== "function") {
-		select = textarea => {
-			textarea.select();
-		}
-	}
-
-	let timeout_id = null;
-	function copy(){
-		select(element);
-		document.execCommand("copy", null, null);
-
-		if (null !== timeout_id) clearTimeout(timeout_id);
-		copyButton.innerText = "コピー完了";
-		timeout_id = setTimeout(() => {
-			copyButton.innerText = "コピー";
-		}, 3000);
-		copyButton.focus();
-	}
-}
 
 function setupOpenCopyAction() {
 	const openCopyActionSelect = document.getElementById("open_copy_action");
