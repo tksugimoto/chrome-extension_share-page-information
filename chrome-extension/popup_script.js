@@ -9,7 +9,7 @@ class ShareTemplate {
 		});
 	}
 	appendTo(data, parent) {
-		const element = this.selectableElement.generateElement(data);
+		const element = this._element = this.selectableElement.generateElement(data);
 		const copyButton = createElement("button", {
 			id: createCopyButtonId(this.id),
 			innerText: "コピー",
@@ -40,6 +40,9 @@ class ShareTemplate {
 			copyButton.focus();
 		}
 	}
+	update(data) {
+		this.selectableElement.updateElement(data, this._element);
+	}
 	_copy(element) {
 		this.selectableElement.selectElement(element);
 		document.execCommand("copy");
@@ -49,6 +52,10 @@ class ShareTemplate {
 class SelectableElement {
 	generateElement() {
 		// 返り値: HTMLElement
+		throw new Error("実装が必要です");
+	}
+	updateElement(data, element) {
+		// 返り値: 無し
 		throw new Error("実装が必要です");
 	}
 	selectElement(element) {
@@ -85,6 +92,9 @@ class SelectableTextarea extends SelectableElement {
 			}
 		});
 	}
+	updateElement(data, element) {
+		element.value = this.generateTextByFormat(data);
+	}
 	selectElement(element) {
 		element.select();
 	}
@@ -97,6 +107,10 @@ class SelectableLink extends SelectableElement{
 			innerText: title,
 			href: url
 		});
+	}
+	updateElement({title, url}, element) {
+		element.innerText = title;
+		element.href = url;
 	}
 	selectElement(element) {
 		const range = document.createRange();
@@ -158,13 +172,9 @@ chrome.tabs.query({
 
 
 		const container = document.getElementById("container");
-		function create(data) {
-			templates.forEach(template => {
-				template.appendTo(data, container);
-			});
-		}
-
-		create(data);
+		templates.forEach(template => {
+			template.appendTo(data, container);
+		});
 		setupOpenCopyAction();
 		
 		titleInput.value = data.title;
@@ -172,8 +182,9 @@ chrome.tabs.query({
 		function change(e) {
 			setTimeout(() => {
 				data.title = titleInput.value;
-				container.innerText = "";
-				create(data);
+				templates.forEach(template => {
+					template.update(data);
+				});
 			}, 1);
 		}
 		titleInput.addEventListener("input", change);
