@@ -9,7 +9,7 @@ class ShareTemplate {
 		});
 	}
 	appendTo(data, parent) {
-		const element = this._element = this.selectableElement.generateElement(data);
+		const element = this.selectableElement.generateElement(data);
 		const copyButton = createElement("button", {
 			id: createCopyButtonId(this.id),
 			innerText: "コピー",
@@ -30,7 +30,7 @@ class ShareTemplate {
 
 		let timeout_id = null;
 		function copy() {
-			this._copy(element);
+			this._copy();
 
 			if (null !== timeout_id) clearTimeout(timeout_id);
 			copyButton.innerText = "コピー完了";
@@ -41,10 +41,10 @@ class ShareTemplate {
 		}
 	}
 	update(data) {
-		this.selectableElement.updateElement(data, this._element);
+		this.selectableElement.updateElement(data);
 	}
-	_copy(element) {
-		this.selectableElement.selectElement(element);
+	_copy() {
+		this.selectableElement.selectElement();
 		document.execCommand("copy");
 	}
 }
@@ -54,11 +54,11 @@ class SelectableElement {
 		// 返り値: HTMLElement
 		throw new Error("実装が必要です");
 	}
-	updateElement(data, element) {
+	updateElement(data) {
 		// 返り値: 無し
 		throw new Error("実装が必要です");
 	}
-	selectElement(element) {
+	selectElement() {
 		throw new Error("実装が必要です");
 	}
 }
@@ -81,7 +81,7 @@ class SelectableTextarea extends SelectableElement {
 		}
 	}
 	generateElement(data) {
-		return createElement("textarea", {
+		this._element = createElement("textarea", {
 			value: this.generateTextByFormat(data),
 			rows: 5,
 			spellcheck: false,
@@ -91,30 +91,32 @@ class SelectableTextarea extends SelectableElement {
 				"word-break": "break-all"
 			}
 		});
+		return this._element;
 	}
-	updateElement(data, element) {
-		element.value = this.generateTextByFormat(data);
+	updateElement(data) {
+		this._element.value = this.generateTextByFormat(data);
 	}
-	selectElement(element) {
-		element.select();
+	selectElement() {
+		this._element.select();
 	}
 }
 
 class SelectableLink extends SelectableElement{
 	generateElement({title, url}) {
-		return createElement("a", {
+		this._element = createElement("a", {
 			tabIndex: -1,
 			innerText: title,
 			href: url
 		});
+		return this._element;
 	}
-	updateElement({title, url}, element) {
-		element.innerText = title;
-		element.href = url;
+	updateElement({title, url}) {
+		this._element.innerText = title;
+		this._element.href = url;
 	}
-	selectElement(element) {
+	selectElement() {
 		const range = document.createRange();
-		range.selectNodeContents(element);
+		range.selectNodeContents(this._element);
 		const selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
