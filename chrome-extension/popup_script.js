@@ -135,6 +135,11 @@ const templates = [
 		selectableElement: new SelectableTextarea("[[{{title}}|{{url}}]]")
 	}),
 	new ShareTemplate({
+		id: "backlog",
+		type: "Backlog \n [[リンクテキスト: タイトル>リンク先: URL]]",
+		selectableElement: new SelectableTextarea("[[{{title}}>{{url}}]]")
+	}),
+	new ShareTemplate({
 		id: "markdown",
 		type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
 		selectableElement: new SelectableTextarea(data => {
