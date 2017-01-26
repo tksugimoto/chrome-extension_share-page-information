@@ -83,7 +83,7 @@ class SelectableTextarea extends SelectableElement {
 	generateElement(data) {
 		this._element = createElement("textarea", {
 			value: this.generateTextByFormat(data),
-			rows: 5,
+			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
 			style: {
