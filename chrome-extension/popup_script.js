@@ -264,6 +264,7 @@ function setupEnableSetting() {
 	const enableSettings =  document.createDocumentFragment();
 	templates.forEach(template => {
 		const checkBox = createElement("check-box", {
+			tabIndex: -1,
 			checked: template.enabled
 		}, [
 			template.type.replace(/\n.*/, "")
