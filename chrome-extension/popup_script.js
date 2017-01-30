@@ -7,6 +7,26 @@ class ShareTemplate {
 			}
 			this[key] = argObject[key];
 		});
+		this._loadEnableSetting();
+	}
+	_loadEnableSetting() {
+		const val = localStorage[`enabled_${this.id}`];
+		this._enabled = (typeof val === "undefined") || (val === "true");
+	}
+	_saveEnableSetting() {
+		localStorage[`enabled_${this.id}`] = this.enabled;
+	}
+	get enabled() {
+		return this._enabled;
+	}
+	set enabled(val) {
+		this._enabled = !!val;
+		this._saveEnableSetting();
+		if (this._enabled) {
+			this._show();
+		} else {
+			this._hide();
+		}
 	}
 	appendTo(data, parent) {
 		const element = this.selectableElement.generateElement(data);
@@ -18,7 +38,7 @@ class ShareTemplate {
 			},
 			onclick: copy.bind(this)
 		});
-		parent.appendChild(createElement("p", {
+		this._container = createElement("p", {
 		}, [
 			createElement("span", {
 				innerText: this.type
@@ -26,7 +46,11 @@ class ShareTemplate {
 			copyButton,
 			createElement("br"),
 			element
-		]));
+		]);
+		if (!this.enabled) {
+			this._hide();
+		}
+		parent.appendChild(this._container);
 
 		let timeout_id = null;
 		function copy() {
@@ -39,6 +63,12 @@ class ShareTemplate {
 			}, 3000);
 			copyButton.focus();
 		}
+	}
+	_hide() {
+		this._container.style.display = "none";
+	}
+	_show() {
+		this._container.style.display = "";
 	}
 	update(data) {
 		this.selectableElement.updateElement(data);
@@ -183,6 +213,7 @@ chrome.tabs.query({
 			template.appendTo(data, container);
 		});
 		setupOpenCopyAction();
+		setupEnableSetting();
 		
 		titleInput.value = data.title;
 		titleInput.select();
@@ -227,6 +258,23 @@ function setupOpenCopyAction() {
 
 function createCopyButtonId(id) {
 	return `copy_button-${id}`;
+}
+
+function setupEnableSetting() {
+	const enableSettings =  document.createDocumentFragment();
+	templates.forEach(template => {
+		const checkBox = createElement("check-box", {
+			checked: template.enabled
+		}, [
+			template.type.replace(/\n.*/, "")
+		]);
+		checkBox.addEventListener("change", evt => {
+			template.enabled = evt.checked;
+		});
+		const li = createElement("li", {}, checkBox);
+		enableSettings.appendChild(li);
+	});
+	document.getElementById("enable_setting").appendChild(enableSettings);
 }
 
 function createElement(elem, attrs, childs){
