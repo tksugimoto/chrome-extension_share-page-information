@@ -13,6 +13,27 @@
 		#open_action_setting {
 			text-align: right;
 		}
+		#settings {
+			position: fixed;
+			right: 0;
+			top: 0;
+			background: lightyellow;
+			border: 2px black solid;
+			border-radius: 5px;
+		}
+		#settings header {
+			text-align: center;
+		}
+		#settings #details {
+			display: none;
+		}
+		#settings:hover {
+			padding: 5px;
+			border-radius: 10px;
+		}
+		#settings:hover #details {
+			display: block;
+		}
 	</style>
 	<link rel="import" href="web-components/check-box.html">
 </head>
@@ -23,14 +44,18 @@
 	</div>
 	<hr>
 	<div id="container"></div>
-	<hr>
-	<div id="open_action_setting">
-		ポップアップを開いたときにコピー：
-		<select id="open_copy_action" tabindex="-1">
-			<option value="">コピーしない</option>
-		</select>
+	<div id="settings">
+		<header>設定</header>
+		<div id="details">
+			<div id="open_action_setting">
+				ポップアップを開いたときにコピー：
+				<select id="open_copy_action" tabindex="-1">
+					<option value="">コピーしない</option>
+				</select>
+			</div>
+			<ul id="enable_setting"></ul>
+		</div>
 	</div>
-	<ul id="enable_setting"></ul>
 	<script src="popup_script.js"></script>
 </body>
 </html>
