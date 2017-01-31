@@ -25,14 +25,20 @@
 			text-align: center;
 		}
 		#settings #details {
-			display: none;
+			overflow: hidden;
+			max-width: 0;
+			max-height: 0;
 		}
 		#settings:hover {
 			padding: 5px;
 			border-radius: 10px;
 		}
 		#settings:hover #details {
-			display: block;
+			white-space: nowrap;
+			transition-duration: 1s;
+			transition-timing-function: ease-out;
+			max-width: 1500px;
+			max-height: 500px;
 		}
 	</style>
 	<link rel="import" href="web-components/check-box.html">
