@@ -10,9 +10,6 @@
 		#title {
 			width: 100%;
 		}
-		#open_action_setting {
-			text-align: right;
-		}
 		#settings {
 			position: fixed;
 			right: 0;
@@ -21,7 +18,8 @@
 			border: 2px black solid;
 			border-radius: 5px;
 		}
-		#settings header {
+		#settings h1 {
+			font-size: 1em;
 			text-align: center;
 		}
 		#settings #details {
@@ -40,6 +38,17 @@
 			max-width: 1500px;
 			max-height: 500px;
 		}
+		#settings * {
+			margin: 0;
+		}
+		#settings .setting {
+			margin-top: 20px;
+		}
+		#settings .setting-title {
+			margin: 0;
+			font-weight: bold;
+			font-size: 1.2em;
+		}
 	</style>
 	<link rel="import" href="web-components/check-box.html">
 </head>
@@ -51,15 +60,18 @@
 	<hr>
 	<div id="container"></div>
 	<div id="settings">
-		<header>設定</header>
+		<h1>設定</h1>
 		<div id="details">
-			<div id="open_action_setting">
-				ポップアップを開いたときにコピー：
+			<div class="setting">
+				<h2 class="setting-title">ポップアップを開いたときにコピー</h2>
 				<select id="open_copy_action" tabindex="-1">
 					<option value="">コピーしない</option>
 				</select>
 			</div>
-			<ul id="enable_setting"></ul>
+			<div class="setting">
+				<h2 class="setting-title">表示する書式</h2>
+				<ul id="enable_setting"></ul>
+			</div>
 		</div>
 	</div>
 	<script src="popup_script.js"></script>
