@@ -136,7 +136,10 @@ class SelectableLink extends SelectableElement{
 		this._element = createElement("a", {
 			tabIndex: -1,
 			innerText: title,
-			href: url
+			href: url,
+			style: {
+				"word-break": "break-all"
+			}
 		});
 		return this._element;
 	}
