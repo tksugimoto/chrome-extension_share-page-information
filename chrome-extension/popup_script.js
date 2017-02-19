@@ -236,7 +236,7 @@ chrome.tabs.query({
 
 function setupOpenCopyAction() {
 	const openCopyActionSelect = document.getElementById("open_copy_action");
-	const openCopyActionOptions =  document.createDocumentFragment();
+	const openCopyActionOptions = document.createDocumentFragment();
 	templates.forEach(template => {
 		const id = template.id;
 		const selected = id === localStorage["open_copy_action_id"];
@@ -264,7 +264,7 @@ function createCopyButtonId(id) {
 }
 
 function setupEnableSetting() {
-	const enableSettings =  document.createDocumentFragment();
+	const enableSettings = document.createDocumentFragment();
 	templates.forEach(template => {
 		const checkBox = createElement("check-box", {
 			tabIndex: -1,
