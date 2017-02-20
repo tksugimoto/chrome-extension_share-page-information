@@ -11,6 +11,9 @@
 		#title {
 			width: 100%;
 		}
+		body.hide-copy-target .copy-target {
+			display: none;
+		}
 		#settings {
 			position: fixed;
 			right: 0;
@@ -75,6 +78,10 @@
 				<select id="open_copy_action" tabindex="-1">
 					<option value="">コピーしない</option>
 				</select>
+			</div>
+			<div class="setting">
+				<h2 class="setting-title">表示のコンパクト化</h2>
+				<check-box tabindex="-1" id="hide_copy_target">コピー対象を非表示にする</check-box>
 			</div>
 			<div class="setting">
 				<h2 class="setting-title">表示する書式</h2>

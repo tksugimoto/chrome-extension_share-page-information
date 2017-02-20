@@ -30,6 +30,7 @@ class ShareTemplate {
 	}
 	appendTo(data, parent) {
 		const element = this.selectableElement.generateElement(data);
+		element.classList.add("copy-target");
 		const copyButton = createElement("button", {
 			id: createCopyButtonId(this.id),
 			innerText: "コピー",
@@ -74,8 +75,10 @@ class ShareTemplate {
 		this.selectableElement.updateElement(data);
 	}
 	_copy() {
+		this.selectableElement.show();
 		this.selectableElement.selectElement();
 		document.execCommand("copy");
+		this.selectableElement.resetDisplay();
 	}
 }
 
@@ -90,6 +93,12 @@ class SelectableElement {
 	}
 	selectElement() {
 		throw new Error("実装が必要です");
+	}
+	show() {
+		this._element.style.display = "inline";
+	}
+	resetDisplay() {
+		this._element.style.display = "";
 	}
 }
 
@@ -256,6 +265,21 @@ function setupOpenCopyAction() {
 	openCopyActionSelect.addEventListener("change", evt => {
 		const selectedValue = openCopyActionSelect.selectedOptions[0].value;
 		localStorage["open_copy_action_id"] = selectedValue;
+	});
+}
+
+{
+	const HIDE_COPY_TARGET_LS_KEY = "hide_copy_target";
+	const HIDE_COPY_TARGET_CLASSNAME = "hide-copy-target";
+	const hideCopyTargetCheckBox = document.getElementById("hide_copy_target");
+	hideCopyTargetCheckBox.checked = localStorage[HIDE_COPY_TARGET_LS_KEY] === "true";
+	if (hideCopyTargetCheckBox.checked) {
+		document.body.classList.add(HIDE_COPY_TARGET_CLASSNAME);
+	}
+	hideCopyTargetCheckBox.addEventListener("change", ({checked}) => {
+		localStorage[HIDE_COPY_TARGET_LS_KEY] = String(checked);
+		const method = checked ? "add" : "remove";
+		document.body.classList[method](HIDE_COPY_TARGET_CLASSNAME);
 	});
 }
 
