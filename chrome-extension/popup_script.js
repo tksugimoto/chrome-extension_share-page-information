@@ -57,6 +57,10 @@ class ShareTemplate {
 		function copy() {
 			this._copy();
 
+			if (closeWindowAfterCopiedCheckBox.checked) {
+				return window.close();
+			}
+
 			if (null !== timeout_id) clearTimeout(timeout_id);
 			copyButton.innerText = "コピー完了";
 			timeout_id = setTimeout(() => {
@@ -266,6 +270,16 @@ function setupOpenCopyAction() {
 		const selectedValue = openCopyActionSelect.selectedOptions[0].value;
 		localStorage["open_copy_action_id"] = selectedValue;
 	});
+}
+
+{
+	const LOCALSTORAGE_KEY = "close_window_after_copied";
+	const checkBox = document.getElementById("close_window_after_copied");
+	checkBox.checked = localStorage[LOCALSTORAGE_KEY] === "true";
+	checkBox.addEventListener("change", ({checked}) => {
+		localStorage[LOCALSTORAGE_KEY] = String(checked);
+	});
+	window.closeWindowAfterCopiedCheckBox = checkBox;
 }
 
 {
