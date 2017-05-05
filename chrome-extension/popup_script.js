@@ -7,6 +7,12 @@ class ShareTemplate {
 			}
 			this[key] = argObject[key];
 		});
+		// Option
+		["accesskey"].forEach(key => {
+			if (typeof argObject[key] !== "undefined") {
+				this[key] = argObject[key];
+			}
+		});
 		this._loadEnableSetting();
 	}
 	_loadEnableSetting() {
@@ -39,6 +45,10 @@ class ShareTemplate {
 			},
 			onclick: copy.bind(this)
 		});
+		if (this.accesskey) {
+			copyButton.setAttribute("accesskey", this.accesskey);
+			copyButton.title = `ショートカットキー: Alt + ${this.accesskey.toUpperCase()}`;
+		}
 		this._container = createElement("p", {
 		}, [
 			createElement("span", {
@@ -173,21 +183,25 @@ const templates = [
 	new ShareTemplate({
 		id: "title_url",
 		type: "タイトル + URL\n タイトル<改行>URL",
+		accesskey: "t",
 		selectableElement: new SelectableTextarea("{{title}}\n{{url}}")
 	}),
 	new ShareTemplate({
 		id: "hiki",
 		type: "Hiki (Wikiクローン) \n [[リンクテキスト: タイトル|リンク先: URL]]",
+		accesskey: "h",
 		selectableElement: new SelectableTextarea("[[{{title}}|{{url}}]]")
 	}),
 	new ShareTemplate({
 		id: "backlog",
 		type: "Backlog \n [[リンクテキスト: タイトル>リンク先: URL]]",
+		accesskey: "b",
 		selectableElement: new SelectableTextarea("[[{{title}}>{{url}}]]")
 	}),
 	new ShareTemplate({
 		id: "markdown",
 		type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
+		accesskey: "m",
 		selectableElement: new SelectableTextarea(data => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
 			const url = data.url.replace(/\)/g, "\\)");
@@ -202,6 +216,7 @@ const templates = [
 	new ShareTemplate({
 		id: "link",
 		type: "リンク",
+		accesskey: "l",
 		selectableElement: new SelectableLink()
 	})
 ];
