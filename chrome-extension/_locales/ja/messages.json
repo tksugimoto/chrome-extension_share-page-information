@@ -4,5 +4,35 @@
 	},
 	"extension_description": {
 		"message": "ページ情報をWiki記法などに変換する"
+	},
+
+
+	"edit_title": {
+		"message": "タイトルを編集"
+	},
+
+	"settings": {
+		"message": "設定"
+	},
+	"auto_copy_when_popup_open": {
+		"message": "ポップアップを開いたときにコピー"
+	},
+	"do_not_copy": {
+		"message": "コピーしない"
+	},
+	"after_copied": {
+		"message": "コピー完了時"
+	},
+	"close_popup_window": {
+		"message": "ポップアップを閉じる"
+	},
+	"compactification": {
+		"message": "表示のコンパクト化"
+	},
+	"hide_copy_target": {
+		"message": "コピー対象を非表示にする"
+	},
+	"display_format": {
+		"message": "表示する書式"
 	}
 }
