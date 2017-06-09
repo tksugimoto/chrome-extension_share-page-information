@@ -367,3 +367,13 @@ function createElement(elem, attrs, childs){
 	}
 	return elem;
 }
+
+document.querySelectorAll("[data-i18n-message]").forEach(elem => {
+	const messageKey = elem.getAttribute("data-i18n-message");
+	const message = chrome.i18n.getMessage(messageKey);
+	if (message) {
+		elem.innerText = message;
+	} else {
+		console.warn(`I18n message of "${messageKey}" is not found.`, elem);
+	}
+});
