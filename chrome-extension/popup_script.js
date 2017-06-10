@@ -377,3 +377,13 @@ document.querySelectorAll("[data-i18n-message]").forEach(elem => {
 		console.warn(`I18n message of "${messageKey}" is not found.`, elem);
 	}
 });
+
+document.querySelectorAll("[data-i18n-message-title]").forEach(elem => {
+	const messageKey = elem.getAttribute("data-i18n-message-title");
+	const message = chrome.i18n.getMessage(messageKey);
+	if (message) {
+		elem.title = message;
+	} else {
+		console.warn(`I18n message of "${messageKey}" is not found.`, elem);
+	}
+});
