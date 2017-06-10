@@ -368,8 +368,8 @@ function createElement(elem, attrs, childs){
 	return elem;
 }
 
-document.querySelectorAll("[data-i18n-message]").forEach(elem => {
-	const messageKey = elem.getAttribute("data-i18n-message");
+document.querySelectorAll("[data-i18n-innerText]").forEach(elem => {
+	const messageKey = elem.getAttribute("data-i18n-innerText");
 	const message = chrome.i18n.getMessage(messageKey);
 	if (message) {
 		elem.innerText = message;
@@ -378,8 +378,8 @@ document.querySelectorAll("[data-i18n-message]").forEach(elem => {
 	}
 });
 
-document.querySelectorAll("[data-i18n-message-title]").forEach(elem => {
-	const messageKey = elem.getAttribute("data-i18n-message-title");
+document.querySelectorAll("[data-i18n-title]").forEach(elem => {
+	const messageKey = elem.getAttribute("data-i18n-title");
 	const message = chrome.i18n.getMessage(messageKey);
 	if (message) {
 		elem.title = message;
