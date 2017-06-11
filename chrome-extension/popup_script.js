@@ -1,4 +1,14 @@
 
+const getMessage = (messageName, substitutions) => {
+	const message = chrome.i18n.getMessage(messageName, substitutions);
+	if (message) {
+		return message;
+	} else {
+		console.warn(`I18n message of "${messageName}" is not found.`);
+		return "";
+	}
+};
+
 class ShareTemplate {
 	constructor(argObject) {
 		["id", "type", "selectableElement"].forEach(key => {
