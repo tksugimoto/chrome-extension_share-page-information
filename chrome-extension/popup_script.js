@@ -1,12 +1,28 @@
 
+const getMessage = (messageName, substitutions) => {
+	const message = chrome.i18n.getMessage(messageName, substitutions);
+	if (message) {
+		return message;
+	} else {
+		console.warn(`I18n message of "${messageName}" is not found.`);
+		return "";
+	}
+};
+
+const Messages = {
+	copy: getMessage("copy"),
+	copyCompleted: getMessage("copy_completed")
+};
+
 class ShareTemplate {
 	constructor(argObject) {
-		["id", "type", "selectableElement"].forEach(key => {
+		["id", "selectableElement"].forEach(key => {
 			if (typeof argObject[key] === "undefined") {
 				throw new Error(`${key}プロパティが必要`);
 			}
 			this[key] = argObject[key];
 		});
+		this.type = getMessage(`format_descriptions_${this.id}`);
 		// Option
 		["accesskey"].forEach(key => {
 			if (typeof argObject[key] !== "undefined") {
@@ -39,7 +55,7 @@ class ShareTemplate {
 		element.classList.add("copy-target");
 		const copyButton = createElement("button", {
 			id: createCopyButtonId(this.id),
-			innerText: "コピー",
+			innerText: Messages.copy,
 			style: {
 				"float": "right"
 			},
@@ -47,7 +63,7 @@ class ShareTemplate {
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute("accesskey", this.accesskey);
-			copyButton.title = `ショートカットキー: Alt + ${this.accesskey.toUpperCase()}`;
+			copyButton.title = getMessage("shortcut_by_accesskey", [this.accesskey.toUpperCase()]);
 		}
 		this._container = createElement("p", {
 		}, [
@@ -72,9 +88,9 @@ class ShareTemplate {
 			}
 
 			if (null !== timeout_id) clearTimeout(timeout_id);
-			copyButton.innerText = "コピー完了";
+			copyButton.innerText = Messages.copyCompleted;
 			timeout_id = setTimeout(() => {
-				copyButton.innerText = "コピー";
+				copyButton.innerText = Messages.copy;
 			}, 3000);
 			copyButton.focus();
 		}
@@ -182,25 +198,21 @@ class SelectableLink extends SelectableElement{
 const templates = [
 	new ShareTemplate({
 		id: "title_url",
-		type: "タイトル + URL\n タイトル<改行>URL",
 		accesskey: "t",
 		selectableElement: new SelectableTextarea("{{title}}\n{{url}}")
 	}),
 	new ShareTemplate({
 		id: "hiki",
-		type: "Hiki (Wikiクローン) \n [[リンクテキスト: タイトル|リンク先: URL]]",
 		accesskey: "h",
 		selectableElement: new SelectableTextarea("[[{{title}}|{{url}}]]")
 	}),
 	new ShareTemplate({
 		id: "backlog",
-		type: "Backlog \n [[リンクテキスト: タイトル>リンク先: URL]]",
 		accesskey: "b",
 		selectableElement: new SelectableTextarea("[[{{title}}>{{url}}]]")
 	}),
 	new ShareTemplate({
 		id: "markdown",
-		type: "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")",
 		accesskey: "m",
 		selectableElement: new SelectableTextarea(data => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
@@ -215,7 +227,6 @@ const templates = [
 	}),
 	new ShareTemplate({
 		id: "link",
-		type: "リンク",
 		accesskey: "l",
 		selectableElement: new SelectableLink()
 	})
@@ -258,7 +269,7 @@ chrome.tabs.query({
 		}
 		titleInput.addEventListener("input", change);
 	} else {
-		document.body.innerText = "非対応ページ";
+		document.body.innerText = getMessage("non_supported_page");
 	}
 });
 
@@ -367,3 +378,23 @@ function createElement(elem, attrs, childs){
 	}
 	return elem;
 }
+
+document.querySelectorAll("[data-i18n-innerText]").forEach(elem => {
+	const messageKey = elem.getAttribute("data-i18n-innerText");
+	const message = chrome.i18n.getMessage(messageKey);
+	if (message) {
+		elem.innerText = message;
+	} else {
+		console.warn(`I18n message of "${messageKey}" is not found.`, elem);
+	}
+});
+
+document.querySelectorAll("[data-i18n-title]").forEach(elem => {
+	const messageKey = elem.getAttribute("data-i18n-title");
+	const message = chrome.i18n.getMessage(messageKey);
+	if (message) {
+		elem.title = message;
+	} else {
+		console.warn(`I18n message of "${messageKey}" is not found.`, elem);
+	}
+});

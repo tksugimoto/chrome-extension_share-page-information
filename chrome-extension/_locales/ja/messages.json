@@ -1,0 +1,75 @@
+{
+	"extension_name": {
+		"message": "ページ情報を共有"
+	},
+	"extension_description": {
+		"message": "ページ情報をWiki記法などに変換する"
+	},
+
+	"non_supported_page": {
+		"message": "非対応ページ"
+	},
+
+	"edit_title": {
+		"message": "タイトルを編集"
+	},
+	"focus_by_accesskey_e": {
+		"message": "Alt + E でフォーカス"
+	},
+
+	"copy": {
+		"message": "コピー"
+	},
+	"copy_completed": {
+		"message": "コピー完了"
+	},
+	"shortcut_by_accesskey": {
+		"message": "ショートカットキー: Alt + $accesskey$",
+		"placeholders": {
+			"accesskey": {
+				"content": "$1"
+			}
+		}
+	},
+
+	"format_descriptions_title_url": {
+		"message": "タイトル + URL\n タイトル<改行>URL"
+	},
+	"format_descriptions_hiki": {
+		"message": "Hiki (Wikiクローン) \n [[リンクテキスト: タイトル|リンク先: URL]]"
+	},
+	"format_descriptions_backlog": {
+		"message": "Backlog \n [[リンクテキスト: タイトル>リンク先: URL]]"
+	},
+	"format_descriptions_markdown": {
+		"message": "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")"
+	},
+	"format_descriptions_link": {
+		"message": "リンク"
+	},
+
+	"settings": {
+		"message": "設定"
+	},
+	"auto_copy_when_popup_open": {
+		"message": "ポップアップを開いたときにコピー"
+	},
+	"do_not_copy": {
+		"message": "コピーしない"
+	},
+	"after_copied": {
+		"message": "コピー完了時"
+	},
+	"close_popup_window": {
+		"message": "ポップアップを閉じる"
+	},
+	"compactification": {
+		"message": "表示のコンパクト化"
+	},
+	"hide_copy_target": {
+		"message": "コピー対象を非表示にする"
+	},
+	"display_format": {
+		"message": "表示する書式"
+	}
+}

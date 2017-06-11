@@ -65,30 +65,30 @@
 </head>
 <body>
 	<div>
-		タイトルを編集
-		<textarea id="title" accesskey="e" title="Alt + E でフォーカス"></textarea>
+		<span data-i18n-innerText="edit_title">タイトルを編集</span>
+		<textarea id="title" accesskey="e" data-i18n-title="focus_by_accesskey_e" title="Alt + E でフォーカス"></textarea>
 	</div>
 	<hr>
 	<div id="container"></div>
 	<div id="settings">
-		<h1>設定</h1>
+		<h1 data-i18n-innerText="settings">設定</h1>
 		<div id="details">
 			<div class="setting">
-				<h2 class="setting-title">ポップアップを開いたときにコピー</h2>
+				<h2 class="setting-title" data-i18n-innerText="auto_copy_when_popup_open">ポップアップを開いたときにコピー</h2>
 				<select id="open_copy_action" tabindex="-1">
-					<option value="">コピーしない</option>
+					<option value="" data-i18n-innerText="do_not_copy">コピーしない</option>
 				</select>
 			</div>
 			<div class="setting">
-				<h2 class="setting-title">コピー完了時</h2>
-				<check-box tabindex="-1" id="close_window_after_copied">ポップアップを閉じる</check-box>
+				<h2 class="setting-title" data-i18n-innerText="after_copied">コピー完了時</h2>
+				<check-box tabindex="-1" id="close_window_after_copied" data-i18n-innerText="close_popup_window">ポップアップを閉じる</check-box>
 			</div>
 			<div class="setting">
-				<h2 class="setting-title">表示のコンパクト化</h2>
-				<check-box tabindex="-1" id="hide_copy_target">コピー対象を非表示にする</check-box>
+				<h2 class="setting-title" data-i18n-innerText="compactification">表示のコンパクト化</h2>
+				<check-box tabindex="-1" id="hide_copy_target" data-i18n-innerText="hide_copy_target">コピー対象を非表示にする</check-box>
 			</div>
 			<div class="setting">
-				<h2 class="setting-title">表示する書式</h2>
+				<h2 class="setting-title" data-i18n-innerText="display_format">表示する書式</h2>
 				<ul id="enable_setting"></ul>
 			</div>
 		</div>
