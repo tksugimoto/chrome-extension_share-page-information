@@ -273,6 +273,18 @@ chrome.tabs.query({
 	}
 });
 
+const canChangeSetting = (key, value) => {
+	if (key === "close_window_after_copied" && value === "true") {
+		return !localStorage["open_copy_action_id"];
+	}
+
+	if (key === "open_copy_action_id" && value) {
+		return localStorage["close_window_after_copied"] !== "true"
+	}
+
+	return true;
+};
+
 function setupOpenCopyAction() {
 	const openCopyActionSelect = document.getElementById("open_copy_action");
 	const openCopyActionOptions = document.createDocumentFragment();
@@ -294,7 +306,11 @@ function setupOpenCopyAction() {
 	openCopyActionSelect.appendChild(openCopyActionOptions);
 	openCopyActionSelect.addEventListener("change", evt => {
 		const selectedValue = openCopyActionSelect.selectedOptions[0].value;
-		localStorage["open_copy_action_id"] = selectedValue;
+		if (canChangeSetting("open_copy_action_id", selectedValue)) {
+			localStorage["open_copy_action_id"] = selectedValue;
+		} else {
+			openCopyActionSelect.value = "";
+		}
 	});
 }
 
@@ -303,7 +319,12 @@ function setupOpenCopyAction() {
 	const checkBox = document.getElementById("close_window_after_copied");
 	checkBox.checked = localStorage[LOCALSTORAGE_KEY] === "true";
 	checkBox.addEventListener("change", ({checked}) => {
-		localStorage[LOCALSTORAGE_KEY] = String(checked);
+		const value = String(checked);
+		if (canChangeSetting(LOCALSTORAGE_KEY, value)) {
+			localStorage[LOCALSTORAGE_KEY] = value;
+		} else {
+			checkBox.checked = false;
+		}
 	});
 	window.closeWindowAfterCopiedCheckBox = checkBox;
 }
