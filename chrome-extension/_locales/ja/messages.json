@@ -51,6 +51,9 @@
 	"settings": {
 		"message": "設定"
 	},
+	"can_not_change_setting_by_other_setting_value": {
+		"message": "変更不可（他設定値の都合）"
+	},
 	"auto_copy_when_popup_open": {
 		"message": "ポップアップを開いたときにコピー"
 	},

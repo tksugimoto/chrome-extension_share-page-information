@@ -285,6 +285,8 @@ const canChangeSetting = (key, value) => {
 	return true;
 };
 
+const settingsContainer = document.getElementById("settings");
+
 function setupOpenCopyAction() {
 	const openCopyActionSelect = document.getElementById("open_copy_action");
 	const openCopyActionOptions = document.createDocumentFragment();
@@ -311,7 +313,9 @@ function setupOpenCopyAction() {
 		} else {
 			openCopyActionSelect.value = "";
 		}
+		settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"]);
 	});
+	settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"]);
 }
 
 {
