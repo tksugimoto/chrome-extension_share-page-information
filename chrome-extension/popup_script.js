@@ -313,9 +313,9 @@ function setupOpenCopyAction() {
 		} else {
 			openCopyActionSelect.value = "";
 		}
-		settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"]);
+		settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"] || "");
 	});
-	settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"]);
+	settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"] || "");
 }
 
 {
