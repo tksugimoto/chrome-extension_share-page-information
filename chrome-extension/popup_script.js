@@ -329,7 +329,9 @@ function setupOpenCopyAction() {
 		} else {
 			checkBox.checked = false;
 		}
+		settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 	});
+	settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 	window.closeWindowAfterCopiedCheckBox = checkBox;
 }
 
