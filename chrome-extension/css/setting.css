@@ -1,4 +1,7 @@
 
+#settings[data-close_window_after_copied="true"] #open_copy_action {
+	pointer-events: none;
+}
 #settings[data-close_window_after_copied="true"] #open_copy_action,
 #settings:not([data-open_copy_action_id=""]) #close_window_after_copied {
 	color: gray;
