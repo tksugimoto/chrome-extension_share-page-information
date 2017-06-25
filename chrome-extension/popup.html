@@ -60,6 +60,12 @@
 			font-weight: bold;
 			font-size: 1.2em;
 		}
+		.annotation {
+			font-size: 70%;
+		}
+		.annotation:before {
+			content: "※ ";
+		}
 	</style>
 	<link rel="stylesheet" href="css/setting.css">
 	<link rel="import" href="web-components/check-box.html">
@@ -79,6 +85,9 @@
 				<select id="open_copy_action" tabindex="-1">
 					<option value="" data-i18n-innerText="do_not_copy">コピーしない</option>
 				</select>
+				<p class="annotation" data-i18n-innerText="can_not_use_with_close_popup_window_after_copied">
+					コピー完了時にポップアップを閉じる設定とは併用不可
+				</p>
 			</div>
 			<div class="setting">
 				<h2 class="setting-title" data-i18n-innerText="after_copied">コピー完了時</h2>

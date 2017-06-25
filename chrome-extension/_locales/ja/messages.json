@@ -54,6 +54,9 @@
 	"can_not_change_setting_by_other_setting_value": {
 		"message": "変更不可（他設定値の都合）"
 	},
+	"can_not_use_with_close_popup_window_after_copied": {
+		"message": "コピー完了時にポップアップを閉じる設定とは併用不可"
+	},
 	"auto_copy_when_popup_open": {
 		"message": "ポップアップを開いたときにコピー"
 	},
