@@ -285,6 +285,11 @@ const canChangeSetting = (key, value) => {
 	return true;
 };
 
+// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
+if (localStorage["close_window_after_copied"] === "true") {
+	delete localStorage["open_copy_action_id"];
+}
+
 const settingsContainer = document.getElementById("settings");
 
 function setupOpenCopyAction() {
