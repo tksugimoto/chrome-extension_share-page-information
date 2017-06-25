@@ -1,0 +1,17 @@
+
+#settings[data-close_window_after_copied="true"] #open_copy_action {
+	pointer-events: none;
+}
+#settings[data-close_window_after_copied="true"] #open_copy_action,
+#settings:not([data-open_copy_action_id=""]) #close_window_after_copied {
+	color: gray;
+}
+#settings:not([data-open_copy_action_id=""]) #close_window_after_copied:hover:after {
+	content: "__MSG_can_not_change_setting_by_other_setting_value__";
+	position: absolute;
+	right: 0;
+	left: 0;
+	text-align: center;
+	color: white;
+	background-color: dimgray;
+}
