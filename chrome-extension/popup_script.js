@@ -293,11 +293,12 @@ if (localStorage["close_window_after_copied"] === "true") {
 const settingsContainer = document.getElementById("settings");
 
 function setupOpenCopyAction() {
+	const LOCALSTORAGE_KEY = "open_copy_action_id";
 	const openCopyActionSelect = document.getElementById("open_copy_action");
 	const openCopyActionOptions = document.createDocumentFragment();
 	templates.forEach(template => {
 		const id = template.id;
-		const selected = id === localStorage["open_copy_action_id"];
+		const selected = id === localStorage[LOCALSTORAGE_KEY];
 
 		const option = createElement("option", {
 			value: template.id,
@@ -313,14 +314,14 @@ function setupOpenCopyAction() {
 	openCopyActionSelect.appendChild(openCopyActionOptions);
 	openCopyActionSelect.addEventListener("change", evt => {
 		const selectedValue = openCopyActionSelect.selectedOptions[0].value;
-		if (canChangeSetting("open_copy_action_id", selectedValue)) {
-			localStorage["open_copy_action_id"] = selectedValue;
+		if (canChangeSetting(LOCALSTORAGE_KEY, selectedValue)) {
+			localStorage[LOCALSTORAGE_KEY] = selectedValue;
 		} else {
 			openCopyActionSelect.value = "";
 		}
-		settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"] || "");
+		settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 	});
-	settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"] || "");
+	settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 }
 
 {
