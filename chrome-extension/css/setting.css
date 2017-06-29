@@ -1,4 +1,52 @@
 
+#settings {
+	position: fixed;
+	right: 0;
+	top: 0;
+	background: lightyellow;
+	border: 2px black solid;
+	border-radius: 5px;
+	overflow: auto;
+	box-sizing: border-box;
+	max-height: 100%;
+	direction: rtl;
+}
+#settings * {
+	direction: ltr;
+}
+#settings h1 {
+	font-size: 1em;
+	text-align: center;
+}
+#settings #details {
+	overflow: hidden;
+	max-width: 0;
+	max-height: 0;
+}
+#settings:hover {
+	padding: 5px;
+	border-radius: 10px;
+}
+#settings:hover #details {
+	white-space: nowrap;
+	transition-duration: 1s;
+	transition-timing-function: ease-out;
+	max-width: 1500px;
+	max-height: 500px;
+}
+#settings * {
+	margin: 0;
+}
+#settings .setting {
+	margin-top: 20px;
+}
+#settings .setting-title {
+	margin: 0;
+	font-weight: bold;
+	font-size: 1.2em;
+}
+
+
 #settings[data-close_window_after_copied="true"] #open_copy_action {
 	pointer-events: none;
 }
