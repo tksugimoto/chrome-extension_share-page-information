@@ -342,15 +342,15 @@ function setupOpenCopyAction() {
 }
 
 {
-	const HIDE_COPY_TARGET_LS_KEY = "hide_copy_target";
+	const LOCALSTORAGE_KEY = "hide_copy_target";
 	const HIDE_COPY_TARGET_CLASSNAME = "hide-copy-target";
 	const hideCopyTargetCheckBox = document.getElementById("hide_copy_target");
-	hideCopyTargetCheckBox.checked = localStorage[HIDE_COPY_TARGET_LS_KEY] === "true";
+	hideCopyTargetCheckBox.checked = localStorage[LOCALSTORAGE_KEY] === "true";
 	if (hideCopyTargetCheckBox.checked) {
 		document.body.classList.add(HIDE_COPY_TARGET_CLASSNAME);
 	}
 	hideCopyTargetCheckBox.addEventListener("change", ({checked}) => {
-		localStorage[HIDE_COPY_TARGET_LS_KEY] = String(checked);
+		localStorage[LOCALSTORAGE_KEY] = String(checked);
 		const method = checked ? "add" : "remove";
 		document.body.classList[method](HIDE_COPY_TARGET_CLASSNAME);
 	});
