@@ -53,13 +53,30 @@ class ShareTemplate {
 	appendTo(data, parent) {
 		const element = this.selectableElement.generateElement(data);
 		element.classList.add("copy-target");
+
+		let timeout_id = null;
+		const copy = () => {
+			this._copy();
+
+			if (closeWindowAfterCopiedCheckBox.checked) {
+				return window.close();
+			}
+
+			if (null !== timeout_id) clearTimeout(timeout_id);
+			copyButton.innerText = Messages.copyCompleted;
+			timeout_id = setTimeout(() => {
+				copyButton.innerText = Messages.copy;
+			}, 3000);
+			copyButton.focus();
+		};
+
 		const copyButton = createElement("button", {
 			id: createCopyButtonId(this.id),
 			innerText: Messages.copy,
 			style: {
 				"float": "right"
 			},
-			onclick: copy.bind(this)
+			onclick: copy
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute("accesskey", this.accesskey);
@@ -78,22 +95,6 @@ class ShareTemplate {
 			this._hide();
 		}
 		parent.appendChild(this._container);
-
-		let timeout_id = null;
-		function copy() {
-			this._copy();
-
-			if (closeWindowAfterCopiedCheckBox.checked) {
-				return window.close();
-			}
-
-			if (null !== timeout_id) clearTimeout(timeout_id);
-			copyButton.innerText = Messages.copyCompleted;
-			timeout_id = setTimeout(() => {
-				copyButton.innerText = Messages.copy;
-			}, 3000);
-			copyButton.focus();
-		}
 	}
 	_hide() {
 		this._container.style.display = "none";
