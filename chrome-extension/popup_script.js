@@ -53,13 +53,32 @@ class ShareTemplate {
 	appendTo(data, parent) {
 		const element = this.selectableElement.generateElement(data);
 		element.classList.add("copy-target");
+
+		const copy = (() => {
+			let timeout_id = null;
+			return () => {
+				this._copy();
+
+				if (closeWindowAfterCopiedCheckBox.checked) {
+					return window.close();
+				}
+
+				if (null !== timeout_id) clearTimeout(timeout_id);
+				copyButton.innerText = Messages.copyCompleted;
+				timeout_id = setTimeout(() => {
+					copyButton.innerText = Messages.copy;
+				}, 3000);
+				copyButton.focus();
+			};
+		})();
+
 		const copyButton = createElement("button", {
 			id: createCopyButtonId(this.id),
 			innerText: Messages.copy,
 			style: {
 				"float": "right"
 			},
-			onclick: copy.bind(this)
+			onclick: copy
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute("accesskey", this.accesskey);
@@ -78,22 +97,6 @@ class ShareTemplate {
 			this._hide();
 		}
 		parent.appendChild(this._container);
-
-		let timeout_id = null;
-		function copy() {
-			this._copy();
-
-			if (closeWindowAfterCopiedCheckBox.checked) {
-				return window.close();
-			}
-
-			if (null !== timeout_id) clearTimeout(timeout_id);
-			copyButton.innerText = Messages.copyCompleted;
-			timeout_id = setTimeout(() => {
-				copyButton.innerText = Messages.copy;
-			}, 3000);
-			copyButton.focus();
-		}
 	}
 	_hide() {
 		this._container.style.display = "none";
@@ -293,11 +296,12 @@ if (localStorage["close_window_after_copied"] === "true") {
 const settingsContainer = document.getElementById("settings");
 
 function setupOpenCopyAction() {
+	const LOCALSTORAGE_KEY = "open_copy_action_id";
 	const openCopyActionSelect = document.getElementById("open_copy_action");
 	const openCopyActionOptions = document.createDocumentFragment();
 	templates.forEach(template => {
 		const id = template.id;
-		const selected = id === localStorage["open_copy_action_id"];
+		const selected = id === localStorage[LOCALSTORAGE_KEY];
 
 		const option = createElement("option", {
 			value: template.id,
@@ -313,14 +317,14 @@ function setupOpenCopyAction() {
 	openCopyActionSelect.appendChild(openCopyActionOptions);
 	openCopyActionSelect.addEventListener("change", evt => {
 		const selectedValue = openCopyActionSelect.selectedOptions[0].value;
-		if (canChangeSetting("open_copy_action_id", selectedValue)) {
-			localStorage["open_copy_action_id"] = selectedValue;
+		if (canChangeSetting(LOCALSTORAGE_KEY, selectedValue)) {
+			localStorage[LOCALSTORAGE_KEY] = selectedValue;
 		} else {
 			openCopyActionSelect.value = "";
 		}
-		settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"] || "");
+		settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 	});
-	settingsContainer.setAttribute("data-open_copy_action_id", localStorage["open_copy_action_id"] || "");
+	settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 }
 
 {
@@ -341,15 +345,15 @@ function setupOpenCopyAction() {
 }
 
 {
-	const HIDE_COPY_TARGET_LS_KEY = "hide_copy_target";
+	const LOCALSTORAGE_KEY = "hide_copy_target";
 	const HIDE_COPY_TARGET_CLASSNAME = "hide-copy-target";
 	const hideCopyTargetCheckBox = document.getElementById("hide_copy_target");
-	hideCopyTargetCheckBox.checked = localStorage[HIDE_COPY_TARGET_LS_KEY] === "true";
+	hideCopyTargetCheckBox.checked = localStorage[LOCALSTORAGE_KEY] === "true";
 	if (hideCopyTargetCheckBox.checked) {
 		document.body.classList.add(HIDE_COPY_TARGET_CLASSNAME);
 	}
 	hideCopyTargetCheckBox.addEventListener("change", ({checked}) => {
-		localStorage[HIDE_COPY_TARGET_LS_KEY] = String(checked);
+		localStorage[LOCALSTORAGE_KEY] = String(checked);
 		const method = checked ? "add" : "remove";
 		document.body.classList[method](HIDE_COPY_TARGET_CLASSNAME);
 	});
