@@ -21,3 +21,8 @@ body[data-show-accesskey] [accesskey]:after {
 	content: " ( " attr(accesskey) " )";
 	color: gray;
 }
+
+body[data-show-accesskey] [data-accesskey]:after {
+	content: " ( " attr(data-accesskey) " )";
+	color: gray;
+}
