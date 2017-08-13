@@ -257,8 +257,10 @@ chrome.tabs.query({
 		templates.forEach(template => {
 			template.appendTo(data, container);
 		});
-		setupOpenCopyAction();
-		setupEnableSetting();
+		setupOpenCopyAction(templates, {
+			createCopyButtonId,
+		});
+		setupEnableSetting(templates);
 		
 		titleInput.value = data.title;
 		titleInput.select();

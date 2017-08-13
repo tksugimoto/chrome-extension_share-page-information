@@ -18,7 +18,7 @@ window.setupGlobalSettings = (shadowRoot) => {
 
 	const settingsContainer = shadowRoot.getElementById("settings");
 
-	window.setupOpenCopyAction = () => {
+	window.setupOpenCopyAction = (templates, { createCopyButtonId }) => {
 		const LOCALSTORAGE_KEY = "open_copy_action_id";
 		const openCopyActionSelect = shadowRoot.getElementById("open_copy_action");
 		const openCopyActionOptions = document.createDocumentFragment();
@@ -82,7 +82,7 @@ window.setupGlobalSettings = (shadowRoot) => {
 		});
 	}
 
-	window.setupEnableSetting = () => {
+	window.setupEnableSetting = (templates) => {
 		const enableSettings = document.createDocumentFragment();
 		templates.forEach(template => {
 			const checkBox = createElement("check-box", {
