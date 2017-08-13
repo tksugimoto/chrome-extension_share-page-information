@@ -59,7 +59,7 @@ class ShareTemplate {
 			return () => {
 				this._copy();
 
-				if (closeWindowAfterCopiedCheckBox.checked) {
+				if (globalSettings.closeWindowAfterCopiedCheckBox.checked) {
 					return window.close();
 				}
 
@@ -235,6 +235,7 @@ const templates = [
 	})
 ];
 
+const globalSettings = document.querySelector("global-settings");
 const titleInput = document.getElementById("title");
 
 chrome.tabs.query({
@@ -257,10 +258,10 @@ chrome.tabs.query({
 		templates.forEach(template => {
 			template.appendTo(data, container);
 		});
-		setupOpenCopyAction(templates, {
+		globalSettings.setupOpenCopyAction(templates, {
 			createCopyButtonId,
 		});
-		setupEnableSetting(templates);
+		globalSettings.setupEnableSetting(templates);
 		
 		titleInput.value = data.title;
 		titleInput.select();

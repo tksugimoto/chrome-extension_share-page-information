@@ -16,11 +16,11 @@
 			const clone = template.cloneNode(true);
 			shadowRoot.appendChild(clone);
 
-			setupGlobalSettings(shadowRoot);
+			setupGlobalSettings(shadowRoot, this);
 		}
 	}
 
-	const setupGlobalSettings = (shadowRoot) => {
+	const setupGlobalSettings = (shadowRoot, globalSettings) => {
 		const canChangeSetting = (key, value) => {
 			if (key === "close_window_after_copied" && value === "true") {
 				return !localStorage["open_copy_action_id"];
@@ -40,7 +40,7 @@
 
 		const settingsContainer = shadowRoot.getElementById("settings");
 
-		window.setupOpenCopyAction = (templates, { createCopyButtonId }) => {
+		globalSettings.setupOpenCopyAction = (templates, { createCopyButtonId }) => {
 			const LOCALSTORAGE_KEY = "open_copy_action_id";
 			const openCopyActionSelect = shadowRoot.getElementById("open_copy_action");
 			const openCopyActionOptions = document.createDocumentFragment();
@@ -86,7 +86,7 @@
 				settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 			});
 			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
-			window.closeWindowAfterCopiedCheckBox = checkBox;
+			globalSettings.closeWindowAfterCopiedCheckBox = checkBox;
 		}
 
 		{
@@ -104,7 +104,7 @@
 			});
 		}
 
-		window.setupEnableSetting = (templates) => {
+		globalSettings.setupEnableSetting = (templates) => {
 			const enableSettings = document.createDocumentFragment();
 			templates.forEach(template => {
 				const checkBox = createElement("check-box", {
