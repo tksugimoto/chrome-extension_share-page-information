@@ -17,6 +17,7 @@
 			shadowRoot.appendChild(clone);
 
 			setupGlobalSettings(shadowRoot, this);
+			i18n.setup(shadowRoot);
 		}
 	}
 
