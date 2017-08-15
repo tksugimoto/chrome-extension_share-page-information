@@ -1,17 +1,7 @@
 
-const getMessage = (messageName, substitutions) => {
-	const message = chrome.i18n.getMessage(messageName, substitutions);
-	if (message) {
-		return message;
-	} else {
-		console.warn(`I18n message of "${messageName}" is not found.`);
-		return "";
-	}
-};
-
 const Messages = {
-	copy: getMessage("copy"),
-	copyCompleted: getMessage("copy_completed")
+	copy: i18n.getMessage("copy"),
+	copyCompleted: i18n.getMessage("copy_completed")
 };
 
 class ShareTemplate {
@@ -22,7 +12,7 @@ class ShareTemplate {
 			}
 			this[key] = argObject[key];
 		});
-		this.type = getMessage(`format_descriptions_${this.id}`);
+		this.type = i18n.getMessage(`format_descriptions_${this.id}`);
 		// Option
 		["accesskey"].forEach(key => {
 			if (typeof argObject[key] !== "undefined") {
@@ -82,7 +72,7 @@ class ShareTemplate {
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute("accesskey", this.accesskey);
-			copyButton.title = getMessage("shortcut_by_accesskey", [this.accesskey.toUpperCase()]);
+			copyButton.title = i18n.getMessage("shortcut_by_accesskey", [this.accesskey.toUpperCase()]);
 		}
 		this._container = createElement("p", {
 		}, [
@@ -272,7 +262,7 @@ chrome.tabs.query({
 		}
 		titleInput.addEventListener("input", change);
 	} else {
-		document.body.innerText = getMessage("non_supported_page");
+		document.body.innerText = i18n.getMessage("non_supported_page");
 	}
 });
 
@@ -415,25 +405,7 @@ function createElement(elem, attrs, childs){
 	return elem;
 }
 
-document.querySelectorAll("[data-i18n-innerText]").forEach(elem => {
-	const messageKey = elem.getAttribute("data-i18n-innerText");
-	const message = chrome.i18n.getMessage(messageKey);
-	if (message) {
-		elem.innerText = message;
-	} else {
-		console.warn(`I18n message of "${messageKey}" is not found.`, elem);
-	}
-});
-
-document.querySelectorAll("[data-i18n-title]").forEach(elem => {
-	const messageKey = elem.getAttribute("data-i18n-title");
-	const message = chrome.i18n.getMessage(messageKey);
-	if (message) {
-		elem.title = message;
-	} else {
-		console.warn(`I18n message of "${messageKey}" is not found.`, elem);
-	}
-});
+i18n.setup(document);
 
 {
 	const dataKey = "data-show-accesskey";
