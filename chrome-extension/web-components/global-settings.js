@@ -49,7 +49,7 @@
 				const id = template.id;
 				const selected = id === localStorage[LOCALSTORAGE_KEY];
 
-				const option = createElement("option", {
+				const option = util.createElement("option", {
 					value: template.id,
 					innerText: template.type.replace(/\n.*/, ""),
 					selected: selected
@@ -108,7 +108,7 @@
 		globalSettings.setupEnableSetting = (templates) => {
 			const enableSettings = document.createDocumentFragment();
 			templates.forEach(template => {
-				const checkBox = createElement("check-box", {
+				const checkBox = util.createElement("check-box", {
 					tabIndex: -1,
 					checked: template.enabled
 				}, [
@@ -117,7 +117,7 @@
 				checkBox.addEventListener("change", evt => {
 					template.enabled = evt.checked;
 				});
-				const li = createElement("li", {}, checkBox);
+				const li = util.createElement("li", {}, checkBox);
 				enableSettings.appendChild(li);
 			});
 			shadowRoot.getElementById("enable_setting").appendChild(enableSettings);
