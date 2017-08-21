@@ -31,19 +31,10 @@
 			setupGlobalSettings(shadowRoot, this);
 			i18n.setup(shadowRoot);
 		}
-	}
 
-	const setupGlobalSettings = (shadowRoot, globalSettings) => {
-		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
-		if (localStorage["close_window_after_copied"] === "true") {
-			delete localStorage["open_copy_action_id"];
-		}
-
-		const settingsContainer = shadowRoot.getElementById("settings");
-
-		globalSettings.setupOpenCopyAction = (templates, { createCopyButtonId }) => {
+		setupOpenCopyAction(templates, { createCopyButtonId }) {
 			const LOCALSTORAGE_KEY = "open_copy_action_id";
-			const openCopyActionSelect = shadowRoot.getElementById("open_copy_action");
+			const openCopyActionSelect = this.shadowRoot.getElementById("open_copy_action");
 			const openCopyActionOptions = document.createDocumentFragment();
 			templates.forEach(template => {
 				const id = template.id;
@@ -61,6 +52,7 @@
 				}
 			});
 			openCopyActionSelect.appendChild(openCopyActionOptions);
+			const settingsContainer = this.shadowRoot.getElementById("settings");
 			openCopyActionSelect.addEventListener("change", evt => {
 				const selectedValue = openCopyActionSelect.selectedOptions[0].value;
 				if (canChangeSetting(LOCALSTORAGE_KEY, selectedValue)) {
@@ -71,7 +63,16 @@
 				settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 			});
 			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
-		};
+		}
+	}
+
+	const setupGlobalSettings = (shadowRoot, globalSettings) => {
+		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
+		if (localStorage["close_window_after_copied"] === "true") {
+			delete localStorage["open_copy_action_id"];
+		}
+
+		const settingsContainer = shadowRoot.getElementById("settings");
 
 		{
 			const LOCALSTORAGE_KEY = "close_window_after_copied";
