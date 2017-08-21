@@ -5,6 +5,18 @@
 
 	const template = ownerDocument.querySelector("template").content;
 
+	const canChangeSetting = (key, value) => {
+		if (key === "close_window_after_copied" && value === "true") {
+			return !localStorage["open_copy_action_id"];
+		}
+
+		if (key === "open_copy_action_id" && value) {
+			return localStorage["close_window_after_copied"] !== "true";
+		}
+
+		return true;
+	};
+
 	class GlobalSettingsElement extends HTMLElement {
 		constructor() {
 			super();
@@ -22,18 +34,6 @@
 	}
 
 	const setupGlobalSettings = (shadowRoot, globalSettings) => {
-		const canChangeSetting = (key, value) => {
-			if (key === "close_window_after_copied" && value === "true") {
-				return !localStorage["open_copy_action_id"];
-			}
-
-			if (key === "open_copy_action_id" && value) {
-				return localStorage["close_window_after_copied"] !== "true"
-			}
-
-			return true;
-		};
-
 		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
 		if (localStorage["close_window_after_copied"] === "true") {
 			delete localStorage["open_copy_action_id"];
