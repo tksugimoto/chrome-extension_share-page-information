@@ -22,7 +22,7 @@
 			super();
 
 			const shadowRoot = this.attachShadow({
-				mode: "closed",
+				mode: "open",
 			});
 
 			const clone = template.cloneNode(true);
