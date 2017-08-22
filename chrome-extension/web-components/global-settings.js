@@ -64,6 +64,24 @@
 			});
 			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 		}
+		
+		setupEnableSetting(templates) {
+			const enableSettings = document.createDocumentFragment();
+			templates.forEach(template => {
+				const checkBox = util.createElement("check-box", {
+					tabIndex: -1,
+					checked: template.enabled
+				}, [
+					template.type.replace(/\n.*/, "")
+				]);
+				checkBox.addEventListener("change", evt => {
+					template.enabled = evt.checked;
+				});
+				const li = util.createElement("li", {}, checkBox);
+				enableSettings.appendChild(li);
+			});
+			this.shadowRoot.getElementById("enable_setting").appendChild(enableSettings);
+		}
 	}
 
 	const setupGlobalSettings = (shadowRoot, globalSettings) => {
@@ -105,24 +123,6 @@
 				document.body.classList[method](HIDE_COPY_TARGET_CLASSNAME);
 			});
 		}
-
-		globalSettings.setupEnableSetting = (templates) => {
-			const enableSettings = document.createDocumentFragment();
-			templates.forEach(template => {
-				const checkBox = util.createElement("check-box", {
-					tabIndex: -1,
-					checked: template.enabled
-				}, [
-					template.type.replace(/\n.*/, "")
-				]);
-				checkBox.addEventListener("change", evt => {
-					template.enabled = evt.checked;
-				});
-				const li = util.createElement("li", {}, checkBox);
-				enableSettings.appendChild(li);
-			});
-			shadowRoot.getElementById("enable_setting").appendChild(enableSettings);
-		};
 	};
 
 	window.customElements.define("global-settings", GlobalSettingsElement);
