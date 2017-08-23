@@ -28,7 +28,8 @@
 			const clone = template.cloneNode(true);
 			shadowRoot.appendChild(clone);
 
-			setupGlobalSettings(shadowRoot, this);
+			setupGlobalSettings(shadowRoot);
+			this._setupCloseWindowSetting();
 			i18n.setup(shadowRoot);
 		}
 
@@ -82,19 +83,11 @@
 			});
 			this.shadowRoot.getElementById("enable_setting").appendChild(enableSettings);
 		}
-	}
 
-	const setupGlobalSettings = (shadowRoot, globalSettings) => {
-		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
-		if (localStorage["close_window_after_copied"] === "true") {
-			delete localStorage["open_copy_action_id"];
-		}
-
-		const settingsContainer = shadowRoot.getElementById("settings");
-
-		{
+		_setupCloseWindowSetting() {
+			const settingsContainer = this.shadowRoot.getElementById("settings");
 			const LOCALSTORAGE_KEY = "close_window_after_copied";
-			const checkBox = shadowRoot.getElementById("close_window_after_copied");
+			const checkBox = this.shadowRoot.getElementById("close_window_after_copied");
 			checkBox.checked = localStorage[LOCALSTORAGE_KEY] === "true";
 			checkBox.addEventListener("change", ({checked}) => {
 				const value = String(checked);
@@ -106,7 +99,14 @@
 				settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 			});
 			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
-			globalSettings.closeWindowAfterCopiedCheckBox = checkBox;
+			this.closeWindowAfterCopiedCheckBox = checkBox;
+		}
+	}
+
+	const setupGlobalSettings = (shadowRoot) => {
+		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
+		if (localStorage["close_window_after_copied"] === "true") {
+			delete localStorage["open_copy_action_id"];
 		}
 
 		{
