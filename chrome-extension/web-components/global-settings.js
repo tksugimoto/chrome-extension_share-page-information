@@ -28,7 +28,7 @@
 			const clone = template.cloneNode(true);
 			shadowRoot.appendChild(clone);
 
-			setupGlobalSettings();
+			fixConflictedSetting();
 			this._setupCloseWindowSetting();
 			this._setupHideTarget();
 			i18n.setup(shadowRoot);
@@ -119,7 +119,7 @@
 		}
 	}
 
-	const setupGlobalSettings = () => {
+	const fixConflictedSetting = () => {
 		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
 		if (localStorage["close_window_after_copied"] === "true") {
 			delete localStorage["open_copy_action_id"];
