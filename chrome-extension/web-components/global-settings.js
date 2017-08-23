@@ -5,6 +5,13 @@
 
 	const template = ownerDocument.querySelector("template").content;
 
+	const fixConflictedSetting = () => {
+		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
+		if (localStorage["close_window_after_copied"] === "true") {
+			delete localStorage["open_copy_action_id"];
+		}
+	};
+
 	const canChangeSetting = (key, value) => {
 		if (key === "close_window_after_copied" && value === "true") {
 			return !localStorage["open_copy_action_id"];
@@ -118,13 +125,6 @@
 			});
 		}
 	}
-
-	const fixConflictedSetting = () => {
-		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
-		if (localStorage["close_window_after_copied"] === "true") {
-			delete localStorage["open_copy_action_id"];
-		}
-	};
 
 	window.customElements.define("global-settings", GlobalSettingsElement);
 })(window, document);
