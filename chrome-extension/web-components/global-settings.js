@@ -109,8 +109,8 @@
 			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 		}
 
-		get closeWindowAfterCopiedCheckBox() {
-			return this.shadowRoot.getElementById("close_window_after_copied");
+		get closeWindowAfterCopied() {
+			return this.shadowRoot.getElementById("close_window_after_copied").checked;
 		}
 
 		_setupHideTarget() {

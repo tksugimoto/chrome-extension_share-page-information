@@ -50,7 +50,7 @@ class ShareTemplate {
 			return () => {
 				this._copy();
 
-				if (globalSettings.closeWindowAfterCopiedCheckBox.checked) {
+				if (globalSettings.closeWindowAfterCopied) {
 					return window.close();
 				}
 
