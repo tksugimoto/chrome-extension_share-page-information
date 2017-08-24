@@ -107,7 +107,10 @@
 				settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 			});
 			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
-			this.closeWindowAfterCopiedCheckBox = checkBox;
+		}
+
+		get closeWindowAfterCopiedCheckBox() {
+			return this.shadowRoot.getElementById("close_window_after_copied");
 		}
 
 		_setupHideTarget() {
