@@ -10,12 +10,6 @@ body {
 body.hide-copy-target .copy-target {
 	display: none;
 }
-.annotation {
-	font-size: 70%;
-}
-.annotation:before {
-	content: "※ ";
-}
 
 body[data-show-accesskey] [accesskey]:after {
 	content: " ( " attr(accesskey) " )";
