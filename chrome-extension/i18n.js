@@ -31,6 +31,16 @@ const i18n = (() => {
 				console.warn(`I18n message of "${messageKey}" is not found.`, elem);
 			}
 		});
+
+		target.querySelectorAll("[data-i18n-data]").forEach(elem => {
+		const [dataAttrKey, messageKey] = elem.getAttribute("data-i18n-data").split(/\s*,\s*/);
+			const message = chrome.i18n.getMessage(messageKey);
+			if (message) {
+				elem.setAttribute(`data-${dataAttrKey}`, message);
+			} else {
+				console.warn(`I18n message of "${messageKey}" is not found.`, elem);
+			}
+		});
 	};
 
 	return i18n;
