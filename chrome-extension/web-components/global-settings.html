@@ -58,7 +58,7 @@
 			color: gray;
 		}
 		#settings:not([data-open_copy_action_id=""]) #close_window_after_copied:hover:after {
-			content: "__MSG_can_not_change_setting_by_other_setting_value__";
+			content: attr(data-can_not_change_setting_by_other_setting_value);
 			position: absolute;
 			right: 0;
 			left: 0;
@@ -88,7 +88,7 @@
 			</div>
 			<div class="setting">
 				<h2 class="setting-title" data-i18n-innerText="after_copied">コピー完了時</h2>
-				<check-box tabindex="-1" id="close_window_after_copied" data-i18n-innerText="close_popup_window">ポップアップを閉じる</check-box>
+				<check-box tabindex="-1" id="close_window_after_copied" data-i18n-innerText="close_popup_window" data-i18n-data="can_not_change_setting_by_other_setting_value, can_not_change_setting_by_other_setting_value">ポップアップを閉じる</check-box>
 			</div>
 			<div class="setting">
 				<h2 class="setting-title" data-i18n-innerText="compactification">表示のコンパクト化</h2>
