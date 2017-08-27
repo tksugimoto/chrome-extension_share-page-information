@@ -61,7 +61,6 @@
 				}
 			});
 			openCopyActionSelect.appendChild(openCopyActionOptions);
-			const settingsContainer = this.shadowRoot.getElementById("settings");
 			openCopyActionSelect.addEventListener("change", evt => {
 				const selectedValue = openCopyActionSelect.selectedOptions[0].value;
 				if (canChangeSetting(LOCALSTORAGE_KEY, selectedValue)) {
@@ -69,9 +68,9 @@
 				} else {
 					openCopyActionSelect.value = "";
 				}
-				settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
+				this.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 			});
-			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
+			this.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 		}
 		
 		setupEnableSetting(templates) {
@@ -93,7 +92,6 @@
 		}
 
 		_setupCloseWindowSetting() {
-			const settingsContainer = this.shadowRoot.getElementById("settings");
 			const LOCALSTORAGE_KEY = "close_window_after_copied";
 			const checkBox = this.shadowRoot.getElementById("close_window_after_copied");
 			checkBox.checked = localStorage[LOCALSTORAGE_KEY] === "true";
@@ -104,9 +102,9 @@
 				} else {
 					checkBox.checked = false;
 				}
-				settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
+				this.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 			});
-			settingsContainer.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
+			this.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || "");
 		}
 
 		get closeWindowAfterCopied() {
