@@ -5,8 +5,7 @@
 	<script src="i18n.js"></script>
 	<script src="util.js"></script>
 	<link rel="stylesheet" href="css/main.css">
-	<link rel="stylesheet" href="css/setting.css">
-	<link rel="import" href="web-components/check-box.html">
+	<link rel="import" href="web-components/global-settings.html">
 </head>
 <body>
 	<div>
@@ -15,32 +14,7 @@
 	</div>
 	<hr>
 	<div id="container"></div>
-	<div id="settings">
-		<h1 data-i18n-innerText="settings">設定</h1>
-		<div id="details">
-			<div class="setting">
-				<h2 class="setting-title" data-i18n-innerText="auto_copy_when_popup_open">ポップアップを開いたときにコピー</h2>
-				<select id="open_copy_action" tabindex="-1">
-					<option value="" data-i18n-innerText="do_not_copy">コピーしない</option>
-				</select>
-				<p class="annotation" data-i18n-innerText="can_not_use_with_close_popup_window_after_copied">
-					コピー完了時にポップアップを閉じる設定とは併用不可
-				</p>
-			</div>
-			<div class="setting">
-				<h2 class="setting-title" data-i18n-innerText="after_copied">コピー完了時</h2>
-				<check-box tabindex="-1" id="close_window_after_copied" data-i18n-innerText="close_popup_window">ポップアップを閉じる</check-box>
-			</div>
-			<div class="setting">
-				<h2 class="setting-title" data-i18n-innerText="compactification">表示のコンパクト化</h2>
-				<check-box tabindex="-1" id="hide_copy_target" data-i18n-innerText="hide_copy_target">コピー対象を非表示にする</check-box>
-			</div>
-			<div class="setting">
-				<h2 class="setting-title" data-i18n-innerText="display_format">表示する書式</h2>
-				<ul id="enable_setting"></ul>
-			</div>
-		</div>
-	</div>
+	<global-settings></global-settings>
 	<script src="popup_script.js"></script>
 </body>
 </html>
