@@ -1,4 +1,4 @@
-const i18n = (() => {
+window.i18n = (() => {
 	const i18n = {};
 
 	i18n.getMessage = (messageName, substitutions) => {
