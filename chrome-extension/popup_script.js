@@ -112,7 +112,7 @@ class SelectableElement {
 		// 返り値: HTMLElement
 		throw new Error("実装が必要です");
 	}
-	updateElement(data) {
+	updateElement(/* data */) {
 		// 返り値: 無し
 		throw new Error("実装が必要です");
 	}
@@ -257,7 +257,7 @@ chrome.tabs.query({
 		
 		titleInput.value = data.title;
 		titleInput.select();
-		function change(e) {
+		function change() {
 			setTimeout(() => {
 				data.title = titleInput.value;
 				templates.forEach(template => {
