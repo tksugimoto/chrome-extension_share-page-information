@@ -1,3 +1,4 @@
+/* global i18n, util */
 (function (window, document) {
 	"use strict";
 

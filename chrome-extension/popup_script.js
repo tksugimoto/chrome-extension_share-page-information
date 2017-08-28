@@ -1,3 +1,4 @@
+/* global i18n, util */
 const createElement = util.createElement;
 
 const Messages = {
