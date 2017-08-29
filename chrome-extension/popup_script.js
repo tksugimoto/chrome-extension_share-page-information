@@ -257,14 +257,14 @@ chrome.tabs.query({
 		
 		titleInput.value = data.title;
 		titleInput.select();
-		function change() {
+		const change = () => {
 			setTimeout(() => {
 				data.title = titleInput.value;
 				templates.forEach(template => {
 					template.update(data);
 				});
 			}, 1);
-		}
+		};
 		titleInput.addEventListener("input", change);
 	} else {
 		document.body.innerText = i18n.getMessage("non_supported_page");
