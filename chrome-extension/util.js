@@ -1,4 +1,4 @@
-const util = (() => {
+window.util = (() => {
 	const util = {};
 
 	util.createElement = (elem, attrs, childs) => {

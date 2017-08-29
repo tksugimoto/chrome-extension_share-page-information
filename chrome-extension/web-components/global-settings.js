@@ -1,3 +1,4 @@
+/* global i18n, util */
 (function (window, document) {
 	"use strict";
 
@@ -61,7 +62,7 @@
 				}
 			});
 			openCopyActionSelect.appendChild(openCopyActionOptions);
-			openCopyActionSelect.addEventListener("change", evt => {
+			openCopyActionSelect.addEventListener("change", () => {
 				const selectedValue = openCopyActionSelect.selectedOptions[0].value;
 				if (canChangeSetting(LOCALSTORAGE_KEY, selectedValue)) {
 					localStorage[LOCALSTORAGE_KEY] = selectedValue;

@@ -1,3 +1,4 @@
+/* global i18n, util */
 const createElement = util.createElement;
 
 const Messages = {
@@ -111,7 +112,7 @@ class SelectableElement {
 		// 返り値: HTMLElement
 		throw new Error("実装が必要です");
 	}
-	updateElement(data) {
+	updateElement(/* data */) {
 		// 返り値: 無し
 		throw new Error("実装が必要です");
 	}
@@ -256,14 +257,14 @@ chrome.tabs.query({
 		
 		titleInput.value = data.title;
 		titleInput.select();
-		function change(e) {
+		const change = () => {
 			setTimeout(() => {
 				data.title = titleInput.value;
 				templates.forEach(template => {
 					template.update(data);
 				});
 			}, 1);
-		}
+		};
 		titleInput.addEventListener("input", change);
 	} else {
 		document.body.innerText = i18n.getMessage("non_supported_page");
