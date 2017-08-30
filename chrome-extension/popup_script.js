@@ -43,6 +43,7 @@ class ShareTemplate {
 		}
 	}
 	appendTo(data, parent) {
+		this._latestData = data;
 		const optionContainer = this.options && (() => {
 			const optionContainer = createElement("div");
 			this.options.forEach(option => {
@@ -50,7 +51,6 @@ class ShareTemplate {
 					innerText: option.name,
 				});
 				checkBox.addEventListener("change", () => {
-					// FIXME: 現在のdataを渡す
 					this.update();
 				});
 				optionContainer.appendChild(checkBox);
@@ -117,7 +117,8 @@ class ShareTemplate {
 	_show() {
 		this._container.style.display = "";
 	}
-	update(data) {
+	update(data = this._latestData) {
+		this._latestData = data;
 		this.selectableElement.updateElement(data);
 	}
 	_copy() {
