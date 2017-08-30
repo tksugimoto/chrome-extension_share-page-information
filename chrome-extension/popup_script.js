@@ -63,7 +63,7 @@ class ShareTemplate {
 			return optionContainer;
 		})();
 
-		const element = this.selectableElement.generateElement(data);
+		const element = this.selectableElement.generateElement(data, this.options);
 		element.classList.add("copy-target");
 
 		const copy = (() => {
@@ -119,7 +119,7 @@ class ShareTemplate {
 	}
 	update(data = this._latestData) {
 		this._latestData = data;
-		this.selectableElement.updateElement(data);
+		this.selectableElement.updateElement(data, this.options);
 	}
 	_copy() {
 		this.selectableElement.show();
@@ -166,9 +166,9 @@ class SelectableTextarea extends SelectableElement {
 			};
 		}
 	}
-	generateElement(data) {
+	generateElement(data, options) {
 		this._element = createElement("textarea", {
-			value: this.generateTextByFormat(data),
+			value: this.generateTextByFormat(data, options),
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -179,8 +179,8 @@ class SelectableTextarea extends SelectableElement {
 		});
 		return this._element;
 	}
-	updateElement(data) {
-		this._element.value = this.generateTextByFormat(data);
+	updateElement(data, options) {
+		this._element.value = this.generateTextByFormat(data, options);
 	}
 	selectElement() {
 		this._element.select();
