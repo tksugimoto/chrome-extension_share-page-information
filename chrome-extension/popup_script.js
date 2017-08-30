@@ -231,9 +231,17 @@ const templates = [
 	new ShareTemplate({
 		id: "markdown",
 		accesskey: "m",
-		selectableElement: new SelectableTextarea(data => {
+		options: [{
+			key: "exclude-title",
+			name: "タイトルを除外",
+		}],
+		selectableElement: new SelectableTextarea((data, options) => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
 			const url = data.url.replace(/\)/g, "\\)");
+			const excludeTitle = options.some(({key, value}) => key === "exclude-title" && value);
+			if (excludeTitle) {
+				return `[${text}](${url})`;
+			}
 			let decodedUrl = data.url;
 			try {
 				decodedUrl = decodeURIComponent(data.url);
