@@ -16,7 +16,7 @@ class ShareTemplate {
 		});
 		this.type = i18n.getMessage(`format_descriptions_${this.id}`);
 		// Option
-		["accesskey"].forEach(key => {
+		["accesskey", "options"].forEach(key => {
 			if (typeof argObject[key] !== "undefined") {
 				this[key] = argObject[key];
 			}
@@ -43,6 +43,26 @@ class ShareTemplate {
 		}
 	}
 	appendTo(data, parent) {
+		const optionContainer = this.options && (() => {
+			const optionContainer = createElement("div");
+			this.options.forEach(option => {
+				const checkBox = createElement("check-box", {
+					innerText: option.name,
+				});
+				checkBox.addEventListener("change", () => {
+					// FIXME: 現在のdataを渡す
+					this.update();
+				});
+				optionContainer.appendChild(checkBox);
+				Object.defineProperty(option, "value", {
+					get: function () {
+						return checkBox.checked;
+					}
+				});
+			});
+			return optionContainer;
+		})();
+
 		const element = this.selectableElement.generateElement(data);
 		element.classList.add("copy-target");
 
@@ -83,6 +103,7 @@ class ShareTemplate {
 			}),
 			copyButton,
 			createElement("br"),
+			optionContainer,
 			element
 		]);
 		if (!this.enabled) {
