@@ -47,10 +47,13 @@ class ShareTemplate {
 		const optionContainer = this.options && (() => {
 			const optionContainer = createElement("div");
 			this.options.forEach(option => {
+				const localStorageKey = `options.${this.id}.${option.key}`;
 				const checkBox = createElement("check-box", {
 					innerText: option.name,
+					checked: localStorage[localStorageKey] === "true",
 				});
 				checkBox.addEventListener("change", () => {
+					localStorage[localStorageKey] = checkBox.checked;
 					this.update();
 				});
 				optionContainer.appendChild(checkBox);
