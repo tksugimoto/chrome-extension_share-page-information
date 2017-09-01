@@ -239,11 +239,10 @@ const templates = [
 			key: "exclude-title",
 			name: "タイトルを除外",
 		}],
-		selectableElement: new SelectableTextarea((data, options) => {
+		selectableElement: new SelectableTextarea((data, option) => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
 			const url = data.url.replace(/\)/g, "\\)");
-			const excludeTitle = options.some(({key, value}) => key === "exclude-title" && value);
-			if (excludeTitle) {
+			if (option["exclude-title"]) {
 				return `[${text}](${url})`;
 			}
 			let decodedUrl = data.url;
