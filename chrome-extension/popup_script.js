@@ -21,6 +21,7 @@ class ShareTemplate {
 				this[key] = argObject[key];
 			}
 		});
+		this.optionObject = {};
 		this._loadEnableSetting();
 	}
 	_loadEnableSetting() {
@@ -57,7 +58,7 @@ class ShareTemplate {
 					this.update();
 				});
 				optionContainer.appendChild(checkBox);
-				Object.defineProperty(option, "value", {
+				Object.defineProperty(this.optionObject, option.key, {
 					get: function () {
 						return checkBox.checked;
 					}
@@ -66,7 +67,7 @@ class ShareTemplate {
 			return optionContainer;
 		})();
 
-		const element = this.selectableElement.generateElement(data, this.options);
+		const element = this.selectableElement.generateElement(data, this.optionObject);
 		element.classList.add("copy-target");
 
 		const copy = (() => {
@@ -122,7 +123,7 @@ class ShareTemplate {
 	}
 	update(data = this._latestData) {
 		this._latestData = data;
-		this.selectableElement.updateElement(data, this.options);
+		this.selectableElement.updateElement(data, this.optionObject);
 	}
 	_copy() {
 		this.selectableElement.show();
@@ -169,9 +170,9 @@ class SelectableTextarea extends SelectableElement {
 			};
 		}
 	}
-	generateElement(data, options) {
+	generateElement(data, optionObject) {
 		this._element = createElement("textarea", {
-			value: this.generateTextByFormat(data, options),
+			value: this.generateTextByFormat(data, optionObject),
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -182,8 +183,8 @@ class SelectableTextarea extends SelectableElement {
 		});
 		return this._element;
 	}
-	updateElement(data, options) {
-		this._element.value = this.generateTextByFormat(data, options);
+	updateElement(data, optionObject) {
+		this._element.value = this.generateTextByFormat(data, optionObject);
 	}
 	selectElement() {
 		this._element.select();
