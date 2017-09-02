@@ -48,6 +48,10 @@
 		"message": "リンク"
 	},
 
+	"exclude_tooltip": {
+		"message": "Tooltipを除外"
+	},
+
 	"settings": {
 		"message": "設定"
 	},

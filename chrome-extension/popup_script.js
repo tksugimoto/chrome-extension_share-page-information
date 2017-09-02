@@ -238,13 +238,13 @@ const templates = [
 		id: "markdown",
 		accesskey: "m",
 		options: [{
-			key: "exclude-title",
-			name: "タイトルを除外",
+			key: "exclude-tooltip",
+			name: i18n.getMessage("exclude_tooltip"),
 		}],
 		selectableElement: new SelectableTextarea((data, option) => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
 			const url = data.url.replace(/\)/g, "\\)");
-			if (option["exclude-title"]) {
+			if (option["exclude-tooltip"]) {
 				return `[${text}](${url})`;
 			}
 			let decodedUrl = data.url;
