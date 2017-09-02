@@ -237,7 +237,7 @@ const templates = [
 		accesskey: "m",
 		options: [{
 			key: "exclude-tooltip",
-			name: "Tooltipを除外",
+			name: i18n.getMessage("exclude_tooltip"),
 		}],
 		selectableElement: new SelectableTextarea((data, option) => {
 			const text = data.title.replace(/\[|\]|\\/g, "\\$&");
