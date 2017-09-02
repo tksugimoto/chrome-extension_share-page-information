@@ -46,7 +46,7 @@ class ShareTemplate {
 	appendTo(data, parent) {
 		this._latestData = data;
 		const optionContainer = this.options && (() => {
-			const optionContainer = createElement("div");
+			const optionsFragment = document.createDocumentFragment();
 			this.options.forEach(option => {
 				const localStorageKey = `options.${this.id}.${option.key}`;
 				const checkBox = createElement("check-box", {
@@ -57,13 +57,15 @@ class ShareTemplate {
 					localStorage[localStorageKey] = checkBox.checked;
 					this.update();
 				});
-				optionContainer.appendChild(checkBox);
+				optionsFragment.appendChild(checkBox);
 				Object.defineProperty(this.optionObject, option.key, {
 					get: function () {
 						return checkBox.checked;
 					}
 				});
 			});
+			const optionContainer = createElement("div");
+			optionContainer.appendChild(optionsFragment);
 			return optionContainer;
 		})();
 
