@@ -16,11 +16,12 @@ class ShareTemplate {
 		});
 		this.type = i18n.getMessage(`format_descriptions_${this.id}`);
 		// Option
-		["accesskey"].forEach(key => {
+		["accesskey", "options"].forEach(key => {
 			if (typeof argObject[key] !== "undefined") {
 				this[key] = argObject[key];
 			}
 		});
+		this.optionObject = {};
 		this._loadEnableSetting();
 	}
 	_loadEnableSetting() {
@@ -43,7 +44,32 @@ class ShareTemplate {
 		}
 	}
 	appendTo(data, parent) {
-		const element = this.selectableElement.generateElement(data);
+		this._latestData = data;
+		const optionContainer = this.options && (() => {
+			const optionsFragment = document.createDocumentFragment();
+			this.options.forEach(option => {
+				const localStorageKey = `options.${this.id}.${option.key}`;
+				const checkBox = createElement("check-box", {
+					innerText: option.name,
+					checked: localStorage[localStorageKey] === "true",
+				});
+				checkBox.addEventListener("change", () => {
+					localStorage[localStorageKey] = checkBox.checked;
+					this.update();
+				});
+				optionsFragment.appendChild(checkBox);
+				Object.defineProperty(this.optionObject, option.key, {
+					get: function () {
+						return checkBox.checked;
+					}
+				});
+			});
+			const optionContainer = createElement("div");
+			optionContainer.appendChild(optionsFragment);
+			return optionContainer;
+		})();
+
+		const element = this.selectableElement.generateElement(data, this.optionObject);
 		element.classList.add("copy-target");
 
 		const copy = (() => {
@@ -83,6 +109,7 @@ class ShareTemplate {
 			}),
 			copyButton,
 			createElement("br"),
+			optionContainer,
 			element
 		]);
 		if (!this.enabled) {
@@ -96,8 +123,9 @@ class ShareTemplate {
 	_show() {
 		this._container.style.display = "";
 	}
-	update(data) {
-		this.selectableElement.updateElement(data);
+	update(data = this._latestData) {
+		this._latestData = data;
+		this.selectableElement.updateElement(data, this.optionObject);
 	}
 	_copy() {
 		this.selectableElement.show();
@@ -144,9 +172,9 @@ class SelectableTextarea extends SelectableElement {
 			};
 		}
 	}
-	generateElement(data) {
+	generateElement(data, optionObject) {
 		this._element = createElement("textarea", {
-			value: this.generateTextByFormat(data),
+			value: this.generateTextByFormat(data, optionObject),
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -157,8 +185,8 @@ class SelectableTextarea extends SelectableElement {
 		});
 		return this._element;
 	}
-	updateElement(data) {
-		this._element.value = this.generateTextByFormat(data);
+	updateElement(data, optionObject) {
+		this._element.value = this.generateTextByFormat(data, optionObject);
 	}
 	selectElement() {
 		this._element.select();
