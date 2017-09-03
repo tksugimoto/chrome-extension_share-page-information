@@ -53,7 +53,7 @@
 				const option = util.createElement("option", {
 					value: template.id,
 					innerText: template.type.replace(/\n.*/, ""),
-					selected: selected,
+					selected,
 				});
 				openCopyActionOptions.appendChild(option);
 
