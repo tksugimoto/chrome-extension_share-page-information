@@ -3,7 +3,7 @@ const createElement = util.createElement;
 
 const Messages = {
 	copy: i18n.getMessage("copy"),
-	copyCompleted: i18n.getMessage("copy_completed")
+	copyCompleted: i18n.getMessage("copy_completed"),
 };
 
 class ShareTemplate {
@@ -61,7 +61,7 @@ class ShareTemplate {
 				Object.defineProperty(this.optionObject, option.key, {
 					get: function () {
 						return checkBox.checked;
-					}
+					},
 				});
 			});
 			const optionContainer = createElement("div");
@@ -94,9 +94,9 @@ class ShareTemplate {
 			id: createCopyButtonId(this.id),
 			innerText: Messages.copy,
 			style: {
-				"float": "right"
+				"float": "right",
 			},
-			onclick: copy
+			onclick: copy,
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute("accesskey", this.accesskey);
@@ -105,12 +105,12 @@ class ShareTemplate {
 		this._container = createElement("p", {
 		}, [
 			createElement("span", {
-				innerText: this.type
+				innerText: this.type,
 			}),
 			copyButton,
 			createElement("br"),
 			optionContainer,
-			element
+			element,
 		]);
 		if (!this.enabled) {
 			this._hide();
@@ -180,8 +180,8 @@ class SelectableTextarea extends SelectableElement {
 			tabIndex: -1,
 			style: {
 				width: "100%",
-				"word-break": "break-all"
-			}
+				"word-break": "break-all",
+			},
 		});
 		return this._element;
 	}
@@ -200,8 +200,8 @@ class SelectableLink extends SelectableElement{
 			innerText: title,
 			href: url,
 			style: {
-				"word-break": "break-all"
-			}
+				"word-break": "break-all",
+			},
 		});
 		return this._element;
 	}
@@ -222,17 +222,17 @@ const templates = [
 	new ShareTemplate({
 		id: "title_url",
 		accesskey: "t",
-		selectableElement: new SelectableTextarea("{{title}}\n{{url}}")
+		selectableElement: new SelectableTextarea("{{title}}\n{{url}}"),
 	}),
 	new ShareTemplate({
 		id: "hiki",
 		accesskey: "h",
-		selectableElement: new SelectableTextarea("[[{{title}}|{{url}}]]")
+		selectableElement: new SelectableTextarea("[[{{title}}|{{url}}]]"),
 	}),
 	new ShareTemplate({
 		id: "backlog",
 		accesskey: "b",
-		selectableElement: new SelectableTextarea("[[{{title}}>{{url}}]]")
+		selectableElement: new SelectableTextarea("[[{{title}}>{{url}}]]"),
 	}),
 	new ShareTemplate({
 		id: "markdown",
@@ -253,13 +253,13 @@ const templates = [
 			} catch (e) {}
 			const tooltip = decodedUrl.replace(/"\)/g, '"\\)');
 			return `[${text}](${url} "${tooltip}")`;
-		})
+		}),
 	}),
 	new ShareTemplate({
 		id: "link",
 		accesskey: "l",
-		selectableElement: new SelectableLink()
-	})
+		selectableElement: new SelectableLink(),
+	}),
 ];
 
 const globalSettings = document.querySelector("global-settings");
@@ -267,13 +267,13 @@ const titleInput = document.getElementById("title");
 
 chrome.tabs.query({
 	active: true,
-	currentWindow: true
+	currentWindow: true,
 }, tabs => {
 	const tab = tabs[0];
 	if (tab.url.match(/^(?:https?|file):/)) {
 		const data = {
 			url: tab.url,
-			title: tab.title
+			title: tab.title,
 		};
 		// Firefox用
 		// Firefoxはネットワークドライブの場合/が5つ必要

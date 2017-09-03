@@ -53,7 +53,7 @@
 				const option = util.createElement("option", {
 					value: template.id,
 					innerText: template.type.replace(/\n.*/, ""),
-					selected: selected
+					selected: selected,
 				});
 				openCopyActionOptions.appendChild(option);
 
@@ -79,9 +79,9 @@
 			templates.forEach(template => {
 				const checkBox = util.createElement("check-box", {
 					tabIndex: -1,
-					checked: template.enabled
+					checked: template.enabled,
 				}, [
-					template.type.replace(/\n.*/, "")
+					template.type.replace(/\n.*/, ""),
 				]);
 				checkBox.addEventListener("change", evt => {
 					template.enabled = evt.checked;
