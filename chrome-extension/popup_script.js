@@ -59,7 +59,7 @@ class ShareTemplate {
 				});
 				optionsFragment.appendChild(checkBox);
 				Object.defineProperty(this.optionObject, option.key, {
-					get: function () {
+					get() {
 						return checkBox.checked;
 					},
 				});
