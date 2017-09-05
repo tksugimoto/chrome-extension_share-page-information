@@ -7,13 +7,13 @@ window.i18n = (() => {
 			return message;
 		} else {
 			console.warn(`I18n message of "${messageName}" is not found.`);
-			return "";
+			return '';
 		}
 	};
 
 	i18n.setup = (target) => {
-		target.querySelectorAll("[data-i18n-innerText]").forEach(elem => {
-			const messageKey = elem.getAttribute("data-i18n-innerText");
+		target.querySelectorAll('[data-i18n-innerText]').forEach(elem => {
+			const messageKey = elem.getAttribute('data-i18n-innerText');
 			const message = chrome.i18n.getMessage(messageKey);
 			if (message) {
 				elem.innerText = message;
@@ -22,8 +22,8 @@ window.i18n = (() => {
 			}
 		});
 
-		target.querySelectorAll("[data-i18n-title]").forEach(elem => {
-			const messageKey = elem.getAttribute("data-i18n-title");
+		target.querySelectorAll('[data-i18n-title]').forEach(elem => {
+			const messageKey = elem.getAttribute('data-i18n-title');
 			const message = chrome.i18n.getMessage(messageKey);
 			if (message) {
 				elem.title = message;
@@ -32,8 +32,8 @@ window.i18n = (() => {
 			}
 		});
 
-		target.querySelectorAll("[data-i18n-data]").forEach(elem => {
-		const [dataAttrKey, messageKey] = elem.getAttribute("data-i18n-data").split(/\s*,\s*/);
+		target.querySelectorAll('[data-i18n-data]').forEach(elem => {
+		const [dataAttrKey, messageKey] = elem.getAttribute('data-i18n-data').split(/\s*,\s*/);
 			const message = chrome.i18n.getMessage(messageKey);
 			if (message) {
 				elem.setAttribute(`data-${dataAttrKey}`, message);
