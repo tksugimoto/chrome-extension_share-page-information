@@ -25,11 +25,11 @@ class ShareTemplate {
 		this._loadEnableSetting();
 	}
 	_loadEnableSetting() {
-		const val = localStorage[`enabled_${this.id}`];
+		const val = localStorage[`enabled.${this.id}`];
 		this._enabled = (typeof val === 'undefined') || (val === 'true');
 	}
 	_saveEnableSetting() {
-		localStorage[`enabled_${this.id}`] = this.enabled;
+		localStorage[`enabled.${this.id}`] = this.enabled;
 	}
 	get enabled() {
 		return this._enabled;
