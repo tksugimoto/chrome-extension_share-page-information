@@ -25,6 +25,11 @@ class ShareTemplate {
 		this._loadEnableSetting();
 	}
 	_loadEnableSetting() {
+		if (typeof localStorage[`enabled_${this.id}`] !== 'undefined') {
+			// 旧形式の設定が残っている場合は移行
+			localStorage[`enabled.${this.id}`] = localStorage[`enabled_${this.id}`];
+			delete localStorage[`enabled_${this.id}`];
+		}
 		const val = localStorage[`enabled.${this.id}`];
 		this._enabled = (typeof val === 'undefined') || (val === 'true');
 	}
