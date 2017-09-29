@@ -69,9 +69,9 @@ class ShareTemplate {
 					},
 				});
 			});
-			const optionContainer = createElement('div');
-			optionContainer.appendChild(optionsFragment);
-			return optionContainer;
+			const _optionContainer = createElement('div');
+			_optionContainer.appendChild(optionsFragment);
+			return _optionContainer;
 		})();
 
 		const element = this.selectableElement.generateElement(data, this.optionObject);
