@@ -4,7 +4,7 @@
 
 	const ownerDocument = document.currentScript.ownerDocument;
 
-	const template = ownerDocument.querySelector('template').content;
+	const templateContent = ownerDocument.querySelector('template').content;
 
 	const fixConflictedSetting = () => {
 		// ポップアップが自動で閉じて設定変更できなくなる設定値を自動修正
@@ -33,7 +33,7 @@
 				mode: 'open',
 			});
 
-			const clone = template.cloneNode(true);
+			const clone = templateContent.cloneNode(true);
 			shadowRoot.appendChild(clone);
 
 			fixConflictedSetting();
