@@ -257,7 +257,7 @@ const templates = [
 		}],
 		selectableElement: new SelectableTextarea((data, option) => {
 			const text = data.title.replace(/\[|\]|\\/g, '\\$&');
-			const url = data.url.replace(/\)/g, '\\)');
+			const url = data.url.replace(/\)|\\/g, '\\$&');
 			if (option['exclude-tooltip']) {
 				return `[${text}](${url})`;
 			}
