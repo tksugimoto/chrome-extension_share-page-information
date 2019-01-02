@@ -27,10 +27,11 @@ body[data-show-accesskey] [data-accesskey]:after {
 
 	display: grid;
 	grid-template:
-		"type    copy-button" auto
-		"options options"     auto
-		"element element"     auto /
-		1fr      auto;
+		"type        copy-button" auto
+		"description copy-button" auto
+		"options     options"     auto
+		"element     element"     auto /
+		1fr          auto;
 }
 
 [data-content-name="type"] {
@@ -38,6 +39,9 @@ body[data-show-accesskey] [data-accesskey]:after {
 }
 [data-content-name="copy-button"] {
 	grid-area: copy-button;
+}
+[data-content-name="description"] {
+	grid-area: description;
 }
 [data-content-name="options"] {
 	grid-area: options;
