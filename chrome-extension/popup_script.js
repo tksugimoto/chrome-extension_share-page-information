@@ -111,9 +111,9 @@ class ShareTemplate {
 				'data-content-name': 'type',
 				innerText: this.type,
 			}),
-			createElement(copyButton, {
+			createElement('div', {
 				'data-content-name': 'copy-button',
-			}),
+			}, copyButton),
 			createElement(optionContainer, {
 				'data-content-name': 'options',
 			}),
