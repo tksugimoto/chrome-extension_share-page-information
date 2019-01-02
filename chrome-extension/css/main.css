@@ -22,6 +22,9 @@ body[data-show-accesskey] [data-accesskey]:after {
 }
 
 .share-item {
+	margin-block-start: 1em;
+	margin-block-end: 1em;
+
 	display: grid;
 	grid-template:
 		"type    copy-button" auto

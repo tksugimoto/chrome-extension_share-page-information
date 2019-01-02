@@ -104,10 +104,10 @@ class ShareTemplate {
 			copyButton.setAttribute('accesskey', this.accesskey);
 			copyButton.title = i18n.getMessage('shortcut_by_accesskey', [this.accesskey.toUpperCase()]);
 		}
-		this._container = createElement('p', {
+		this._container = createElement('div', {
 			class: 'share-item',
 		}, [
-			createElement('span', {
+			createElement('div', {
 				'data-content-name': 'type',
 				innerText: this.type,
 			}),
