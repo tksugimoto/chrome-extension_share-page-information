@@ -98,24 +98,28 @@ class ShareTemplate {
 		const copyButton = createElement('button', {
 			id: createCopyButtonId(this.id),
 			innerText: Messages.copy,
-			style: {
-				'float': 'right',
-			},
 			onclick: copy,
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute('accesskey', this.accesskey);
 			copyButton.title = i18n.getMessage('shortcut_by_accesskey', [this.accesskey.toUpperCase()]);
 		}
-		this._container = createElement('p', {
+		this._container = createElement('div', {
+			class: 'share-item',
 		}, [
-			createElement('span', {
+			createElement('div', {
+				'data-content-name': 'type',
 				innerText: this.type,
 			}),
-			copyButton,
-			createElement('br'),
-			optionContainer,
-			element,
+			createElement('div', {
+				'data-content-name': 'copy-button',
+			}, copyButton),
+			createElement(optionContainer, {
+				'data-content-name': 'options',
+			}),
+			createElement(element, {
+				'data-content-name': 'element',
+			}),
 		]);
 		if (!this.enabled) {
 			this._hide();
