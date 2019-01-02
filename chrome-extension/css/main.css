@@ -20,3 +20,25 @@ body[data-show-accesskey] [data-accesskey]:after {
 	content: " ( " attr(data-accesskey) " )";
 	color: gray;
 }
+
+.share-item {
+	display: grid;
+	grid-template:
+		"type    copy-button" auto
+		"options options"     auto
+		"element element"     auto /
+		1fr      auto;
+}
+
+[data-content-name="type"] {
+	grid-area: type;
+}
+[data-content-name="copy-button"] {
+	grid-area: copy-button;
+}
+[data-content-name="options"] {
+	grid-area: options;
+}
+[data-content-name="element"] {
+	grid-area: element;
+}
