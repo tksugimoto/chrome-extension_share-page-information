@@ -110,7 +110,11 @@ class ShareTemplate {
 		}, [
 			createElement('div', {
 				'data-content-name': 'type',
-				innerText: this.type + '\n' + this.description,
+				innerText: this.type,
+			}),
+			createElement('div', {
+				'data-content-name': 'description',
+				innerText: this.description,
 			}),
 			createElement('div', {
 				'data-content-name': 'copy-button',
