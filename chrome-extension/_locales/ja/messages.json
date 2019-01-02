@@ -32,20 +32,35 @@
 		}
 	},
 
-	"format_descriptions_title_url": {
-		"message": "タイトル + URL\n タイトル<改行>URL"
+	"format_type_title_url": {
+		"message": "タイトル + URL"
 	},
-	"format_descriptions_hiki": {
-		"message": "Hiki (Wikiクローン) \n [[リンクテキスト: タイトル|リンク先: URL]]"
+	"format_description_title_url": {
+		"message": "タイトル<改行>URL"
 	},
-	"format_descriptions_backlog": {
-		"message": "Backlog \n [[リンクテキスト: タイトル>リンク先: URL]]"
+	"format_type_hiki": {
+		"message": "Hiki (Wikiクローン) "
 	},
-	"format_descriptions_markdown": {
-		"message": "Markdown\n [リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")"
+	"format_description_hiki": {
+		"message": "[[リンクテキスト: タイトル|リンク先: URL]]"
 	},
-	"format_descriptions_link": {
+	"format_type_backlog": {
+		"message": "Backlog"
+	},
+	"format_description_backlog": {
+		"message": "[[リンクテキスト: タイトル>リンク先: URL]]"
+	},
+	"format_type_markdown": {
+		"message": "Markdown"
+	},
+	"format_description_markdown": {
+		"message": "[リンクテキスト: タイトル](リンク先: URL \"Tooltip: URL(decoded)\")"
+	},
+	"format_type_link": {
 		"message": "リンク"
+	},
+	"format_description_link": {
+		"message": ""
 	},
 
 	"exclude_tooltip": {

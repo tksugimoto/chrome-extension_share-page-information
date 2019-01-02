@@ -14,7 +14,8 @@ class ShareTemplate {
 			}
 			this[key] = argObject[key];
 		});
-		this.type = i18n.getMessage(`format_descriptions_${this.id}`);
+		this.type = i18n.getMessage(`format_type_${this.id}`);
+		this.description = i18n.getMessage(`format_description_${this.id}`);
 		// Option
 		['accesskey', 'options'].forEach(key => {
 			if (typeof argObject[key] !== 'undefined') {
@@ -109,7 +110,7 @@ class ShareTemplate {
 		}, [
 			createElement('div', {
 				'data-content-name': 'type',
-				innerText: this.type,
+				innerText: this.type + '\n' + this.description,
 			}),
 			createElement('div', {
 				'data-content-name': 'copy-button',
@@ -298,7 +299,7 @@ chrome.tabs.query({
 			createCopyButtonId,
 		});
 		globalSettings.setupEnableSetting(templates);
-		
+
 		titleInput.value = data.title;
 		titleInput.select();
 		const change = () => {

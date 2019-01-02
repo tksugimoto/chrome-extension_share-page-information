@@ -52,7 +52,7 @@
 
 				const option = util.createElement('option', {
 					value: template.id,
-					innerText: template.type.replace(/\n.*/, ''),
+					innerText: template.type,
 					selected,
 				});
 				openCopyActionOptions.appendChild(option);
@@ -73,7 +73,7 @@
 			});
 			this.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || '');
 		}
-		
+
 		setupEnableSetting(templates) {
 			const enableSettings = document.createDocumentFragment();
 			templates.forEach(template => {
@@ -81,7 +81,7 @@
 					tabIndex: -1,
 					checked: template.enabled,
 				}, [
-					template.type.replace(/\n.*/, ''),
+					template.type,
 				]);
 				checkBox.addEventListener('change', evt => {
 					template.enabled = evt.checked;
