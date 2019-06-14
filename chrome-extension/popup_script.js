@@ -9,7 +9,7 @@ import {
 const templates = [
 	new ShareTemplate({
 		id: 'title_url',
-		accesskey: 't',
+		accesskey: 'p',
 		selectableElement: new SelectableTextarea('{{title}}\n{{url}}'),
 	}),
 	new ShareTemplate({
@@ -19,6 +19,7 @@ const templates = [
 	}),
 	new ShareTemplate({
 		id: 'textile',
+		accesskey: 't',
 		selectableElement: new SelectableTextarea('"{{title}}":{{url}}'),
 	}),
 	new ShareTemplate({
