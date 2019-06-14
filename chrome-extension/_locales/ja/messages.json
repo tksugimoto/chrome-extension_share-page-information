@@ -44,6 +44,12 @@
 	"format_description_hiki": {
 		"message": "[[リンクテキスト: タイトル|リンク先: URL]]"
 	},
+	"format_type_textile": {
+		"message": "Textile (Redmine) "
+	},
+	"format_description_textile": {
+		"message": "\"リンクテキスト: タイトル\":リンク先: URL"
+	},
 	"format_type_backlog": {
 		"message": "Backlog"
 	},

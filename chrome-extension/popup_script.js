@@ -18,6 +18,10 @@ const templates = [
 		selectableElement: new SelectableTextarea('[[{{title}}|{{url}}]]'),
 	}),
 	new ShareTemplate({
+		id: 'textile',
+		selectableElement: new SelectableTextarea('"{{title}}":{{url}}'),
+	}),
+	new ShareTemplate({
 		id: 'backlog',
 		accesskey: 'b',
 		selectableElement: new SelectableTextarea('[[{{title}}>{{url}}]]'),
