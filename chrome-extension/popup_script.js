@@ -24,6 +24,7 @@ const templates = [
 			const title = data.title
 				.replace(/[(]/g, '[')
 				.replace(/[)]/g, ']')
+				.replace(/"/g, '&quot;')
 			;
 			const url = data.url;
 			return `"${title}":${url}`;
