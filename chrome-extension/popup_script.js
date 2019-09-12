@@ -20,7 +20,14 @@ const templates = [
 	new ShareTemplate({
 		id: 'textile',
 		accesskey: 't',
-		selectableElement: new SelectableTextarea('"{{title}}":{{url}}'),
+		selectableElement: new SelectableTextarea((data) => {
+			const title = data.title
+				.replace(/[(]/g, '[')
+				.replace(/[)]/g, ']')
+			;
+			const url = data.url;
+			return `"${title}":${url}`;
+		}),
 	}),
 	new ShareTemplate({
 		id: 'backlog',
