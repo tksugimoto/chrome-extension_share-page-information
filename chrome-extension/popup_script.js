@@ -55,9 +55,10 @@ class ShareTemplate {
 			const optionsFragment = document.createDocumentFragment();
 			this.options.forEach(option => {
 				const localStorageKey = `options.${this.id}.${option.key}`;
+				const savedValueString = localStorage[localStorageKey];
 				const checkBox = createElement('check-box', {
 					innerText: option.name,
-					checked: localStorage[localStorageKey] === 'true',
+					checked: savedValueString ? savedValueString === 'true' : !!option.defaultValue,
 				});
 				checkBox.addEventListener('change', () => {
 					localStorage[localStorageKey] = checkBox.checked;
