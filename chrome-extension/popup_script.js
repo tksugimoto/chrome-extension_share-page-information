@@ -55,9 +55,10 @@ class ShareTemplate {
 			const optionsFragment = document.createDocumentFragment();
 			this.options.forEach(option => {
 				const localStorageKey = `options.${this.id}.${option.key}`;
+				const savedValueString = localStorage[localStorageKey];
 				const checkBox = createElement('check-box', {
 					innerText: option.name,
-					checked: localStorage[localStorageKey] === 'true',
+					checked: savedValueString ? savedValueString === 'true' : !!option.defaultValue,
 				});
 				checkBox.addEventListener('change', () => {
 					localStorage[localStorageKey] = checkBox.checked;
@@ -254,10 +255,17 @@ const templates = [
 		options: [{
 			key: 'exclude-tooltip',
 			name: i18n.getMessage('exclude_tooltip'),
+		}, {
+			key: 'escape-parenthesis',
+			name: i18n.getMessage('markdown_escape_parenthesis'),
+			defaultValue: true,
 		}],
 		selectableElement: new SelectableTextarea((data, option) => {
 			const text = data.title.replace(/\[|\]|\\/g, '\\$&');
-			const url = data.url.replace(/\)|\\/g, '\\$&');
+			let url = data.url.replace(/\\/g, '\\$&');
+			if (option['escape-parenthesis']) {
+				url = data.url.replace(/\)/g, '\\$&');
+			}
 			if (option['exclude-tooltip']) {
 				return `[${text}](${url})`;
 			}

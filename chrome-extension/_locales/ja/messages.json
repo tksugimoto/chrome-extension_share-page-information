@@ -66,6 +66,9 @@
 	"exclude_tooltip": {
 		"message": "Tooltipを除外"
 	},
+	"markdown_escape_parenthesis": {
+		"message": "括弧をエスケープする"
+	},
 
 	"settings": {
 		"message": "設定"
