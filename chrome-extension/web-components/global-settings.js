@@ -1,3 +1,4 @@
+import './check-box.js';
 import i18n from '../i18n.js';
 import util from '../util.js';
 
