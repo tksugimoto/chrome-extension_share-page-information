@@ -1,4 +1,5 @@
-/* global i18n, util */
+import i18n from './i18n.js';
+import util from './util.js';
 const createElement = util.createElement;
 
 const Messages = {
