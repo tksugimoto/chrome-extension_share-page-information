@@ -6,6 +6,19 @@
 		"message": "Convert page information to Wiki notation, etc."
 	},
 
+	"quote_copy_selected_text": {
+		"message": "Quote copy selected text"
+	},
+	"quoted_copy_not_supported": {
+		"message": "(Quotation copy not supported) $formatType$",
+		"placeholders": {
+			"formatType": {
+				"example": "Title + URL",
+				"content": "$1"
+			}
+		}
+	},
+
 	"edit_title": {
 		"message": "Edit title"
 	},

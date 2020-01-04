@@ -41,7 +41,10 @@ class SelectableTextarea extends SelectableElement {
 		});
 		shadowRoot.append(this._textarea);
 	}
-	update({text}) {
+	update({text, quotationText}) {
+		if (quotationText) {
+			text += `\n\n${quotationText}`;
+		}
 		this._textarea.value = text;
 	}
 	select() {
