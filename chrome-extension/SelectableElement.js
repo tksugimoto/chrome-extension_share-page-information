@@ -23,25 +23,9 @@ class SelectableElement {
 }
 
 class SelectableTextarea extends SelectableElement {
-	constructor(format) {
-		super();
-		this._setupGenerateTextByFormat(format);
-	}
-	_setupGenerateTextByFormat(format) {
-		if (typeof format === 'function') {
-			this.generateTextByFormat = format;
-		} else {
-			format = String(format);
-			this.generateTextByFormat = data => {
-				return format.replace(/{{([a-z]+)}}/ig, (all, name) => {
-					return data[name] || '';
-				});
-			};
-		}
-	}
-	generateElement(data, optionObject) {
+	generateElement({text}) {
 		this._element = createElement('textarea', {
-			value: this.generateTextByFormat(data, optionObject),
+			value: text,
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -52,8 +36,8 @@ class SelectableTextarea extends SelectableElement {
 		});
 		return this._element;
 	}
-	updateElement(data, optionObject) {
-		this._element.value = this.generateTextByFormat(data, optionObject);
+	updateElement({text}) {
+		this._element.value = text;
 	}
 	selectElement() {
 		this._element.select();
@@ -61,10 +45,10 @@ class SelectableTextarea extends SelectableElement {
 }
 
 class SelectableLink extends SelectableElement{
-	generateElement({title, url}) {
+	generateElement({text, url}) {
 		this._element = createElement('a', {
 			tabIndex: -1,
-			innerText: title,
+			innerText: text,
 			href: url,
 			style: {
 				'word-break': 'break-all',
@@ -72,8 +56,8 @@ class SelectableLink extends SelectableElement{
 		});
 		return this._element;
 	}
-	updateElement({title, url}) {
-		this._element.innerText = title;
+	updateElement({text, url}) {
+		this._element.innerText = text;
 		this._element.href = url;
 	}
 	selectElement() {

@@ -10,30 +10,36 @@ const templates = [
 	new ShareTemplate({
 		id: 'title_url',
 		accesskey: 'p',
-		selectableElement: new SelectableTextarea('{{title}}\n{{url}}'),
+		format: '{{title}}\n{{url}}',
+		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'hiki',
 		accesskey: 'h',
-		selectableElement: new SelectableTextarea('[[{{title}}|{{url}}]]'),
+		format: '[[{{title}}|{{url}}]]',
+		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'textile',
 		accesskey: 't',
-		selectableElement: new SelectableTextarea((data) => {
+		format: (data) => {
 			const title = data.title
 				.replace(/[(]/g, '[')
 				.replace(/[)]/g, ']')
 				.replace(/"/g, '&quot;')
 			;
 			const url = data.url;
-			return `"${title}":${url}`;
-		}),
+			return {
+				text: `"${title}":${url}`,
+			};
+		},
+		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'backlog',
 		accesskey: 'b',
-		selectableElement: new SelectableTextarea('[[{{title}}>{{url}}]]'),
+		format: '[[{{title}}>{{url}}]]',
+		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'markdown',
@@ -46,26 +52,37 @@ const templates = [
 			name: i18n.getMessage('markdown_escape_parenthesis'),
 			defaultValue: true,
 		}],
-		selectableElement: new SelectableTextarea((data, option) => {
+		format: (data, option) => {
 			const text = data.title.replace(/\[|\]|\\/g, '\\$&');
 			let url = data.url.replace(/\\/g, '\\$&');
 			if (option['escape-parenthesis']) {
 				url = data.url.replace(/\)/g, '\\$&');
 			}
 			if (option['exclude-tooltip']) {
-				return `[${text}](${url})`;
+				return {
+					text: `[${text}](${url})`,
+				};
 			}
 			let decodedUrl = data.url;
 			try {
 				decodedUrl = decodeURIComponent(data.url);
 			} catch (e) {}
 			const tooltip = decodedUrl.replace(/"\)/g, '"\\)');
-			return `[${text}](${url} "${tooltip}")`;
-		}),
+			return {
+				text: `[${text}](${url} "${tooltip}")`,
+			};
+		},
+		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'link',
 		accesskey: 'l',
+		format: (data) => {
+			return {
+				text: data.title,
+				url: data.url,
+			};
+		},
 		selectableElement: new SelectableLink(),
 	}),
 ];

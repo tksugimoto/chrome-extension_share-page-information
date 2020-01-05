@@ -14,12 +14,23 @@ const Messages = {
 
 class ShareTemplate {
 	constructor(argObject) {
-		['id', 'selectableElement'].forEach(key => {
+		['id', 'selectableElement', 'format'].forEach(key => {
 			if (typeof argObject[key] === 'undefined') {
 				throw new Error(`${key}プロパティが必要`);
 			}
 			this[key] = argObject[key];
 		});
+		if (typeof this.format !== 'function') {
+			const format = String(this.format);
+			this.format = data => {
+				const text = format.replace(/{{([a-z]+)}}/ig, (all, name) => {
+					return data[name] || '';
+				});
+				return {
+					text,
+				};
+			};
+		}
 		this.type = i18n.getMessage(`format_type_${this.id}`);
 		this.description = i18n.getMessage(`format_description_${this.id}`);
 		// Option
@@ -77,7 +88,8 @@ class ShareTemplate {
 			return _optionContainer;
 		})();
 
-		const element = this.selectableElement.generateElement(data, this.optionObject);
+		const formatted = this.format(data, this.optionObject);
+		const element = this.selectableElement.generateElement(formatted);
 		element.classList.add('copy-target');
 
 		const copy = (() => {
@@ -141,7 +153,8 @@ class ShareTemplate {
 	}
 	update(data = this._latestData) {
 		this._latestData = data;
-		this.selectableElement.updateElement(data, this.optionObject);
+		const formatted = this.format(data, this.optionObject);
+		this.selectableElement.updateElement(formatted);
 	}
 	_copy() {
 		this.selectableElement.show();
