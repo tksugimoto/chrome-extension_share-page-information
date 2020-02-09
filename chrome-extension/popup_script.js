@@ -9,13 +9,26 @@ import {
 const templates = [
 	new ShareTemplate({
 		id: 'title_url',
-		accesskey: 't',
+		accesskey: 'p',
 		selectableElement: new SelectableTextarea('{{title}}\n{{url}}'),
 	}),
 	new ShareTemplate({
 		id: 'hiki',
 		accesskey: 'h',
 		selectableElement: new SelectableTextarea('[[{{title}}|{{url}}]]'),
+	}),
+	new ShareTemplate({
+		id: 'textile',
+		accesskey: 't',
+		selectableElement: new SelectableTextarea((data) => {
+			const title = data.title
+				.replace(/[(]/g, '[')
+				.replace(/[)]/g, ']')
+				.replace(/"/g, '&quot;')
+			;
+			const url = data.url;
+			return `"${title}":${url}`;
+		}),
 	}),
 	new ShareTemplate({
 		id: 'backlog',
