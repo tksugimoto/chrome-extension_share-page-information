@@ -60,7 +60,7 @@
 		"message": "リンク"
 	},
 	"format_description_link": {
-		"message": ""
+		"message": "HTML <a> タグ"
 	},
 
 	"exclude_tooltip": {
