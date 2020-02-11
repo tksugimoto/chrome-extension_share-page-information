@@ -7,10 +7,10 @@
 
 ## 対応書式
 * タイトル<改行>URL
-* Hiki (Wikiクローン) 書式：[[タイトル|URL]]
+* Hiki (Wikiクローン) 書式：`[[タイトル|URL]]`
 * Textile (Redmine) 書式：`"リンクテキスト: タイトル":リンク先: URL`
-* Backlog 書式：[[タイトル>URL]]
-* Markdown書式：\[リンクテキスト](URL "タイトル(tooltip)")
+* Backlog 書式：`[[タイトル>URL]]`
+* Markdown書式：`[リンクテキスト](URL "タイトル(tooltip)")`
 * リンク（OfficeなどHTMLのコピーに対応している製品用）
 
 ## アイコン
