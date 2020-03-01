@@ -23,9 +23,8 @@ class SelectableElement {
 }
 
 class SelectableTextarea extends SelectableElement {
-	generateElement({text}) {
+	generateElement() {
 		this._element = createElement('textarea', {
-			value: text,
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -45,11 +44,9 @@ class SelectableTextarea extends SelectableElement {
 }
 
 class SelectableLink extends SelectableElement{
-	generateElement({text, url}) {
+	generateElement() {
 		this._element = createElement('a', {
 			tabIndex: -1,
-			innerText: text,
-			href: url,
 			style: {
 				'word-break': 'break-all',
 			},

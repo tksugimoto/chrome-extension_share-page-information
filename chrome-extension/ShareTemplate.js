@@ -58,10 +58,9 @@ class ShareTemplate {
 			this._hide();
 		}
 	}
-	appendTo(data, parent, {
+	appendTo(parent, {
 		copyCallBack,
 	} = {}) {
-		this._latestData = data;
 		const optionContainer = this.options && (() => {
 			const optionsFragment = document.createDocumentFragment();
 			this.options.forEach(option => {
@@ -87,8 +86,7 @@ class ShareTemplate {
 			return _optionContainer;
 		})();
 
-		const formatted = this.format(data, this.optionObject);
-		const element = this.selectableElement.generateElement(formatted);
+		const element = this.selectableElement.generateElement();
 		element.classList.add('copy-target');
 
 		const copy = (() => {

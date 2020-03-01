@@ -27,9 +27,10 @@ chrome.tabs.query({
 
 		const container = document.getElementById('container');
 		templates.forEach(template => {
-			template.appendTo(data, container, {
+			template.appendTo(container, {
 				copyCallBack,
 			});
+			template.update(data);
 		});
 		globalSettings.setupOpenCopyAction(templates);
 		globalSettings.setupEnableSetting(templates);
