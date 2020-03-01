@@ -1,5 +1,4 @@
 import i18n from './i18n.js';
-import createCopyButtonId from './createCopyButtonId.js';
 import templates from './templates.js';
 
 const globalSettings = document.querySelector('global-settings');
@@ -32,9 +31,7 @@ chrome.tabs.query({
 				copyCallBack,
 			});
 		});
-		globalSettings.setupOpenCopyAction(templates, {
-			createCopyButtonId,
-		});
+		globalSettings.setupOpenCopyAction(templates);
 		globalSettings.setupEnableSetting(templates);
 
 		titleInput.value = data.title;
