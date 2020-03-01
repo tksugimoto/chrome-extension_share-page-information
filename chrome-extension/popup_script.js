@@ -20,10 +20,17 @@ chrome.tabs.query({
 		// Chromeではfile:の後に/がいくつ並んでもOK
 		data.url = data.url.replace(/^file:[/][/]([^:/]+)[/]/, 'file://///$1/');
 
+		const copyCallBack = () => {
+			if (globalSettings.closeWindowAfterCopied) {
+				window.close();
+			}
+		};
 
 		const container = document.getElementById('container');
 		templates.forEach(template => {
-			template.appendTo(data, container);
+			template.appendTo(data, container, {
+				copyCallBack,
+			});
 		});
 		globalSettings.setupOpenCopyAction(templates, {
 			createCopyButtonId,

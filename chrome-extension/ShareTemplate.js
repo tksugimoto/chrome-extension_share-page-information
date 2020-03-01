@@ -5,8 +5,6 @@ import createCopyButtonId from './createCopyButtonId.js';
 
 const createElement = util.createElement;
 
-const globalSettings = document.querySelector('global-settings');
-
 const Messages = {
 	copy: i18n.getMessage('copy'),
 	copyCompleted: i18n.getMessage('copy_completed'),
@@ -61,7 +59,9 @@ class ShareTemplate {
 			this._hide();
 		}
 	}
-	appendTo(data, parent) {
+	appendTo(data, parent, {
+		copyCallBack,
+	} = {}) {
 		this._latestData = data;
 		const optionContainer = this.options && (() => {
 			const optionsFragment = document.createDocumentFragment();
@@ -97,8 +97,8 @@ class ShareTemplate {
 			return () => {
 				this._copy();
 
-				if (globalSettings.closeWindowAfterCopied) {
-					return window.close();
+				if (copyCallBack) {
+					copyCallBack();
 				}
 
 				if (null !== timeout_id) clearTimeout(timeout_id);
