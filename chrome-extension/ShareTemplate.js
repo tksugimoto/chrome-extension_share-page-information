@@ -70,16 +70,13 @@ class ShareTemplate {
 					innerText: option.name,
 					checked: savedValueString ? savedValueString === 'true' : !!option.defaultValue,
 				});
+				this.optionObject[option.key] = checkBox.checked;
 				checkBox.addEventListener('change', () => {
 					localStorage[localStorageKey] = checkBox.checked;
+					this.optionObject[option.key] = checkBox.checked;
 					this.update();
 				});
 				optionsFragment.appendChild(checkBox);
-				Object.defineProperty(this.optionObject, option.key, {
-					get() {
-						return checkBox.checked;
-					},
-				});
 			});
 			const _optionContainer = createElement('div');
 			_optionContainer.appendChild(optionsFragment);
@@ -150,7 +147,8 @@ class ShareTemplate {
 	}
 	update(data = this._latestData) {
 		this._latestData = data;
-		const formatted = this.format(data, this.optionObject);
+		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
+		const formatted = this.format(data, optionObject);
 		this.selectableElement.updateElement(formatted);
 	}
 	_copy() {
