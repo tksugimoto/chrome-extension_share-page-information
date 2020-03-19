@@ -86,7 +86,7 @@ class ShareTemplate {
 		const element = this.selectableElement.generateElement();
 		element.classList.add('copy-target');
 
-		const copy = (() => {
+		const copyAndAnimate = (() => {
 			let timeout_id = null;
 			return () => {
 				this._copy();
@@ -103,11 +103,11 @@ class ShareTemplate {
 				copyButton.focus();
 			};
 		})();
-		this.clickCopyButton = copy;
+		this.clickCopyButton = copyAndAnimate;
 
 		const copyButton = createElement('button', {
 			innerText: Messages.copy,
-			onclick: copy,
+			onclick: copyAndAnimate,
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute('accesskey', this.accesskey);
