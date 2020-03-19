@@ -6,10 +6,6 @@
 		"message": "ページ情報をWiki記法などに変換する"
 	},
 
-	"non_supported_page": {
-		"message": "非対応ページ"
-	},
-
 	"edit_title": {
 		"message": "タイトルを編集"
 	},
