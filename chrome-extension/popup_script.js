@@ -1,74 +1,5 @@
 import i18n from './i18n.js';
-import ShareTemplate from './ShareTemplate.js';
-import createCopyButtonId from './createCopyButtonId.js';
-import {
-	SelectableTextarea,
-	SelectableLink,
-} from './SelectableElement.js';
-
-const templates = [
-	new ShareTemplate({
-		id: 'title_url',
-		accesskey: 'p',
-		selectableElement: new SelectableTextarea('{{title}}\n{{url}}'),
-	}),
-	new ShareTemplate({
-		id: 'hiki',
-		accesskey: 'h',
-		selectableElement: new SelectableTextarea('[[{{title}}|{{url}}]]'),
-	}),
-	new ShareTemplate({
-		id: 'textile',
-		accesskey: 't',
-		selectableElement: new SelectableTextarea((data) => {
-			const title = data.title
-				.replace(/[(]/g, '[')
-				.replace(/[)]/g, ']')
-				.replace(/"/g, '&quot;')
-			;
-			const url = data.url;
-			return `"${title}":${url}`;
-		}),
-	}),
-	new ShareTemplate({
-		id: 'backlog',
-		accesskey: 'b',
-		selectableElement: new SelectableTextarea('[[{{title}}>{{url}}]]'),
-	}),
-	new ShareTemplate({
-		id: 'markdown',
-		accesskey: 'm',
-		options: [{
-			key: 'exclude-tooltip',
-			name: i18n.getMessage('exclude_tooltip'),
-		}, {
-			key: 'escape-parenthesis',
-			name: i18n.getMessage('markdown_escape_parenthesis'),
-			defaultValue: true,
-		}],
-		selectableElement: new SelectableTextarea((data, option) => {
-			const text = data.title.replace(/\[|\]|\\/g, '\\$&');
-			let url = data.url.replace(/\\/g, '\\$&');
-			if (option['escape-parenthesis']) {
-				url = data.url.replace(/\)/g, '\\$&');
-			}
-			if (option['exclude-tooltip']) {
-				return `[${text}](${url})`;
-			}
-			let decodedUrl = data.url;
-			try {
-				decodedUrl = decodeURIComponent(data.url);
-			} catch (e) {}
-			const tooltip = decodedUrl.replace(/"\)/g, '"\\)');
-			return `[${text}](${url} "${tooltip}")`;
-		}),
-	}),
-	new ShareTemplate({
-		id: 'link',
-		accesskey: 'l',
-		selectableElement: new SelectableLink(),
-	}),
-];
+import templates from './templates.js';
 
 const globalSettings = document.querySelector('global-settings');
 const titleInput = document.getElementById('title');
@@ -88,14 +19,20 @@ chrome.tabs.query({
 		// Chromeではfile:の後に/がいくつ並んでもOK
 		data.url = data.url.replace(/^file:[/][/]([^:/]+)[/]/, 'file://///$1/');
 
+		const copyCallBack = () => {
+			if (globalSettings.closeWindowAfterCopied) {
+				window.close();
+			}
+		};
 
 		const container = document.getElementById('container');
 		templates.forEach(template => {
-			template.appendTo(data, container);
+			template.appendTo(container, {
+				copyCallBack,
+			});
+			template.update(data);
 		});
-		globalSettings.setupOpenCopyAction(templates, {
-			createCopyButtonId,
-		});
+		globalSettings.setupOpenCopyAction(templates);
 		globalSettings.setupEnableSetting(templates);
 
 		titleInput.value = data.title;

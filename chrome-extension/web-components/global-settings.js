@@ -166,7 +166,7 @@ class GlobalSettingsElement extends HTMLElement {
 		i18n.setup(shadowRoot);
 	}
 
-	setupOpenCopyAction(templates, { createCopyButtonId }) {
+	setupOpenCopyAction(templates) {
 		const LOCALSTORAGE_KEY = 'open_copy_action_id';
 		const openCopyActionSelect = this.shadowRoot.getElementById('open_copy_action');
 		const openCopyActionOptions = document.createDocumentFragment();
@@ -182,7 +182,7 @@ class GlobalSettingsElement extends HTMLElement {
 			openCopyActionOptions.appendChild(option);
 
 			if (selected) {
-				document.getElementById(createCopyButtonId(id)).onclick();
+				template.clickCopyButton();
 			}
 		});
 		openCopyActionSelect.appendChild(openCopyActionOptions);

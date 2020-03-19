@@ -1,11 +1,8 @@
 import './web-components/check-box.js';
 import i18n from './i18n.js';
 import util from './util.js';
-import createCopyButtonId from './createCopyButtonId.js';
 
 const createElement = util.createElement;
-
-const globalSettings = document.querySelector('global-settings');
 
 const Messages = {
 	copy: i18n.getMessage('copy'),
@@ -14,12 +11,23 @@ const Messages = {
 
 class ShareTemplate {
 	constructor(argObject) {
-		['id', 'selectableElement'].forEach(key => {
+		['id', 'selectableElement', 'format'].forEach(key => {
 			if (typeof argObject[key] === 'undefined') {
 				throw new Error(`${key}プロパティが必要`);
 			}
 			this[key] = argObject[key];
 		});
+		if (typeof this.format !== 'function') {
+			const format = String(this.format);
+			this.format = data => {
+				const text = format.replace(/{{([a-z]+)}}/ig, (all, name) => {
+					return data[name] || '';
+				});
+				return {
+					text,
+				};
+			};
+		}
 		this.type = i18n.getMessage(`format_type_${this.id}`);
 		this.description = i18n.getMessage(`format_description_${this.id}`);
 		// Option
@@ -50,8 +58,9 @@ class ShareTemplate {
 			this._hide();
 		}
 	}
-	appendTo(data, parent) {
-		this._latestData = data;
+	appendTo(parent, {
+		copyCallBack,
+	} = {}) {
 		const optionContainer = this.options && (() => {
 			const optionsFragment = document.createDocumentFragment();
 			this.options.forEach(option => {
@@ -61,32 +70,29 @@ class ShareTemplate {
 					innerText: option.name,
 					checked: savedValueString ? savedValueString === 'true' : !!option.defaultValue,
 				});
+				this.optionObject[option.key] = checkBox.checked;
 				checkBox.addEventListener('change', () => {
 					localStorage[localStorageKey] = checkBox.checked;
+					this.optionObject[option.key] = checkBox.checked;
 					this.update();
 				});
 				optionsFragment.appendChild(checkBox);
-				Object.defineProperty(this.optionObject, option.key, {
-					get() {
-						return checkBox.checked;
-					},
-				});
 			});
 			const _optionContainer = createElement('div');
 			_optionContainer.appendChild(optionsFragment);
 			return _optionContainer;
 		})();
 
-		const element = this.selectableElement.generateElement(data, this.optionObject);
+		const element = this.selectableElement.generateElement();
 		element.classList.add('copy-target');
 
-		const copy = (() => {
+		const copyAndAnimate = (() => {
 			let timeout_id = null;
 			return () => {
-				this._copy();
+				this.copy();
 
-				if (globalSettings.closeWindowAfterCopied) {
-					return window.close();
+				if (copyCallBack) {
+					copyCallBack();
 				}
 
 				if (null !== timeout_id) clearTimeout(timeout_id);
@@ -97,11 +103,11 @@ class ShareTemplate {
 				copyButton.focus();
 			};
 		})();
+		this.clickCopyButton = copyAndAnimate;
 
 		const copyButton = createElement('button', {
-			id: createCopyButtonId(this.id),
 			innerText: Messages.copy,
-			onclick: copy,
+			onclick: copyAndAnimate,
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute('accesskey', this.accesskey);
@@ -141,9 +147,11 @@ class ShareTemplate {
 	}
 	update(data = this._latestData) {
 		this._latestData = data;
-		this.selectableElement.updateElement(data, this.optionObject);
+		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
+		const formatted = this.format(data, optionObject);
+		this.selectableElement.updateElement(formatted);
 	}
-	_copy() {
+	copy() {
 		this.selectableElement.show();
 		this.selectableElement.selectElement();
 		document.execCommand('copy');
