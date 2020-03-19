@@ -89,7 +89,7 @@ class ShareTemplate {
 		const copyAndAnimate = (() => {
 			let timeout_id = null;
 			return () => {
-				this._copy();
+				this.copy();
 
 				if (copyCallBack) {
 					copyCallBack();
@@ -151,7 +151,7 @@ class ShareTemplate {
 		const formatted = this.format(data, optionObject);
 		this.selectableElement.updateElement(formatted);
 	}
-	_copy() {
+	copy() {
 		this.selectableElement.show();
 		this.selectableElement.selectElement();
 		document.execCommand('copy');
