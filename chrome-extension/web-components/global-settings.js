@@ -1,6 +1,9 @@
 import './check-box.js';
 import i18n from '../i18n.js';
 import util from '../util.js';
+import {
+	updateContextMenus,
+ } from '../ContextMenuUtil.js';
 
 const templateHTML = `
 	<style>
@@ -209,6 +212,7 @@ class GlobalSettingsElement extends HTMLElement {
 			]);
 			checkBox.addEventListener('change', evt => {
 				template.enabled = evt.checked;
+				updateContextMenus();
 			});
 			template.addEventListener('change-enabled', evt => {
 				checkBox.checked = evt.enabled;
