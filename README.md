@@ -3,7 +3,11 @@
 
 [Chromeストア](https://chrome.google.com/webstore/detail/nnnflohcklplblcndpidebcbkdfbjmdm)
 
-<img src="chrome-store/スクリーンショット-01.png">
+## コピー方法
+1. ポップアップから
+    <img src="chrome-store/スクリーンショット-01.png">
+1. 右クリックメニューから
+    <img src="chrome-store/スクリーンショット-context_menu-page.png">
 
 ## 対応書式
 * タイトル<改行>URL

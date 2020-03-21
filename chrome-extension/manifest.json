@@ -11,9 +11,14 @@
 		"128": "icon/icon.png"
 	},
 	"permissions": [
+		"contextMenus",
 		"activeTab",
 		"clipboardWrite"
 	],
+	"background": {
+		"persistent": false,
+		"page": "background.html"
+	},
 	"browser_action": {
 		"default_icon": "icon/icon.png",
 		"default_title": "__MSG_extension_name__",
