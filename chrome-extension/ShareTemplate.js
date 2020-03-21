@@ -9,8 +9,9 @@ const Messages = {
 	copyCompleted: i18n.getMessage('copy_completed'),
 };
 
-class ShareTemplate {
+class ShareTemplate extends EventTarget {
 	constructor(argObject) {
+		super();
 		['id', 'selectableElement', 'format'].forEach(key => {
 			if (typeof argObject[key] === 'undefined') {
 				throw new Error(`${key}プロパティが必要`);
@@ -44,10 +45,10 @@ class ShareTemplate {
 		window.addEventListener('storage', ({ key, newValue }) => {
 			if (key === null) {
 				// localStorage.clear()
-				return this._updateEnabled(true);
+				return this._updateEnabled(true, { fromOtherPage: true });
 			}
 			if (key === `enabled.${this.id}`) {
-				this._updateEnabled(newValue === 'true');
+				this._updateEnabled(newValue === 'true', { fromOtherPage: true });
 			}
 		});
 	}
@@ -65,12 +66,19 @@ class ShareTemplate {
 		this._updateEnabled(val);
 		this._saveEnableSetting();
 	}
-	_updateEnabled(val) {
+	_updateEnabled(val, {
+		fromOtherPage = false,
+	} = {}) {
 		this._enabled = !!val;
 		if (this._enabled) {
 			this._show();
 		} else {
 			this._hide();
+		}
+		if (fromOtherPage) {
+			const event = new CustomEvent('change-enabled');
+			event.enabled = this.enabled;
+			this.dispatchEvent(event);
 		}
 	}
 	appendTo(parent, {

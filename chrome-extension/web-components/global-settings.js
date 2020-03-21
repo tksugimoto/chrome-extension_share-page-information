@@ -210,6 +210,9 @@ class GlobalSettingsElement extends HTMLElement {
 			checkBox.addEventListener('change', evt => {
 				template.enabled = evt.checked;
 			});
+			template.addEventListener('change-enabled', evt => {
+				checkBox.checked = evt.enabled;
+			});
 			const li = util.createElement('li', {}, checkBox);
 			enableSettings.appendChild(li);
 		});
