@@ -50,8 +50,11 @@ class ShareTemplate {
 		return this._enabled;
 	}
 	set enabled(val) {
-		this._enabled = !!val;
+		this._updateEnabled(val);
 		this._saveEnableSetting();
+	}
+	_updateEnabled(val) {
+		this._enabled = !!val;
 		if (this._enabled) {
 			this._show();
 		} else {
