@@ -38,6 +38,18 @@ class ShareTemplate {
 		});
 		this.optionObject = {};
 		this._loadEnableSetting();
+		this._listenStorageChange();
+	}
+	_listenStorageChange() {
+		window.addEventListener('storage', ({ key, newValue }) => {
+			if (key === null) {
+				// localStorage.clear()
+				return this._updateEnabled(true);
+			}
+			if (key === `enabled.${this.id}`) {
+				this._updateEnabled(newValue === 'true');
+			}
+		});
 	}
 	_loadEnableSetting() {
 		const val = localStorage[`enabled.${this.id}`];
