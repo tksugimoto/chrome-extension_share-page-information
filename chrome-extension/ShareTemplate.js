@@ -163,9 +163,11 @@ class ShareTemplate extends EventTarget {
 		parent.appendChild(this._container);
 	}
 	_hide() {
+		if (!this._container) return;
 		this._container.style.display = 'none';
 	}
 	_show() {
+		if (!this._container) return;
 		this._container.style.display = '';
 	}
 	update(data = this._latestData) {
