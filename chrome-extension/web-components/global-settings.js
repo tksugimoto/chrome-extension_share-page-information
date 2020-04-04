@@ -129,7 +129,7 @@ const templateHTML = `
 				class="setting-title"
 				data-i18n-innerText="using_format"
 				>使用する書式</h2>
-			<ul id="enable_setting"></ul>
+			<ul id="using_format_container"></ul>
 		</div>
 	</div>
 `;
@@ -220,7 +220,7 @@ class GlobalSettingsElement extends HTMLElement {
 			const li = util.createElement('li', {}, checkBox);
 			liContainer.appendChild(li);
 		});
-		this.shadowRoot.getElementById('enable_setting').appendChild(liContainer);
+		this.shadowRoot.getElementById('using_format_container').appendChild(liContainer);
 	}
 
 	_setupCloseWindowSetting() {
