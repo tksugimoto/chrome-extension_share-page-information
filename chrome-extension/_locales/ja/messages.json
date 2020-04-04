@@ -99,7 +99,7 @@
 	"hide_copy_target": {
 		"message": "コピー対象を非表示にする"
 	},
-	"display_format": {
-		"message": "表示する書式"
+	"using_format": {
+		"message": "使用する書式"
 	}
 }

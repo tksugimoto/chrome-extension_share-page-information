@@ -127,8 +127,8 @@ const templateHTML = `
 		<div class="setting">
 			<h2
 				class="setting-title"
-				data-i18n-innerText="display_format"
-				>表示する書式</h2>
+				data-i18n-innerText="using_format"
+				>使用する書式</h2>
 			<ul id="enable_setting"></ul>
 		</div>
 	</div>
