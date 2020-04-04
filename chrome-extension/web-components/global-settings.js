@@ -202,7 +202,7 @@ class GlobalSettingsElement extends HTMLElement {
 	}
 
 	setupEnableSetting(templates) {
-		const enableSettings = document.createDocumentFragment();
+		const liContainer = document.createDocumentFragment();
 		templates.forEach(template => {
 			const checkBox = util.createElement('check-box', {
 				tabIndex: -1,
@@ -218,9 +218,9 @@ class GlobalSettingsElement extends HTMLElement {
 				checkBox.checked = evt.enabled;
 			});
 			const li = util.createElement('li', {}, checkBox);
-			enableSettings.appendChild(li);
+			liContainer.appendChild(li);
 		});
-		this.shadowRoot.getElementById('enable_setting').appendChild(enableSettings);
+		this.shadowRoot.getElementById('enable_setting').appendChild(liContainer);
 	}
 
 	_setupCloseWindowSetting() {
