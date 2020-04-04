@@ -1,7 +1,7 @@
 import {
 	createContextMenus,
 	findTemplateFrom,
- } from './ContextMenuUtil.js';
+ } from '../ContextMenuUtil.js';
 
 chrome.runtime.onInstalled.addListener(createContextMenus);
 chrome.runtime.onStartup.addListener(createContextMenus);
