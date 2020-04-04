@@ -201,7 +201,7 @@ class GlobalSettingsElement extends HTMLElement {
 		this.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || '');
 	}
 
-	setupEnableSetting(templates) {
+	setupUsingFormat(templates) {
 		const liContainer = document.createDocumentFragment();
 		templates.forEach(template => {
 			const checkBox = util.createElement('check-box', {
