@@ -1,9 +1,7 @@
 import './check-box.js';
+import './using-format-setting.js';
 import i18n from '../i18n.js';
 import util from '../util.js';
-import {
-	updateContextMenus,
- } from '../ContextMenuUtil.js';
 
 const templateHTML = `
 	<style>
@@ -129,7 +127,7 @@ const templateHTML = `
 				class="setting-title"
 				data-i18n-innerText="using_format"
 				>使用する書式</h2>
-			<ul id="using_format_container"></ul>
+			<using-format-setting></using-format-setting>
 		</div>
 	</div>
 `;
@@ -202,25 +200,7 @@ class GlobalSettingsElement extends HTMLElement {
 	}
 
 	setupUsingFormat(templates) {
-		const liContainer = document.createDocumentFragment();
-		templates.forEach(template => {
-			const checkBox = util.createElement('check-box', {
-				tabIndex: -1,
-				checked: template.enabled,
-			}, [
-				template.type,
-			]);
-			checkBox.addEventListener('change', evt => {
-				template.enabled = evt.checked;
-				updateContextMenus();
-			});
-			template.addEventListener('change-enabled', evt => {
-				checkBox.checked = evt.enabled;
-			});
-			const li = util.createElement('li', {}, checkBox);
-			liContainer.appendChild(li);
-		});
-		this.shadowRoot.getElementById('using_format_container').appendChild(liContainer);
+		this.shadowRoot.querySelector('using-format-setting').setup(templates);
 	}
 
 	_setupCloseWindowSetting() {
