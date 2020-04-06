@@ -8,19 +8,19 @@ import {
 const templates = [
 	new ShareTemplate({
 		id: 'title_url',
-		accesskey: 'p',
+		accesskey: 'P',
 		format: '{{title}}\n{{url}}',
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'hiki',
-		accesskey: 'h',
+		accesskey: 'H',
 		format: '[[{{title}}|{{url}}]]',
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'textile',
-		accesskey: 't',
+		accesskey: 'T',
 		format: (data) => {
 			const title = data.title
 				.replace(/[(]/g, '[')
@@ -36,13 +36,13 @@ const templates = [
 	}),
 	new ShareTemplate({
 		id: 'backlog',
-		accesskey: 'b',
+		accesskey: 'B',
 		format: '[[{{title}}>{{url}}]]',
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'markdown',
-		accesskey: 'm',
+		accesskey: 'M',
 		options: [{
 			key: 'exclude-tooltip',
 			name: i18n.getMessage('exclude_tooltip'),
@@ -75,7 +75,7 @@ const templates = [
 	}),
 	new ShareTemplate({
 		id: 'link',
-		accesskey: 'l',
+		accesskey: 'L',
 		format: (data) => {
 			return {
 				text: data.title,

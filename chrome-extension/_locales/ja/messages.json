@@ -9,8 +9,8 @@
 	"edit_title": {
 		"message": "タイトルを編集"
 	},
-	"focus_by_accesskey_e": {
-		"message": "Alt + E でフォーカス"
+	"shortcut_by_accesskey_e": {
+		"message": "ショートカットキー: E"
 	},
 
 	"copy": {
@@ -20,7 +20,7 @@
 		"message": "コピー完了"
 	},
 	"shortcut_by_accesskey": {
-		"message": "ショートカットキー: Alt + $accesskey$",
+		"message": "ショートカットキー: $accesskey$",
 		"placeholders": {
 			"accesskey": {
 				"content": "$1"
