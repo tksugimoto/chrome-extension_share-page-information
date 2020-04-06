@@ -1,5 +1,5 @@
-import i18n from './i18n.js';
-import templates from './templates.js';
+import i18n from '../i18n.js';
+import templates from '../templates.js';
 
 const globalSettings = document.querySelector('global-settings');
 const titleInput = document.getElementById('title');
