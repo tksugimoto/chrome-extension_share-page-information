@@ -134,7 +134,7 @@ class ShareTemplate extends EventTarget {
 		});
 		if (this.accesskey) {
 			copyButton.setAttribute('accesskey', this.accesskey);
-			copyButton.title = i18n.getMessage('shortcut_by_accesskey', [this.accesskey.toUpperCase()]);
+			copyButton.title = i18n.getMessage('shortcut_by_accesskey', [this.accesskey]);
 		}
 		this._container = createElement('div', {
 			class: 'share-item',
