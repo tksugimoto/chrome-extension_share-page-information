@@ -32,7 +32,7 @@ chrome.tabs.query({
 		template.update(data);
 	});
 	globalSettings.setupOpenCopyAction(templates);
-	globalSettings.setupEnableSetting(templates);
+	globalSettings.setupUsingFormat(templates);
 
 	titleInput.value = data.title;
 	titleInput.select();

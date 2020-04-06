@@ -127,9 +127,9 @@ const templateHTML = `
 		<div class="setting">
 			<h2
 				class="setting-title"
-				data-i18n-innerText="display_format"
-				>表示する書式</h2>
-			<ul id="enable_setting"></ul>
+				data-i18n-innerText="using_format"
+				>使用する書式</h2>
+			<ul id="using_format_container"></ul>
 		</div>
 	</div>
 `;
@@ -201,8 +201,8 @@ class GlobalSettingsElement extends HTMLElement {
 		this.setAttribute(`data-${LOCALSTORAGE_KEY}`, localStorage[LOCALSTORAGE_KEY] || '');
 	}
 
-	setupEnableSetting(templates) {
-		const enableSettings = document.createDocumentFragment();
+	setupUsingFormat(templates) {
+		const liContainer = document.createDocumentFragment();
 		templates.forEach(template => {
 			const checkBox = util.createElement('check-box', {
 				tabIndex: -1,
@@ -218,9 +218,9 @@ class GlobalSettingsElement extends HTMLElement {
 				checkBox.checked = evt.enabled;
 			});
 			const li = util.createElement('li', {}, checkBox);
-			enableSettings.appendChild(li);
+			liContainer.appendChild(li);
 		});
-		this.shadowRoot.getElementById('enable_setting').appendChild(enableSettings);
+		this.shadowRoot.getElementById('using_format_container').appendChild(liContainer);
 	}
 
 	_setupCloseWindowSetting() {
