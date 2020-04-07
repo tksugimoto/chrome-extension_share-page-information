@@ -45,6 +45,14 @@ const templates = [
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
+		id: 'gitlab',
+		accesskey: 'G',
+		// TODO: title に含まれる ` の数 +1 個の ` で囲む
+		format: '{{url}} ``{{title}}``',
+		quotationFormat: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+		selectableElement: new SelectableTextarea(),
+	}),
+	new ShareTemplate({
 		id: 'markdown',
 		accesskey: 'M',
 		options: [{

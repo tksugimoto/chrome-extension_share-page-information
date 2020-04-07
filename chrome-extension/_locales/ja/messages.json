@@ -65,6 +65,12 @@
 	"format_description_backlog": {
 		"message": "[[リンクテキスト: タイトル>リンク先: URL]]"
 	},
+	"format_type_gitlab": {
+		"message": "GitLab"
+	},
+	"format_description_gitlab": {
+		"message": "URL `タイトル`"
+	},
 	"format_type_markdown": {
 		"message": "Markdown"
 	},
