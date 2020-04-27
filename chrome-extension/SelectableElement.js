@@ -10,7 +10,7 @@ class SelectableElement extends HTMLElement {
 		// 返り値: 無し
 		throw new Error('実装が必要です');
 	}
-	selectElement() {
+	select() {
 		throw new Error('実装が必要です');
 	}
 	show() {
@@ -43,7 +43,7 @@ class SelectableTextarea extends SelectableElement {
 	update({text}) {
 		this._textarea.value = text;
 	}
-	selectElement() {
+	select() {
 		this._textarea.select();
 	}
 }
@@ -69,7 +69,7 @@ class SelectableLink extends SelectableElement{
 		this._link.innerText = text;
 		this._link.href = url;
 	}
-	selectElement() {
+	select() {
 		const range = document.createRange();
 		range.selectNodeContents(this._link);
 		const selection = window.getSelection();

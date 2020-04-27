@@ -178,7 +178,7 @@ class ShareTemplate extends EventTarget {
 	}
 	copy() {
 		this.selectableElement.show();
-		this.selectableElement.selectElement();
+		this.selectableElement.select();
 		document.execCommand('copy');
 		this.selectableElement.resetDisplay();
 	}
