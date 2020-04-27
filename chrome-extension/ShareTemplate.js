@@ -106,7 +106,7 @@ class ShareTemplate extends EventTarget {
 			return _optionContainer;
 		})();
 
-		const element = this.selectableElement.generateElement();
+		const element = this.selectableElement;
 		element.classList.add('copy-target');
 
 		const copyAndAnimate = (() => {

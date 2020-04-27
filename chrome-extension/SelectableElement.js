@@ -2,10 +2,9 @@ import util from './util.js';
 
 const createElement = util.createElement;
 
-class SelectableElement {
-	generateElement() {
-		// 返り値: HTMLElement
-		throw new Error('実装が必要です');
+class SelectableElement extends HTMLElement {
+	constructor() {
+		super();
 	}
 	updateElement(/* data */) {
 		// 返り値: 無し
@@ -15,15 +14,17 @@ class SelectableElement {
 		throw new Error('実装が必要です');
 	}
 	show() {
-		this._element.style.display = 'inline';
+		this.style.display = 'inline';
 	}
 	resetDisplay() {
-		this._element.style.display = '';
+		this.style.display = '';
 	}
 }
 
 class SelectableTextarea extends SelectableElement {
-	generateElement() {
+	constructor() {
+		super();
+
 		this._element = createElement('textarea', {
 			rows: 2,
 			spellcheck: false,
@@ -33,7 +34,11 @@ class SelectableTextarea extends SelectableElement {
 				'word-break': 'break-all',
 			},
 		});
-		return this._element;
+
+		const shadowRoot = this.attachShadow({
+			mode: 'closed',
+		});
+		shadowRoot.append(this._element);
 	}
 	updateElement({text}) {
 		this._element.value = text;
@@ -43,15 +48,23 @@ class SelectableTextarea extends SelectableElement {
 	}
 }
 
+window.customElements.define('selectable-textarea', SelectableTextarea);
+
 class SelectableLink extends SelectableElement{
-	generateElement() {
+	constructor() {
+		super();
+
 		this._element = createElement('a', {
 			tabIndex: -1,
 			style: {
 				'word-break': 'break-all',
 			},
 		});
-		return this._element;
+
+		const shadowRoot = this.attachShadow({
+			mode: 'closed',
+		});
+		shadowRoot.append(this._element);
 	}
 	updateElement({text, url}) {
 		this._element.innerText = text;
@@ -65,6 +78,8 @@ class SelectableLink extends SelectableElement{
 		selection.addRange(range);
 	}
 }
+
+window.customElements.define('selectable-link', SelectableLink);
 
 export {
 	SelectableTextarea,
