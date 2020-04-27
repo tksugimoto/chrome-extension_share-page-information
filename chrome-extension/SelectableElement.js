@@ -56,10 +56,9 @@ class SelectableLink extends SelectableElement{
 
 		this._element = createElement('a', {
 			tabIndex: -1,
-			style: {
-				'word-break': 'break-all',
-			},
 		});
+
+		this.style.wordBreak = 'break-all';
 
 		const shadowRoot = this.attachShadow({
 			mode: 'closed',
