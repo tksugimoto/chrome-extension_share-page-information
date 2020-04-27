@@ -25,7 +25,7 @@ class SelectableTextarea extends SelectableElement {
 	constructor() {
 		super();
 
-		this._element = createElement('textarea', {
+		this._textarea = createElement('textarea', {
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -38,13 +38,13 @@ class SelectableTextarea extends SelectableElement {
 		const shadowRoot = this.attachShadow({
 			mode: 'closed',
 		});
-		shadowRoot.append(this._element);
+		shadowRoot.append(this._textarea);
 	}
 	updateElement({text}) {
-		this._element.value = text;
+		this._textarea.value = text;
 	}
 	selectElement() {
-		this._element.select();
+		this._textarea.select();
 	}
 }
 
@@ -54,7 +54,7 @@ class SelectableLink extends SelectableElement{
 	constructor() {
 		super();
 
-		this._element = createElement('a', {
+		this._link = createElement('a', {
 			tabIndex: -1,
 		});
 
@@ -63,15 +63,15 @@ class SelectableLink extends SelectableElement{
 		const shadowRoot = this.attachShadow({
 			mode: 'closed',
 		});
-		shadowRoot.append(this._element);
+		shadowRoot.append(this._link);
 	}
 	updateElement({text, url}) {
-		this._element.innerText = text;
-		this._element.href = url;
+		this._link.innerText = text;
+		this._link.href = url;
 	}
 	selectElement() {
 		const range = document.createRange();
-		range.selectNodeContents(this._element);
+		range.selectNodeContents(this._link);
 		const selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
