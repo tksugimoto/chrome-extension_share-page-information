@@ -174,7 +174,7 @@ class ShareTemplate extends EventTarget {
 		this._latestData = data;
 		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
 		const formatted = this.format(data, optionObject);
-		this.selectableElement.updateElement(formatted);
+		this.selectableElement.update(formatted);
 	}
 	copy() {
 		this.selectableElement.show();

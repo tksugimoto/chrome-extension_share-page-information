@@ -6,7 +6,7 @@ class SelectableElement extends HTMLElement {
 	constructor() {
 		super();
 	}
-	updateElement(/* data */) {
+	update(/* data */) {
 		// 返り値: 無し
 		throw new Error('実装が必要です');
 	}
@@ -40,7 +40,7 @@ class SelectableTextarea extends SelectableElement {
 		});
 		shadowRoot.append(this._textarea);
 	}
-	updateElement({text}) {
+	update({text}) {
 		this._textarea.value = text;
 	}
 	selectElement() {
@@ -65,7 +65,7 @@ class SelectableLink extends SelectableElement{
 		});
 		shadowRoot.append(this._link);
 	}
-	updateElement({text, url}) {
+	update({text, url}) {
 		this._link.innerText = text;
 		this._link.href = url;
 	}
