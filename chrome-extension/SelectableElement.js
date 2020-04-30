@@ -54,9 +54,9 @@ class SelectableLink extends SelectableElement{
 	constructor() {
 		super();
 
-		this._link = createElement('a', {
-			tabIndex: -1,
-		});
+		this._link = createElement('a');
+
+		this.tabIndex = -1;
 
 		this.style.wordBreak = 'break-all';
 
