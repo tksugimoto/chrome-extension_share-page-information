@@ -87,6 +87,7 @@ const templates = [
 				url: data.url,
 			};
 		},
+		quotationFormat: (text) => text,
 		selectableElement: new SelectableLink(),
 	}),
 ];
