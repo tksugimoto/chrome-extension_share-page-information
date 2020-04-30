@@ -25,7 +25,8 @@ class SelectableTextarea extends SelectableElement {
 	constructor() {
 		super();
 
-		this._textarea = createElement('textarea', {
+		this._textarea = document.createElement('textarea');
+		createElement(this._textarea, {
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -54,7 +55,7 @@ class SelectableLink extends SelectableElement{
 	constructor() {
 		super();
 
-		this._link = createElement('a');
+		this._link = document.createElement('a');
 
 		this.tabIndex = -1;
 
