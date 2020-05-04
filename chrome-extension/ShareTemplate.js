@@ -106,7 +106,7 @@ class ShareTemplate extends EventTarget {
 			return _optionContainer;
 		})();
 
-		const element = this.selectableElement.generateElement();
+		const element = this.selectableElement;
 		element.classList.add('copy-target');
 
 		const copyAndAnimate = (() => {
@@ -174,11 +174,11 @@ class ShareTemplate extends EventTarget {
 		this._latestData = data;
 		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
 		const formatted = this.format(data, optionObject);
-		this.selectableElement.updateElement(formatted);
+		this.selectableElement.update(formatted);
 	}
 	copy() {
 		this.selectableElement.show();
-		this.selectableElement.selectElement();
+		this.selectableElement.select();
 		document.execCommand('copy');
 		this.selectableElement.resetDisplay();
 	}

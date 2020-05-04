@@ -2,29 +2,31 @@ import util from './util.js';
 
 const createElement = util.createElement;
 
-class SelectableElement {
-	generateElement() {
-		// 返り値: HTMLElement
-		throw new Error('実装が必要です');
+class SelectableElement extends HTMLElement {
+	constructor() {
+		super();
 	}
-	updateElement(/* data */) {
+	update(/* data */) {
 		// 返り値: 無し
 		throw new Error('実装が必要です');
 	}
-	selectElement() {
+	select() {
 		throw new Error('実装が必要です');
 	}
 	show() {
-		this._element.style.display = 'inline';
+		this.style.display = 'inline';
 	}
 	resetDisplay() {
-		this._element.style.display = '';
+		this.style.display = '';
 	}
 }
 
 class SelectableTextarea extends SelectableElement {
-	generateElement() {
-		this._element = createElement('textarea', {
+	constructor() {
+		super();
+
+		this._textarea = document.createElement('textarea');
+		createElement(this._textarea, {
 			rows: 2,
 			spellcheck: false,
 			tabIndex: -1,
@@ -33,38 +35,51 @@ class SelectableTextarea extends SelectableElement {
 				'word-break': 'break-all',
 			},
 		});
-		return this._element;
+
+		const shadowRoot = this.attachShadow({
+			mode: 'closed',
+		});
+		shadowRoot.append(this._textarea);
 	}
-	updateElement({text}) {
-		this._element.value = text;
+	update({text}) {
+		this._textarea.value = text;
 	}
-	selectElement() {
-		this._element.select();
+	select() {
+		this._textarea.select();
 	}
 }
 
+window.customElements.define('selectable-textarea', SelectableTextarea);
+
 class SelectableLink extends SelectableElement{
-	generateElement() {
-		this._element = createElement('a', {
-			tabIndex: -1,
-			style: {
-				'word-break': 'break-all',
-			},
+	constructor() {
+		super();
+
+		this._link = document.createElement('a');
+
+		this.tabIndex = -1;
+
+		this.style.wordBreak = 'break-all';
+
+		const shadowRoot = this.attachShadow({
+			mode: 'closed',
 		});
-		return this._element;
+		shadowRoot.append(this._link);
 	}
-	updateElement({text, url}) {
-		this._element.innerText = text;
-		this._element.href = url;
+	update({text, url}) {
+		this._link.innerText = text;
+		this._link.href = url;
 	}
-	selectElement() {
+	select() {
 		const range = document.createRange();
-		range.selectNodeContents(this._element);
+		range.selectNodeContents(this._link);
 		const selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
 	}
 }
+
+window.customElements.define('selectable-link', SelectableLink);
 
 export {
 	SelectableTextarea,
