@@ -1,0 +1,105 @@
+{
+	"extension_name": {
+		"message": "Share page information"
+	},
+	"extension_description": {
+		"message": "Convert page information to Wiki notation, etc."
+	},
+
+	"edit_title": {
+		"message": "Edit title"
+	},
+	"shortcut_by_accesskey_e": {
+		"message": "Shortcut key: E"
+	},
+
+	"copy": {
+		"message": "Copy"
+	},
+	"copy_completed": {
+		"message": "Copy completed"
+	},
+	"shortcut_by_accesskey": {
+		"message": "Shortcut key: $accesskey$",
+		"placeholders": {
+			"accesskey": {
+				"content": "$1"
+			}
+		}
+	},
+
+	"format_type_title_url": {
+		"message": "Title + URL"
+	},
+	"format_description_title_url": {
+		"message": "Title <line feed> URL"
+	},
+	"format_type_hiki": {
+		"message": "Hiki (Wiki clone)"
+	},
+	"format_description_hiki": {
+		"message": "[[Link text: title|Link destination URL]]"
+	},
+	"format_type_textile": {
+		"message": "Textile (Redmine) "
+	},
+	"format_description_textile": {
+		"message": "\"Link text: Title\":Link_destination_URL"
+	},
+	"format_type_backlog": {
+		"message": "Backlog"
+	},
+	"format_description_backlog": {
+		"message": "[[Link text: Title>Link destination URL]]"
+	},
+	"format_type_markdown": {
+		"message": "Markdown"
+	},
+	"format_description_markdown": {
+		"message": "[Link text: Title](Link_destination_URL \"Tooltip: URL (decoded)\")"
+	},
+	"format_type_link": {
+		"message": "Link"
+	},
+	"format_description_link": {
+		"message": "HTML <a> tag"
+	},
+
+	"exclude_tooltip": {
+		"message": "Exclude tooltip"
+	},
+	"markdown_escape_parenthesis": {
+		"message": "Escape parentheses"
+	},
+
+	"settings": {
+		"message": "Settings"
+	},
+	"can_not_change_setting_by_other_setting_value": {
+		"message": "Unable to change (due to other setting values)"
+	},
+	"can_not_use_with_close_popup_window_after_copied": {
+		"message": "Cannot be used in combination with the setting to close the popup when copying is completed"
+	},
+	"auto_copy_when_popup_open": {
+		"message": "Copy when pop-up opens"
+	},
+	"do_not_copy": {
+		"message": "Do not copy"
+	},
+	"after_copied": {
+		"message": "When copying is completed"
+	},
+	"close_popup_window": {
+		"message": "Close popup"
+	},
+	"compactification": {
+		"message": "Make the display compact"
+	},
+	"hide_copy_target": {
+		"message": "Hide copy target"
+	},
+	"using_format": {
+		"message": "The format to use"
+	}
+}
