@@ -5,9 +5,9 @@
 
 ## コピー方法
 1. ポップアップから
-    <img src="chrome-store/スクリーンショット-01.png">
+    <img src="chrome-store/screenshot-ja-01.png">
 1. 右クリックメニューから
-    <img src="chrome-store/スクリーンショット-context_menu-page.png">
+    <img src="chrome-store/screenshot-ja-context_menu-page.png">
 
 ## 対応書式
 * タイトル<改行>URL
