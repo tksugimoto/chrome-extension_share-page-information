@@ -10,12 +10,14 @@ const templates = [
 		id: 'title_url',
 		accesskey: 'P',
 		format: '{{title}}\n{{url}}',
+		quotationFormat: (text) => text.replace(/^/gm, '> '),
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'hiki',
 		accesskey: 'H',
 		format: '[[{{title}}|{{url}}]]',
+		quotationFormat: (text) => text.replace(/^/gm, '"" '),
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -32,12 +34,14 @@ const templates = [
 				text: `"${title}":${url}`,
 			};
 		},
+		quotationFormat: (text) => text.replace(/^/gm, '> '),
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'backlog',
 		accesskey: 'B',
 		format: '[[{{title}}>{{url}}]]',
+		quotationFormat: (text) => text.replace(/^/gm, '>'),
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -71,6 +75,7 @@ const templates = [
 				text: `[${text}](${url} "${tooltip}")`,
 			};
 		},
+		quotationFormat: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -82,6 +87,7 @@ const templates = [
 				url: data.url,
 			};
 		},
+		quotationFormat: (text) => text,
 		selectableElement: new SelectableLink(),
 	}),
 ];

@@ -32,7 +32,7 @@ class ShareTemplate extends EventTarget {
 		this.type = i18n.getMessage(`format_type_${this.id}`);
 		this.description = i18n.getMessage(`format_description_${this.id}`);
 		// Option
-		['accesskey', 'options'].forEach(key => {
+		['accesskey', 'options', 'quotationFormat'].forEach(key => {
 			if (typeof argObject[key] !== 'undefined') {
 				this[key] = argObject[key];
 			}
@@ -51,6 +51,9 @@ class ShareTemplate extends EventTarget {
 				this._updateEnabled(newValue === 'true', { fromOtherPage: true });
 			}
 		});
+	}
+	get quotationSupported() {
+		return !!this.quotationFormat;
 	}
 	_loadEnableSetting() {
 		const val = localStorage[`enabled.${this.id}`];
@@ -170,10 +173,15 @@ class ShareTemplate extends EventTarget {
 		if (!this._container) return;
 		this._container.style.display = '';
 	}
-	update(data = this._latestData) {
+	update(data = this._latestData, {
+		selectionText,
+	} = {}) {
 		this._latestData = data;
 		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
 		const formatted = this.format(data, optionObject);
+		if (selectionText && this.quotationSupported) {
+			formatted.quotationText = this.quotationFormat(selectionText.trimEnd());
+		}
 		this.selectableElement.update(formatted);
 	}
 	copy() {

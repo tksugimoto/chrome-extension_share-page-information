@@ -8,6 +8,8 @@
     <img src="chrome-store/screenshot-ja-01.png">
 1. 右クリックメニューから
     <img src="chrome-store/screenshot-ja-context_menu-page.png">
+1. [引用コピー] テキストを選択して右クリックメニューから
+    <img src="chrome-store/screenshot-ja-context_menu-selection_text.png">
 
 ## 対応書式
 * タイトル<改行>URL
@@ -16,6 +18,9 @@
 * Backlog 書式：`[[タイトル>URL]]`
 * Markdown書式：`[リンクテキスト](URL "タイトル(tooltip)")`
 * リンク（OfficeなどHTMLのコピーに対応している製品用）
+
+## 引用コピー
+テキストを選択して右クリックメニューから引用コピーに対応
 
 ## アイコン
 [アイコン素材ダウンロードサイト「icooon-mono」](https://icooon-mono.com/)

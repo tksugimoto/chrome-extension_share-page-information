@@ -41,7 +41,10 @@ class SelectableTextarea extends SelectableElement {
 		});
 		shadowRoot.append(this._textarea);
 	}
-	update({text}) {
+	update({text, quotationText}) {
+		if (quotationText) {
+			text += `\n\n${quotationText}`;
+		}
 		this._textarea.value = text;
 	}
 	select() {
@@ -56,6 +59,7 @@ class SelectableLink extends SelectableElement{
 		super();
 
 		this._link = document.createElement('a');
+		this._blockquote = document.createElement('blockquote');
 
 		this.tabIndex = -1;
 
@@ -65,14 +69,17 @@ class SelectableLink extends SelectableElement{
 			mode: 'closed',
 		});
 		shadowRoot.append(this._link);
+		shadowRoot.append(this._blockquote);
 	}
-	update({text, url}) {
+	update({text, url, quotationText}) {
 		this._link.innerText = text;
 		this._link.href = url;
+		this._blockquote.innerText = quotationText || '';
 	}
 	select() {
 		const range = document.createRange();
 		range.selectNodeContents(this._link);
+		if (this._blockquote.innerText) range.setEndAfter(this._blockquote);
 		const selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);

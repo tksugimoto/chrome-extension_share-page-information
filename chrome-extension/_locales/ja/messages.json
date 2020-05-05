@@ -6,6 +6,19 @@
 		"message": "ページ情報をWiki記法などに変換する"
 	},
 
+	"quote_copy_selected_text": {
+		"message": "選択テキストを引用コピー"
+	},
+	"quoted_copy_not_supported": {
+		"message": "(引用コピー非対応) $formatType$",
+		"placeholders": {
+			"formatType": {
+				"example": "タイトル + URL",
+				"content": "$1"
+			}
+		}
+	},
+
 	"edit_title": {
 		"message": "タイトルを編集"
 	},
