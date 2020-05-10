@@ -7,7 +7,7 @@ const createIdForSelection = (template) => `selection-${template.id}`;
 const updateContextMenus = () => {
 	chrome.contextMenus.removeAll(() => {
 		const parentMenuForPage = {
-			title: i18n.getMessage('extension_name'),
+			title: '&h: ' + i18n.getMessage('extension_name'),
 			id: 'parent-menu-for-page',
 			contexts: [
 				'page',
@@ -26,7 +26,7 @@ const updateContextMenus = () => {
 			});
 		});
 		const parentMenuForSelection = {
-			title: i18n.getMessage('quote_copy_selected_text'),
+			title: '&h: ' + i18n.getMessage('quote_copy_selected_text'),
 			id: 'parent-menu-for-selection-text',
 			contexts: [
 				'selection',
