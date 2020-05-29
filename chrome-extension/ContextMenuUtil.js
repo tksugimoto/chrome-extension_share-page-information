@@ -9,6 +9,7 @@ import i18n from './i18n.js';
 const calculateTypeFrom = (menuItemId) => menuItemId.split('-')[0];
 const createIdForNormal = (template) => `normal-${template.id}`;
 const createIdForQuotation = (template) => `quotation-${template.id}`;
+const createIdForBlock = (template) => `block-${template.id}`;
 
 const updateContextMenus = () => {
 	chrome.contextMenus.removeAll(() => {
@@ -31,6 +32,7 @@ const updateContextMenus = () => {
 				});
 			});
 		});
+		// TODO: 引用コピーとblockコピーの親を作る
 		const parentMenuForQuotation = {
 			title: i18n.getMessage('quote_copy_selected_text'),
 			id: 'parent-menu-for-quotation',
@@ -51,6 +53,26 @@ const updateContextMenus = () => {
 				});
 			});
 		});
+		const parentMenuForBlock = {
+			title: '選択テキストをBlockコピー', // TODO: use i18n
+			id: 'parent-menu-for-block',
+			contexts: [
+				'selection',
+			],
+		};
+		chrome.contextMenus.create(parentMenuForBlock, () => {
+			templates.forEach(template => {
+				const formatType = i18n.getMessage(`format_type_${template.id}`);
+				chrome.contextMenus.create({
+					title: template.blockSupported ? formatType : 'Blockコピー非対応', // TODO: use i18n
+					id: createIdForBlock(template),
+					contexts: parentMenuForBlock.contexts,
+					parentId: parentMenuForBlock.id,
+					enabled: template.blockSupported,
+					visible: template.enabled,
+				});
+			});
+		});
 	});
 };
 
@@ -64,6 +86,7 @@ const createContextMenus = updateContextMenus;
 const findTemplateFrom = (menuItemId) => templates.find((template) => {
 	if (createIdForNormal(template) === menuItemId) return true;
 	if (createIdForQuotation(template) === menuItemId) return true;
+	if (createIdForBlock(template) === menuItemId) return true;
 	return false;
 });
 
