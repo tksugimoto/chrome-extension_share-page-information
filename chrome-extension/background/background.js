@@ -36,7 +36,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 		const url = (() => {
 			const _url = new URL(tab.url);
 
-			if (_url.hash) return tab.url;
+			if (_url.hash && !_url.hash.startsWith('#:~:text=')) return tab.url;
 
 			const [ firstLineSelectionText ] = selectionText.trim().split(/\n+/);
 			_url.hash = `:~:text=${encodeURIComponent(firstLineSelectionText)}`;
