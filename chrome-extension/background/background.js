@@ -33,8 +33,17 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 			resolve(info.selectionText);
 		});
 	}).then(selectionText => {
+		const url = (() => {
+			const _url = new URL(tab.url);
+
+			if (_url.hash) return tab.url;
+
+			const [ firstLineSelectionText ] = selectionText.trim().split(/\n+/);
+			_url.hash = `:~:text=${encodeURIComponent(firstLineSelectionText)}`;
+			return _url.toString();
+		})();
 		const data = {
-			url: tab.url,
+			url,
 			title: tab.title,
 		};
 		// Firefox用
