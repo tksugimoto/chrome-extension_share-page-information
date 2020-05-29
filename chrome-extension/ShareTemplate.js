@@ -174,13 +174,14 @@ class ShareTemplate extends EventTarget {
 		this._container.style.display = '';
 	}
 	update(data = this._latestData, {
+		type,
 		selectionText,
 	} = {}) {
 		this._latestData = data;
 		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
 		const formatted = this.format(data, optionObject);
 		if (selectionText) {
-			if (this.quotationSupported) {
+			if (type === 'quotation' && this.quotationSupported) {
 				formatted.quotationText = this.quotationFormat(selectionText.trimEnd());
 			}
 		}
