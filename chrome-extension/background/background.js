@@ -34,6 +34,8 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 		});
 	}).then(selectionText => {
 		const url = (() => {
+			if (!selectionText) return tab.url;
+
 			const _url = new URL(tab.url);
 
 			if (_url.hash && !_url.hash.startsWith('#:~:text=')) return tab.url;
