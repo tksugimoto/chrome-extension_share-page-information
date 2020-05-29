@@ -1,6 +1,12 @@
 import templates from './templates.js';
 import i18n from './i18n.js';
 
+/**
+ *
+ * @param {string} menuItemId
+ * @returns {string} メニュー type
+ */
+const calculateTypeFrom = (menuItemId) => menuItemId.split('-')[0];
 const createIdForNormal = (template) => `normal-${template.id}`;
 const createIdForQuotation = (template) => `quotation-${template.id}`;
 
@@ -65,4 +71,5 @@ export {
 	createContextMenus,
 	updateContextMenus,
 	findTemplateFrom,
+	calculateTypeFrom,
 };
