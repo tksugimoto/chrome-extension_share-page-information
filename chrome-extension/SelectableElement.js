@@ -68,8 +68,10 @@ class SelectableLink extends SelectableElement{
 		const shadowRoot = this.attachShadow({
 			mode: 'closed',
 		});
-		shadowRoot.append(this._link);
-		shadowRoot.append(this._blockquote);
+		this._container = document.createElement('div');
+		this._container.append(this._link);
+		this._container.append(this._blockquote);
+		shadowRoot.append(this._container);
 	}
 	update({text, url, quotationText}) {
 		this._link.innerText = text;
@@ -84,8 +86,7 @@ class SelectableLink extends SelectableElement{
 	}
 	select() {
 		const range = document.createRange();
-		range.selectNodeContents(this._link);
-		range.setEndAfter(this._blockquote);
+		range.selectNodeContents(this._container);
 		const selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
