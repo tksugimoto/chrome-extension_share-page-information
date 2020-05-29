@@ -41,9 +41,12 @@ class SelectableTextarea extends SelectableElement {
 		});
 		shadowRoot.append(this._textarea);
 	}
-	update({text, quotationText}) {
+	update({text, quotationText, blockText}) {
 		if (quotationText) {
 			text += `\n\n${quotationText}`;
+		}
+		if (blockText) {
+			text += `\n\n${blockText}`;
 		}
 		this._textarea.value = text;
 	}
@@ -60,6 +63,7 @@ class SelectableLink extends SelectableElement{
 
 		this._link = document.createElement('a');
 		this._blockquote = document.createElement('blockquote');
+		this._pre = document.createElement('pre');
 
 		this.tabIndex = -1;
 
@@ -71,9 +75,10 @@ class SelectableLink extends SelectableElement{
 		this._container = document.createElement('div');
 		this._container.append(this._link);
 		this._container.append(this._blockquote);
+		this._container.append(this._pre);
 		shadowRoot.append(this._container);
 	}
-	update({text, url, quotationText}) {
+	update({text, url, quotationText, blockText}) {
 		this._link.innerText = text;
 		this._link.href = url;
 		if (quotationText) {
@@ -82,6 +87,13 @@ class SelectableLink extends SelectableElement{
 		} else {
 			this._blockquote.innerText = '';
 			this._blockquote.style.display = 'none';
+		}
+		if (blockText) {
+			this._pre.innerText = blockText;
+			this._pre.style.display = '';
+		} else {
+			this._pre.innerText = '';
+			this._pre.style.display = 'none';
 		}
 	}
 	select() {

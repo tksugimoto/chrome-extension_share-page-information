@@ -11,6 +11,7 @@ const templates = [
 		accesskey: 'P',
 		format: '{{title}}\n{{url}}',
 		quotationFormat: (text) => text.replace(/^/gm, '> '),
+		blockFormat: (text) => '```\n' + text + '\n```',
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -18,6 +19,7 @@ const templates = [
 		accesskey: 'H',
 		format: '[[{{title}}|{{url}}]]',
 		quotationFormat: (text) => text.replace(/^/gm, '"" '),
+		blockFormat: (text) => `<<<\n${text}\n>>>`,
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -76,6 +78,7 @@ const templates = [
 			};
 		},
 		quotationFormat: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+		blockFormat: (text) => '```\n' + text + '\n```',
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -88,6 +91,7 @@ const templates = [
 			};
 		},
 		quotationFormat: (text) => text,
+		blockFormat: (text) => text,
 		selectableElement: new SelectableLink(),
 	}),
 ];
