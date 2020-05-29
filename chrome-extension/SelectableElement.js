@@ -74,12 +74,18 @@ class SelectableLink extends SelectableElement{
 	update({text, url, quotationText}) {
 		this._link.innerText = text;
 		this._link.href = url;
-		this._blockquote.innerText = quotationText || '';
+		if (quotationText) {
+			this._blockquote.innerText = quotationText;
+			this._blockquote.style.display = '';
+		} else {
+			this._blockquote.innerText = '';
+			this._blockquote.style.display = 'none';
+		}
 	}
 	select() {
 		const range = document.createRange();
 		range.selectNodeContents(this._link);
-		if (this._blockquote.innerText) range.setEndAfter(this._blockquote);
+		range.setEndAfter(this._blockquote);
 		const selection = window.getSelection();
 		selection.removeAllRanges();
 		selection.addRange(range);
