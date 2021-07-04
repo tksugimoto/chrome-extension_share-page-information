@@ -1,46 +1,74 @@
 import templates from './templates.js';
 import i18n from './i18n.js';
 
-const createIdForPage = (template) => `page-${template.id}`;
-const createIdForSelection = (template) => `selection-${template.id}`;
+/**
+ *
+ * @param {string} menuItemId
+ * @returns {string} メニュー type
+ */
+const calculateTypeFrom = (menuItemId) => menuItemId.split('-')[0];
+const createIdForNormal = (template) => `normal-${template.id}`;
+const createIdForQuotation = (template) => `quotation-${template.id}`;
+const createIdForBlock = (template) => `block-${template.id}`;
 
 const updateContextMenus = () => {
 	chrome.contextMenus.removeAll(() => {
-		const parentMenuForPage = {
+		const parentMenuForNormal = {
 			title: i18n.getMessage('extension_name'),
-			id: 'parent-menu-for-page',
+			id: 'parent-menu-for-normal',
 			contexts: [
 				'page',
 			],
 		};
-		chrome.contextMenus.create(parentMenuForPage, () => {
+		chrome.contextMenus.create(parentMenuForNormal, () => {
 			templates.forEach(template => {
 				const formatType = i18n.getMessage(`format_type_${template.id}`);
 				chrome.contextMenus.create({
 					title: formatType,
-					id: createIdForPage(template),
-					contexts: parentMenuForPage.contexts,
-					parentId: parentMenuForPage.id,
+					id: createIdForNormal(template),
+					contexts: parentMenuForNormal.contexts,
+					parentId: parentMenuForNormal.id,
 					visible: template.enabled,
 				});
 			});
 		});
-		const parentMenuForSelection = {
+		// TODO: 引用コピーとblockコピーの親を作る
+		const parentMenuForQuotation = {
 			title: i18n.getMessage('quote_copy_selected_text'),
-			id: 'parent-menu-for-selection-text',
+			id: 'parent-menu-for-quotation',
 			contexts: [
 				'selection',
 			],
 		};
-		chrome.contextMenus.create(parentMenuForSelection, () => {
+		chrome.contextMenus.create(parentMenuForQuotation, () => {
 			templates.forEach(template => {
 				const formatType = i18n.getMessage(`format_type_${template.id}`);
 				chrome.contextMenus.create({
 					title: template.quotationSupported ? formatType : i18n.getMessage('quoted_copy_not_supported', formatType),
-					id: createIdForSelection(template),
-					contexts: parentMenuForSelection.contexts,
-					parentId: parentMenuForSelection.id,
+					id: createIdForQuotation(template),
+					contexts: parentMenuForQuotation.contexts,
+					parentId: parentMenuForQuotation.id,
 					enabled: template.quotationSupported,
+					visible: template.enabled,
+				});
+			});
+		});
+		const parentMenuForBlock = {
+			title: '選択テキストをBlockコピー', // TODO: use i18n
+			id: 'parent-menu-for-block',
+			contexts: [
+				'selection',
+			],
+		};
+		chrome.contextMenus.create(parentMenuForBlock, () => {
+			templates.forEach(template => {
+				const formatType = i18n.getMessage(`format_type_${template.id}`);
+				chrome.contextMenus.create({
+					title: template.blockSupported ? formatType : 'Blockコピー非対応', // TODO: use i18n
+					id: createIdForBlock(template),
+					contexts: parentMenuForBlock.contexts,
+					parentId: parentMenuForBlock.id,
+					enabled: template.blockSupported,
 					visible: template.enabled,
 				});
 			});
@@ -56,8 +84,9 @@ const createContextMenus = updateContextMenus;
  * @returns shareTemplate
  */
 const findTemplateFrom = (menuItemId) => templates.find((template) => {
-	if (createIdForPage(template) === menuItemId) return true;
-	if (createIdForSelection(template) === menuItemId) return true;
+	if (createIdForNormal(template) === menuItemId) return true;
+	if (createIdForQuotation(template) === menuItemId) return true;
+	if (createIdForBlock(template) === menuItemId) return true;
 	return false;
 });
 
@@ -65,4 +94,5 @@ export {
 	createContextMenus,
 	updateContextMenus,
 	findTemplateFrom,
+	calculateTypeFrom,
 };
