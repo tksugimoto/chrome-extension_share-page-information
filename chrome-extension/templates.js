@@ -49,7 +49,7 @@ const templates = [
 		accesskey: 'G',
 		// TODO: title に含まれる ` の数 +1 個の ` で囲む
 		format: '{{url}} ```{{title}}```',
-		quotationFormat: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+		quotationFormat: (text) => '```\n' + text + '\n```',
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -83,7 +83,7 @@ const templates = [
 				text: `[${text}](${url} "${tooltip}")`,
 			};
 		},
-		quotationFormat: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+		quotationFormat: (text) => '```\n' + text + '\n```',
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
