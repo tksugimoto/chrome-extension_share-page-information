@@ -9,7 +9,15 @@ const Messages = {
 	copyCompleted: i18n.getMessage('copy_completed'),
 };
 
+const QuotationType = {
+	CODE: 'code',
+	QUOTATION: 'quotation',
+};
+
 class ShareTemplate extends EventTarget {
+	static get QuotationType() {
+		return QuotationType;
+	}
 	constructor(argObject) {
 		super();
 		['id', 'selectableElement', 'format'].forEach(key => {
@@ -180,7 +188,8 @@ class ShareTemplate extends EventTarget {
 		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
 		const formatted = this.format(data, optionObject);
 		if (selectionText && this.quotationSupported) {
-			formatted.quotationText = this.quotationFormat(selectionText.trimEnd());
+			const quotationFormat = this.quotationFormat[localStorage['quotation_type'] || QuotationType.QUOTATION];
+			formatted.quotationText = quotationFormat(selectionText.trimEnd());
 		}
 		this.selectableElement.update(formatted);
 	}

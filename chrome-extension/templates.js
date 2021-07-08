@@ -10,14 +10,20 @@ const templates = [
 		id: 'title_url',
 		accesskey: 'P',
 		format: '{{title}}\n{{url}}',
-		quotationFormat: (text) => text.replace(/^/gm, '> '),
+		quotationFormat: {
+			[ShareTemplate.QuotationType.QUOTATION]: (text) => text.replace(/^/gm, '> '),
+			[ShareTemplate.QuotationType.CODE]: (text) => '```\n' + text + '\n```',
+		},
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'hiki',
 		accesskey: 'H',
 		format: '[[{{title}}|{{url}}]]',
-		quotationFormat: (text) => text.replace(/^/gm, '"" '),
+		quotationFormat: {
+			[ShareTemplate.QuotationType.QUOTATION]: (text) => text.replace(/^/gm, '"" '),
+			[ShareTemplate.QuotationType.CODE]: (text) => text.replace(/^/gm, '"" '), // FIXME
+		},
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -34,14 +40,20 @@ const templates = [
 				text: `"${title}":${url}`,
 			};
 		},
-		quotationFormat: (text) => text.replace(/^/gm, '> '),
+		quotationFormat: {
+			[ShareTemplate.QuotationType.QUOTATION]: (text) => text.replace(/^/gm, '> '),
+			[ShareTemplate.QuotationType.CODE]: (text) => text.replace(/^/gm, '> '), // FIXME
+		},
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
 		id: 'backlog',
 		accesskey: 'B',
 		format: '[[{{title}}>{{url}}]]',
-		quotationFormat: (text) => text.replace(/^/gm, '>'),
+		quotationFormat: {
+			[ShareTemplate.QuotationType.QUOTATION]: (text) => text.replace(/^/gm, '>'),
+			[ShareTemplate.QuotationType.CODE]: (text) => text.replace(/^/gm, '>'), // FIXME
+		},
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -49,7 +61,10 @@ const templates = [
 		accesskey: 'G',
 		// TODO: title に含まれる ` の数 +1 個の ` で囲む
 		format: '{{url}} ``{{title}}``',
-		quotationFormat: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+		quotationFormat: {
+			[ShareTemplate.QuotationType.QUOTATION]: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+			[ShareTemplate.QuotationType.CODE]: (text) => '```\n' + text + '\n```',
+		},
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -83,7 +98,10 @@ const templates = [
 				text: `[${text}](${url} "${tooltip}")`,
 			};
 		},
-		quotationFormat: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+		quotationFormat: {
+			[ShareTemplate.QuotationType.QUOTATION]: (text) => text.split('\n').map(line => `> ${line}  `).join('\n'),
+			[ShareTemplate.QuotationType.CODE]: (text) => '```\n' + text + '\n```',
+		},
 		selectableElement: new SelectableTextarea(),
 	}),
 	new ShareTemplate({
@@ -95,7 +113,10 @@ const templates = [
 				url: data.url,
 			};
 		},
-		quotationFormat: (text) => text,
+		quotationFormat: {
+			[ShareTemplate.QuotationType.QUOTATION]: (text) => text,
+			[ShareTemplate.QuotationType.CODE]: (text) => text, // FIXME
+		},
 		selectableElement: new SelectableLink(),
 	}),
 ];

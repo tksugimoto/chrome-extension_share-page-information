@@ -1,10 +1,19 @@
 import {
 	createContextMenus,
 	findTemplateFrom,
+	findQuotationType,
  } from '../ContextMenuUtil.js';
 
 chrome.runtime.onInstalled.addListener(createContextMenus);
 chrome.runtime.onStartup.addListener(createContextMenus);
+
+
+chrome.contextMenus.onClicked.addListener((info) => {
+	if (info.checked) {
+		const quotationType = findQuotationType(info.menuItemId);
+		if (quotationType) localStorage['quotation_type'] = quotationType;
+	}
+});
 
 chrome.contextMenus.onClicked.addListener((info, tab) => {
 	const template = findTemplateFrom(info.menuItemId);
