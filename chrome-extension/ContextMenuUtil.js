@@ -1,5 +1,6 @@
 import templates from './templates.js';
 import i18n from './i18n.js';
+import ShareTemplate from './ShareTemplate.js';
 
 const createIdForPage = (template) => `page-${template.id}`;
 const createIdForSelection = (template) => `selection-${template.id}`;
@@ -48,6 +49,24 @@ const updateContextMenus = () => {
 					visible: template.enabled,
 				});
 			});
+			const parentMenuForOption = {
+				title: '引用書式 [&F]', // FIXME
+				id: 'option-selection-format',
+				contexts: parentMenuForSelection.contexts,
+				parentId: parentMenuForSelection.id,
+			};
+			chrome.contextMenus.create(parentMenuForOption, () => {
+				Object.values(ShareTemplate.QuotationType).sort().forEach(type => {
+					chrome.contextMenus.create({
+						title: `${type} [&${type[0].toUpperCase()}]`, // FIXME?
+						id: `option-selection-format-${type}`,
+						contexts: parentMenuForOption.contexts,
+						parentId: parentMenuForOption.id,
+						type: chrome.contextMenus.ItemType.RADIO,
+						checked: (localStorage['quotation_type'] || ShareTemplate.QuotationType.QUOTATION) === type,
+					});
+				});
+			});
 		});
 	});
 };
@@ -65,8 +84,19 @@ const findTemplateFrom = (menuItemId) => templates.find((template) => {
 	return false;
 });
 
+/**
+ * menuItemId から対応する QuotationType を返却する
+ * @param {string} menuItemId
+ * @returns quotationType
+ */
+const findQuotationType = (menuItemId) => Object.values(ShareTemplate.QuotationType).find((type) => {
+	if (`option-selection-format-${type}` === menuItemId) return true; // FIXME: ハードコーディング
+	return false;
+});
+
 export {
 	createContextMenus,
 	updateContextMenus,
 	findTemplateFrom,
+	findQuotationType,
 };
