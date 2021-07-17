@@ -4,6 +4,10 @@ import i18n from './i18n.js';
 const createIdForPage = (template) => `page-${template.id}`;
 const createIdForSelection = (template) => `selection-${template.id}`;
 
+const shortcutText = template => {
+	return template.accesskey ? ` [&${template.accesskey}]` : '';
+};
+
 const updateContextMenus = () => {
 	chrome.contextMenus.removeAll(() => {
 		const parentMenuForPage = {
@@ -17,7 +21,7 @@ const updateContextMenus = () => {
 			templates.forEach(template => {
 				const formatType = i18n.getMessage(`format_type_${template.id}`);
 				chrome.contextMenus.create({
-					title: formatType,
+					title: formatType + shortcutText(template),
 					id: createIdForPage(template),
 					contexts: parentMenuForPage.contexts,
 					parentId: parentMenuForPage.id,
@@ -36,7 +40,7 @@ const updateContextMenus = () => {
 			templates.forEach(template => {
 				const formatType = i18n.getMessage(`format_type_${template.id}`);
 				chrome.contextMenus.create({
-					title: template.quotationSupported ? formatType : i18n.getMessage('quoted_copy_not_supported', formatType),
+					title: template.quotationSupported ? formatType + shortcutText(template) : i18n.getMessage('quoted_copy_not_supported', formatType),
 					id: createIdForSelection(template),
 					contexts: parentMenuForSelection.contexts,
 					parentId: parentMenuForSelection.id,
