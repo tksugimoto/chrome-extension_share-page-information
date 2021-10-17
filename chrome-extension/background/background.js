@@ -1,7 +1,6 @@
 import {
 	createContextMenus,
 	findTemplateFrom,
-	findQuotationType,
  } from '../ContextMenuUtil.js';
 
 chrome.runtime.onInstalled.addListener(createContextMenus);
@@ -9,9 +8,8 @@ chrome.runtime.onStartup.addListener(createContextMenus);
 
 
 chrome.contextMenus.onClicked.addListener((info) => {
-	if (info.checked) {
-		const quotationType = findQuotationType(info.menuItemId);
-		if (quotationType) localStorage['quotation_type'] = quotationType;
+	if (info.menuItemId === 'option-use_code_format_for_quoting') {
+		localStorage['use_code_format_for_quoting'] = info.checked;
 	}
 });
 
