@@ -60,6 +60,7 @@ class SelectableLink extends SelectableElement{
 
 		this._link = document.createElement('a');
 		this._blockquote = document.createElement('blockquote');
+		this._pre = document.createElement('pre');
 
 		this.tabIndex = -1;
 
@@ -71,15 +72,27 @@ class SelectableLink extends SelectableElement{
 		this._container = document.createElement('div');
 		this._container.append(this._link);
 		this._container.append(this._blockquote);
+		this._container.append(this._pre);
 		shadowRoot.append(this._container);
 	}
-	update({text, url, quotationText}) {
+	update({text, url, quotationText, useCodeFormat}) {
 		this._link.innerText = text;
 		this._link.href = url;
 		if (quotationText) {
-			this._blockquote.innerText = quotationText;
-			this._blockquote.style.display = '';
+			if (useCodeFormat) {
+				this._pre.innerText = quotationText;
+				this._pre.style.display = '';
+				this._blockquote.innerText = '';
+				this._blockquote.style.display = 'none';
+			} else {
+				this._pre.innerText = '';
+				this._pre.style.display = 'none';
+				this._blockquote.innerText = quotationText;
+				this._blockquote.style.display = '';
+			}
 		} else {
+			this._pre.innerText = '';
+			this._pre.style.display = 'none';
 			this._blockquote.innerText = '';
 			this._blockquote.style.display = 'none';
 		}

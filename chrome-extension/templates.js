@@ -115,7 +115,7 @@ const templates = [
 		},
 		quotationFormat: {
 			[ShareTemplate.QuotationType.QUOTATION]: (text) => text,
-			[ShareTemplate.QuotationType.CODE]: (text) => text, // FIXME
+			[ShareTemplate.QuotationType.CODE]: (text) => text,
 		},
 		selectableElement: new SelectableLink(),
 	}),
