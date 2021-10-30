@@ -20,7 +20,9 @@ chrome.tabs.query({
 
 	const copyCallBack = () => {
 		if (globalSettings.closeWindowAfterCopied) {
-			window.close();
+			window.setTimeout(() => {
+				window.close();
+			}, 50 /* ms */);
 		}
 	};
 
