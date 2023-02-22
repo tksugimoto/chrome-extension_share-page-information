@@ -22,7 +22,7 @@ chrome.tabs.query({
 		if (globalSettings.closeWindowAfterCopied) {
 			window.setTimeout(() => {
 				window.close();
-			}, 50 /* ms */);
+			}, 150 /* ms */);
 		}
 	};
 
