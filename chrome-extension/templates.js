@@ -107,9 +107,19 @@ const templates = [
 	new ShareTemplate({
 		id: 'link',
 		accesskey: 'L',
-		format: (data) => {
+		options: [{
+			key: 'escape-dot',
+			name: 'URLをescapeする(SlackでtitleにURLが含まれているとリンクが壊れる問題対策)',
+			defaultValue: true,
+		}],
+		format: (data, option) => {
+			let title = data.title;
+			if (option['escape-dot']) {
+				const zeroWidthSpace = '​';
+				title = title.replace(/[.:]/g, `${zeroWidthSpace}$&`);
+			}
 			return {
-				text: data.title,
+				text: title,
 				url: data.url,
 			};
 		},
