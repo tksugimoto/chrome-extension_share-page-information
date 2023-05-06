@@ -185,6 +185,12 @@ class ShareTemplate extends EventTarget {
 		selectionText,
 	} = {}) {
 		this._latestData = data;
+		data = window.structuredClone(data);
+		// TODO: 設定から変更できるようにする
+		const pdfPage = (data.url.match(/[.]pdf(#page=[0-9]+)$/) || [])[1];
+		if (pdfPage) {
+			data.title += pdfPage;
+		}
 		const optionObject = Object.freeze(Object.assign({}, this.optionObject));
 		const formatted = this.format(data, optionObject);
 		if (selectionText && this.quotationSupported) {
