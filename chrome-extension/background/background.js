@@ -1,6 +1,7 @@
 import {
 	createContextMenus,
 	findTemplateFrom,
+	calculateTypeFrom,
  } from '../ContextMenuUtil.js';
 
 chrome.runtime.onInstalled.addListener(createContextMenus);
@@ -47,6 +48,7 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 		template.appendTo(container);
 		template.update(data, {
+			type: calculateTypeFrom(info.menuItemId),
 			selectionText,
 		});
 		template.copy();
