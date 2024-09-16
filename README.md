@@ -6,10 +6,12 @@
 ## コピー方法
 1. ポップアップから
     <img src="chrome-store/screenshot-ja-01.png">
-1. 右クリックメニューから
-    <img src="chrome-store/screenshot-ja-context_menu-page.png">
-1. [引用コピー] テキストを選択して右クリックメニューから
-    <img src="chrome-store/screenshot-ja-context_menu-selection_text.png">
+1. ~~右クリックメニューから~~  
+    現在Chrome拡張Manifest v3対応のため一時的に無効化中
+    <!-- <img src="chrome-store/screenshot-ja-context_menu-page.png"> -->
+1. ~~[引用コピー] テキストを選択して右クリックメニューから~~  
+    現在Chrome拡張Manifest v3対応のため一時的に無効化中
+    <!-- <img src="chrome-store/screenshot-ja-context_menu-selection_text.png"> -->
 
 ## 対応書式
 * タイトル<改行>URL
@@ -19,8 +21,10 @@
 * Markdown書式：`[リンクテキスト](URL "タイトル(tooltip)")`
 * リンク（OfficeなどHTMLのコピーに対応している製品用）
 
-## 引用コピー
-テキストを選択して右クリックメニューから引用コピーに対応
+## ~~引用コピー~~
+~~テキストを選択して右クリックメニューから引用コピーに対応~~
+
+現在Chrome拡張Manifest v3対応のため一時的に無効化中
 
 ## アイコン
 [アイコン素材ダウンロードサイト「icooon-mono」](https://icooon-mono.com/)
