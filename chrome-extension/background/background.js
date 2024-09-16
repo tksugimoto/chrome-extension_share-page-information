@@ -1,12 +1,35 @@
+import i18n from '../i18n.js';
+/*
 import {
 	createContextMenus,
 	findTemplateFrom,
  } from '../ContextMenuUtil.js';
+*/
+
+const contextMenuId = 'popup';
+const createContextMenus = () => {
+	chrome.contextMenus.removeAll(() => {
+		chrome.contextMenus.create({
+			title: i18n.getMessage('extension_name'),
+			id: contextMenuId,
+			contexts: [
+				'page',
+			],
+		});
+
+	});
+};
 
 chrome.runtime.onInstalled.addListener(createContextMenus);
 chrome.runtime.onStartup.addListener(createContextMenus);
 
-chrome.contextMenus.onClicked.addListener((info, tab) => {
+chrome.contextMenus.onClicked.addListener((info) => {
+	if (info.menuItemId === contextMenuId) {
+		chrome.action.openPopup();
+	}
+
+	// TODO: manifest v3 (service workerに対応できたら復活させる)
+	/*
 	const template = findTemplateFrom(info.menuItemId);
 	if (!template) return;
 
@@ -53,4 +76,5 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
 
 		container.remove();
 	});
+	*/
 });
