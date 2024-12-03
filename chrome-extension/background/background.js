@@ -3,6 +3,7 @@ import i18n from '../i18n.js';
 import {
 	createContextMenus,
 	findTemplateFrom,
+	calculateTypeFrom,
  } from '../ContextMenuUtil.js';
 */
 
@@ -70,6 +71,7 @@ chrome.contextMenus.onClicked.addListener((info) => {
 
 		template.appendTo(container);
 		template.update(data, {
+			type: calculateTypeFrom(info.menuItemId),
 			selectionText,
 		});
 		template.copy();
